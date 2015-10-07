@@ -1,7 +1,0 @@
-test:
-  override:
-    - xctool
-      -sdk iphonesimulator
-      -workspace Cargo.xcworkspace
-      -scheme "Cargo"
-      build build-tests run-tests

@@ -1,3 +1,0 @@
-language: objective-c
-xcode_workspace: Cargo.xcworkspace
-xcode_scheme: Cargo

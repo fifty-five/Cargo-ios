@@ -811,7 +811,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 80006E9E0F1BD93666E907CB /* Pods-CargoTest.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CargoTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fiftyfive.CargoTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -822,7 +824,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D599E70A993DAF60C839B10D /* Pods-CargoTest.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CargoTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fiftyfive.CargoTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";

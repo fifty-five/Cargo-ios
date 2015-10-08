@@ -44,7 +44,7 @@ Pod::Spec.new do |s|
     ss.source_files = ['Cargo/*.{h,m}', 'Cargo/Logger/*.{h,m}']
     ss.platform = :ios, '7.0'
     s.xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => "CARGO_VERSION=#{s.version}" }
-    s.dependency 'GoogleTagManager', '3.1.12'
+    s.dependency 'GoogleTagManager', '3.12.1'
   end
 
   Build.subspecs.each do |a|

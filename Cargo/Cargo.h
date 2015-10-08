@@ -20,7 +20,7 @@
 
 
 /**
- *  A class that provides a template to manage and schedule different function 
+ *  A class that provides a template to manage and schedule different function
  *  calls from different mobile tracking frameworks using GTM.
  */
 @interface Cargo : NSObject
@@ -59,7 +59,7 @@
 
 #pragma mark - GoogleTagManager
 /**
- *  Use initTagHandlerWithManager:container: to configure and initilize 
+ *  Use initTagHandlerWithManager:container: to configure and initilize
  *  FIFTagHandler with Google Tag Manager.
  *
  *  @param tagManager A google tag manager instance.

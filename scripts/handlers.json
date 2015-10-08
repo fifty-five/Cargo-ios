@@ -1,0 +1,13 @@
+{
+ "handlers": [
+    {
+      "name":"GoogleAnalytics",
+      "dependencies":[
+        {
+          "name": "GoogleAnalytics",
+          "version" : "3.13.0"
+        }
+      ]
+    }
+  ]
+}

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		1A8C7BFB2CC8F46C95E51C50 /* libPods-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72932A8825F606067371B16B /* libPods-App.a */; };
 		6154FCF9D0E850405E251021 /* libPods-Cargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 680906E761508DD13995013D /* libPods-Cargo.a */; };
+		BF18DC8A1BC67D340067B593 /* CARMobileAppTrackingTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF18DC891BC67D340067B593 /* CARMobileAppTrackingTagHandler.m */; settings = {ASSET_TAGS = (); }; };
+		BF18DC8C1BC683B50067B593 /* CARMobileAppTrackingAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF18DC8B1BC683B50067B593 /* CARMobileAppTrackingAdapter.m */; settings = {ASSET_TAGS = (); }; };
+		BF18DC911BC686260067B593 /* MobileAppTrackingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF18DC901BC686260067B593 /* MobileAppTrackingTests.m */; settings = {ASSET_TAGS = (); }; };
 		BF37DE811BC51BB50031876D /* Cargo.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DE801BC51BB50031876D /* Cargo.m */; settings = {ASSET_TAGS = (); }; };
 		BF37DE851BC51BCC0031876D /* CARUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DE841BC51BCC0031876D /* CARUtils.m */; settings = {ASSET_TAGS = (); }; };
 		BF37DEAC1BC51CC80031876D /* FIFLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DEAB1BC51CC80031876D /* FIFLogger.m */; settings = {ASSET_TAGS = (); }; };
@@ -27,7 +30,6 @@
 		BF37DF2C1BC57B530031876D /* CARAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF201BC57B530031876D /* CARAdapter.m */; settings = {ASSET_TAGS = (); }; };
 		BF37DF2D1BC57B530031876D /* CARMacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF221BC57B530031876D /* CARMacroHandler.m */; settings = {ASSET_TAGS = (); }; };
 		BF37DF2E1BC57B530031876D /* CARTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF241BC57B530031876D /* CARTagHandler.m */; settings = {ASSET_TAGS = (); }; };
-		BF37DF2F1BC57B530031876D /* CARGoogleAnalyticsAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF271BC57B530031876D /* CARGoogleAnalyticsAdapter.m */; settings = {ASSET_TAGS = (); }; };
 		BF37DF301BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF291BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m */; settings = {ASSET_TAGS = (); }; };
 		BF37DF311BC57B530031876D /* CARGoogleAnalyticsTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF2B1BC57B530031876D /* CARGoogleAnalyticsTagHandler.m */; settings = {ASSET_TAGS = (); }; };
 		BF37DF341BC57B880031876D /* GoogleAnalyticsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF321BC57B790031876D /* GoogleAnalyticsTests.m */; settings = {ASSET_TAGS = (); }; };
@@ -86,6 +88,12 @@
 		80006E9E0F1BD93666E907CB /* Pods-CargoTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CargoTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CargoTest/Pods-CargoTest.debug.xcconfig"; sourceTree = "<group>"; };
 		8EEB530E06FC762D3420EA2F /* Pods-Cargo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.release.xcconfig"; sourceTree = "<group>"; };
 		AC40A7DA512F2D96CC022648 /* Pods-Cargo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.debug.xcconfig"; sourceTree = "<group>"; };
+		BF18DC881BC67D340067B593 /* CARMobileAppTrackingTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARMobileAppTrackingTagHandler.h; sourceTree = "<group>"; };
+		BF18DC891BC67D340067B593 /* CARMobileAppTrackingTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARMobileAppTrackingTagHandler.m; sourceTree = "<group>"; };
+		BF18DC8B1BC683B50067B593 /* CARMobileAppTrackingAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARMobileAppTrackingAdapter.m; sourceTree = "<group>"; };
+		BF18DC8D1BC683E30067B593 /* CARMobileAppTrackingAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARMobileAppTrackingAdapter.h; sourceTree = "<group>"; };
+		BF18DC8E1BC684620067B593 /* CARConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CARConstants.h; sourceTree = "<group>"; };
+		BF18DC901BC686260067B593 /* MobileAppTrackingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileAppTrackingTests.m; sourceTree = "<group>"; };
 		BF37DD591BC512450031876D /* libCargo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCargo.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF37DE7F1BC51BB40031876D /* Cargo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cargo.h; sourceTree = "<group>"; };
 		BF37DE801BC51BB50031876D /* Cargo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cargo.m; sourceTree = "<group>"; };
@@ -120,8 +128,6 @@
 		BF37DF221BC57B530031876D /* CARMacroHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARMacroHandler.m; sourceTree = "<group>"; };
 		BF37DF231BC57B530031876D /* CARTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARTagHandler.h; sourceTree = "<group>"; };
 		BF37DF241BC57B530031876D /* CARTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARTagHandler.m; sourceTree = "<group>"; };
-		BF37DF261BC57B530031876D /* CARGoogleAnalyticsAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARGoogleAnalyticsAdapter.h; sourceTree = "<group>"; };
-		BF37DF271BC57B530031876D /* CARGoogleAnalyticsAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARGoogleAnalyticsAdapter.m; sourceTree = "<group>"; };
 		BF37DF281BC57B530031876D /* CARGoogleAnalyticsMacroHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARGoogleAnalyticsMacroHandler.h; sourceTree = "<group>"; };
 		BF37DF291BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARGoogleAnalyticsMacroHandler.m; sourceTree = "<group>"; };
 		BF37DF2A1BC57B530031876D /* CARGoogleAnalyticsTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARGoogleAnalyticsTagHandler.h; sourceTree = "<group>"; };
@@ -197,6 +203,25 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		BF18DC871BC67C880067B593 /* MobileAppTracking */ = {
+			isa = PBXGroup;
+			children = (
+				BF18DC881BC67D340067B593 /* CARMobileAppTrackingTagHandler.h */,
+				BF18DC891BC67D340067B593 /* CARMobileAppTrackingTagHandler.m */,
+				BF18DC8B1BC683B50067B593 /* CARMobileAppTrackingAdapter.m */,
+				BF18DC8D1BC683E30067B593 /* CARMobileAppTrackingAdapter.h */,
+			);
+			path = MobileAppTracking;
+			sourceTree = "<group>";
+		};
+		BF18DC8F1BC686030067B593 /* MobileAppTracking */ = {
+			isa = PBXGroup;
+			children = (
+				BF18DC901BC686260067B593 /* MobileAppTrackingTests.m */,
+			);
+			path = MobileAppTracking;
+			sourceTree = "<group>";
+		};
 		BF37DD501BC512450031876D = {
 			isa = PBXGroup;
 			children = (
@@ -231,6 +256,7 @@
 				BF37DE801BC51BB50031876D /* Cargo.m */,
 				BF37DE831BC51BCC0031876D /* CARUtils.h */,
 				BF37DE841BC51BCC0031876D /* CARUtils.m */,
+				BF18DC8E1BC684620067B593 /* CARConstants.h */,
 				BF37DF1E1BC57B530031876D /* Handlers */,
 				BF37DEA91BC51CC80031876D /* Logger */,
 			);
@@ -249,6 +275,7 @@
 		BF37DEB21BC51FF90031876D /* CargoTest */ = {
 			isa = PBXGroup;
 			children = (
+				BF18DC8F1BC686030067B593 /* MobileAppTracking */,
 				BF37DEBC1BC520D30031876D /* GA */,
 				BF37DEB31BC51FF90031876D /* CargoTest.m */,
 				BF37DEB51BC51FF90031876D /* Info.plist */,
@@ -316,6 +343,7 @@
 				BF37DF221BC57B530031876D /* CARMacroHandler.m */,
 				BF37DF231BC57B530031876D /* CARTagHandler.h */,
 				BF37DF241BC57B530031876D /* CARTagHandler.m */,
+				BF18DC871BC67C880067B593 /* MobileAppTracking */,
 				BF37DF251BC57B530031876D /* GoogleAnalytics */,
 			);
 			path = Handlers;
@@ -324,8 +352,6 @@
 		BF37DF251BC57B530031876D /* GoogleAnalytics */ = {
 			isa = PBXGroup;
 			children = (
-				BF37DF261BC57B530031876D /* CARGoogleAnalyticsAdapter.h */,
-				BF37DF271BC57B530031876D /* CARGoogleAnalyticsAdapter.m */,
 				BF37DF281BC57B530031876D /* CARGoogleAnalyticsMacroHandler.h */,
 				BF37DF291BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m */,
 				BF37DF2A1BC57B530031876D /* CARGoogleAnalyticsTagHandler.h */,
@@ -618,8 +644,9 @@
 				BF37DF2D1BC57B530031876D /* CARMacroHandler.m in Sources */,
 				BF37DF2E1BC57B530031876D /* CARTagHandler.m in Sources */,
 				BF37DF311BC57B530031876D /* CARGoogleAnalyticsTagHandler.m in Sources */,
-				BF37DF2F1BC57B530031876D /* CARGoogleAnalyticsAdapter.m in Sources */,
+				BF18DC8C1BC683B50067B593 /* CARMobileAppTrackingAdapter.m in Sources */,
 				BF37DF301BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m in Sources */,
+				BF18DC8A1BC67D340067B593 /* CARMobileAppTrackingTagHandler.m in Sources */,
 				BF37DE811BC51BB50031876D /* Cargo.m in Sources */,
 				BF37DF2C1BC57B530031876D /* CARAdapter.m in Sources */,
 				BF37DEAC1BC51CC80031876D /* FIFLogger.m in Sources */,
@@ -630,6 +657,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF18DC911BC686260067B593 /* MobileAppTrackingTests.m in Sources */,
 				BF37DEB41BC51FF90031876D /* CargoTest.m in Sources */,
 				BF37DF341BC57B880031876D /* GoogleAnalyticsTests.m in Sources */,
 			);

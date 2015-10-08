@@ -1,5 +1,5 @@
 {
- "handlers": [
+  "handlers": [
     {
       "name":"GoogleAnalytics",
       "dependencies":[
@@ -8,6 +8,17 @@
           "version" : "3.13.0"
         }
       ]
+    },
+    {
+      "name":"MobileAppTracking",
+      "dependencies":[
+        {
+          "name": "MobileAppTracker",
+          "version" : "3.13.0"
+        }
+      ]
     }
   ]
+
+
 }

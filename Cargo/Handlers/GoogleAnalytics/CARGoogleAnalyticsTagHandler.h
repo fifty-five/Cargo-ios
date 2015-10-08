@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 
 #if GA_v3_10_0
-#import "TAGContainer.h"
-#import "Cargo.h"
+
 #import "CARTagHandler.h"
-#import "CARUtils.h"
+#import "GAI.h"
+
 
 
 /**
@@ -20,6 +20,8 @@
  */
 @interface CARGoogleAnalyticsTagHandler : CARTagHandler
 
+@property GAI* instance;
+@property id<GAITracker> tracker;
 
 @end
 #endif

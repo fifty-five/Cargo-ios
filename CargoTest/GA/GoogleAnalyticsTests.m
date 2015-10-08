@@ -18,28 +18,40 @@
 
 #import "GAI.h"
 
+
+#define HC_SHORTHAND
+#import <OCHamcrest/OCHamcrest.h>
+
+#define MOCKITO_SHORTHAND
+#import <OCMockito/OCMockito.h>
+
+
+
+
 @interface GoogleAnalyticsTest : XCTestCase
-    @property (nonatomic, strong) TAGManager *tagManager;
-    @property (nonatomic, strong) TAGContainer *container;
-    @property (nonatomic, strong) CARGoogleAnalyticsTagHandler *handler;
-    @property (nonatomic, strong) GAI* gaInstance;
-    @property (nonatomic, strong) id<GAITracker> tracker;
+
+@property (nonatomic, strong) CARGoogleAnalyticsTagHandler *handler;
+@property (nonatomic, strong) GAI *instanceMock;
+@property (nonatomic, strong) id<GAITracker> trackerMock;
+
 
 @end
 
 @implementation GoogleAnalyticsTest
 
-@synthesize handler;
-@synthesize gaInstance;
-@synthesize tracker;
 
 - (void)setUp
 {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
-    handler = [[CARGoogleAnalyticsTagHandler alloc] init];
-    self.gaInstance = [GAI sharedInstance];
-    self.tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-123456-9"];
+    _handler = [[CARGoogleAnalyticsTagHandler alloc] init];
+
+    _instanceMock = mock([GAI class]);
+    _trackerMock = mockProtocol(@protocol(GAITracker));
+    
+    [_handler setInstance:_instanceMock];
+    [_handler setTracker:_trackerMock];
+
 }
 
 - (void)tearDown
@@ -51,50 +63,32 @@
 
 #pragma mark - TestGoogleAnalytics
 
--(void) testSetDryRun{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@true, @"dryRun", nil];
-    [handler execute:@"GA_set" parameters:dict];
-    XCTAssertEqual(gaInstance.dryRun, true, @"Failed to set dryRun to Google Analytics");
-}
+
 
 -(void) testSetDispatchInterval{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"10", @"dispatchInterval", nil];
 
-    [handler execute:@"GA_set" parameters:dict];
-    XCTAssertEqual(gaInstance.dispatchInterval, 10, @"Failed to set dispatchInterval to Google Analytics");
+    [_handler execute:@"GA_set" parameters:dict];
+    [verifyCount(_instanceMock, times(1) ) setDispatchInterval:10 ];
+
 }
 
--(void) testEnableOptOut{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@true, @"optOut", nil];
-    [handler execute:@"GA_set" parameters:dict];
-    XCTAssertEqual(gaInstance.optOut, true, @"Failed to set optOut to Google Analytics");
-}
-
--(void) testDisableOptOut{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"false", @"optOut", nil];
-    [handler execute:@"GA_set" parameters:dict];
-    XCTAssertEqual(gaInstance.optOut, false, @"Failed to set optOut to Google Analytics");
-}
 
 -(void) testEnableTrackUncaughtExceptions{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@true, @"trackUncaughtExceptions", nil];
-    [handler execute:@"GA_set" parameters:dict];
-    XCTAssertEqual(gaInstance.trackUncaughtExceptions, true, @"Failed to enable trackUncaughtExceptions to Google Analytics");
-}
+    [_handler execute:@"GA_set" parameters:dict];
+    [verifyCount(_instanceMock, times(1) ) trackUncaughtExceptions ];
 
 
--(void) testDisableTrackUncaughtExceptions{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@false, @"trackUncaughtExceptions", nil];
-    [handler execute:@"GA_set" parameters:dict];
-    XCTAssertEqual(gaInstance.trackUncaughtExceptions, false, @"Failed to disable trackUncaughtExceptions to Google Analytics");
 }
 
 
 
 -(void) testEnableAllowIdfaCollection{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@true, @"allowIDFACollection", nil];
-    [handler execute:@"GA_set" parameters:dict];
-    XCTAssertEqual(tracker.allowIDFACollection, true, @"Failed to set allowIdfaCollection to Google Analytics");
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@true, @"allowIdfaCollection", nil];
+    [_handler execute:@"GA_set" parameters:dict];
+    [verifyCount(_trackerMock, times(1) ) allowIDFACollection ];
+
 }
 
 

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "FIFLogger.h"
 #import "CARUtils.h"
+#import "CARConstants.h"
 
 /**
  *  This class is a representation 

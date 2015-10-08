@@ -11,13 +11,11 @@
 
 #import "GAI.h"
 #import "GAIFields.h"
-#import "CARGoogleAnalyticsAdapter.h"
 #import "FIFLogger.h"
 
 
 @interface CARGoogleAnalyticsTagHandler()
 
-@property (nonatomic, assign) id<GAITracker> tracker;
 
 @end
 
@@ -27,6 +25,8 @@
 
 +(void)load{
     CARGoogleAnalyticsTagHandler *handler = [[CARGoogleAnalyticsTagHandler alloc] init];
+    
+    [Cargo registerTagHandler:handler withKey:@"GA_init"];
     [Cargo registerTagHandler:handler withKey:@"GA_set"];
     [Cargo registerTagHandler:handler withKey:@"GA_upload"];
 }
@@ -37,6 +37,9 @@
     [super execute:tagName parameters:parameters];
     if([tagName isEqualToString:@"GA_set"]){
         [self set:parameters];
+    }
+    else if ([tagName isEqualToString:@"GA_init"]){
+        [self init:parameters];
     }
     else if ([tagName isEqualToString:@"GA_upload"]){
         [self upload:parameters];
@@ -51,6 +54,9 @@
         self.name = @"Google Analytics";
         self.valid = NO;
         self.initialized = NO;
+        self.tracker = [[GAI sharedInstance] defaultTracker];
+        self.instance = [GAI sharedInstance];
+        
     }
     return self;
 }
@@ -64,14 +70,33 @@
     self.valid = TRUE;
 }
 
-
+-(void)init:(NSDictionary*)parameters{
+    NSString* trackingId = [parameters objectForKey:@"trackingId"];
+    if(trackingId){
+        [self.instance trackerWithTrackingId:trackingId];
+    }
+    [self set:parameters];
+}
 
 - (void)set:(NSDictionary *)parameters {
 
+    NSString * trackUncaughtException = [parameters objectForKey:@"trackUncaughtExceptions"];
+    if([trackUncaughtException boolValue]){
+        [self.instance trackUncaughtExceptions];
+    }
+    
+    NSString * allowIdfaCollection = [parameters objectForKey:@"allowIdfaCollection"];
+    if([allowIdfaCollection boolValue]){
+        [self.tracker allowIDFACollection];
+    }
+    
+    NSString * dispatchInterval = [parameters objectForKey:@"dispatchInterval"];
+    if(dispatchInterval){
+        NSNumber *interval = [CARUtils castToNSNumber:dispatchInterval];
+        [self.instance setDispatchInterval:[interval integerValue]];
+    }
     
     
-    CARGoogleAnalyticsAdapter *adapter = [[CARGoogleAnalyticsAdapter alloc] init];
-    [adapter setAttributesFromParameters:parameters];
 
     
 }
@@ -80,7 +105,7 @@
     (void)parameters;
 
     //Upload
-    [[GAI sharedInstance] dispatch];
+    [self.instance dispatch];
     FIFLog(kTAGLoggerLogLevelInfo, @"%@ upload success.",
            self.name);
     

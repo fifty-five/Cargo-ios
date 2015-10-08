@@ -8,7 +8,6 @@
 
 #import "CARGoogleAnalyticsMacroHandler.h"
 
-#import "GAI.h"
 #import "GAIFields.h"
 #import "FIFLogger.h"
 

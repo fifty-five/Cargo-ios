@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "TAGContainer.h"
-
+#import "Cargo.h"
+#import "TAGLogger.h"
+#import "CARUtils.h"
 
 /**
  *  This class registers and handle all GTM event calls. This classe decides which framework to handle the call received from GTM and routes it.

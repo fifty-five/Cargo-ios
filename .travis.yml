@@ -1,3 +1,7 @@
 language: objective-c
 xcode_workspace: Cargo.xcworkspace
 xcode_scheme: Cargo
+
+
+script:
+  - xctool -workspace Cargo.xcworkspace -scheme Cargo build test -sdk iphonesimulator

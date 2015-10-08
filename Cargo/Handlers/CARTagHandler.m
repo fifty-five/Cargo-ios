@@ -8,7 +8,6 @@
 
 #import "CARTagHandler.h"
 #import "FIFLogger.h"
-#import "Cargo.h"
 #import "CARUtils.h"
 
 

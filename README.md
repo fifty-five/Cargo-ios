@@ -1,9 +1,10 @@
 # Cargo-ios
 
-Travis Build:
+## Travis Build:
+--
 ![Build Status](https://travis-ci.org/fifty-five/Cargo-ios.svg?branch=master)
 
-Platform specific deliverables 
+## Platform specific deliverables 
 --
  * Android : 
 
@@ -19,4 +20,4 @@ Platform specific deliverables
 
 
 
-
+  

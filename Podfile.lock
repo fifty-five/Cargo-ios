@@ -1,4 +1,19 @@
 PODS:
+  - Bolts (1.3.0):
+    - Bolts/AppLinks (= 1.3.0)
+    - Bolts/Tasks (= 1.3.0)
+  - Bolts/AppLinks (1.3.0):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.3.0)
+  - FBSDKCoreKit (4.7.0):
+    - Bolts (~> 1.1)
+    - FBSDKCoreKit/arc (= 4.7.0)
+    - FBSDKCoreKit/no-arc (= 4.7.0)
+  - FBSDKCoreKit/arc (4.7.0):
+    - Bolts (~> 1.1)
+  - FBSDKCoreKit/no-arc (4.7.0):
+    - Bolts (~> 1.1)
+    - FBSDKCoreKit/arc
   - GoogleAnalytics (3.13.0)
   - GoogleTagManager (3.12.1):
     - GoogleAnalytics (~> 3.13.0)
@@ -8,16 +23,19 @@ PODS:
     - OCHamcrest (~> 4.0)
 
 DEPENDENCIES:
+  - FBSDKCoreKit (= 4.7.0)
   - GoogleAnalytics (= 3.13.0)
   - GoogleTagManager (= 3.12.1)
   - MobileAppTracker (= 3.13.0)
   - OCMockito (~> 1.0)
 
 SPEC CHECKSUMS:
+  Bolts: 805a4a87413e49d4a0c2b7d469084cbc46b09342
+  FBSDKCoreKit: eb580bfc2040ad44f4c0b4f4d0befb1d35bce59c
   GoogleAnalytics: fcf1f1cad57ae1a9a53520018f0f680ceeeb8b49
   GoogleTagManager: d93ce3ea323b5989f07c7cf24a59e69ed36841b6
   MobileAppTracker: 870bd758b9b5a4f4c072f3ebb2872b97959b9605
   OCHamcrest: c14c0b3f4c4e99363e5b87d97bae38c4438b6d5d
   OCMockito: 4981140c9a9ec06c31af40f636e3c0f25f27e6b2
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0

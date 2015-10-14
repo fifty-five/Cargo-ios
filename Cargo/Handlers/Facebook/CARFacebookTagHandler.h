@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "CARTagHandler.h"
-#import <MobileAppTracker/MobileAppTracker.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 
 
-@interface CARMobileAppTrackingTagHandler : CARTagHandler
+@interface CARFacebookTagHandler : CARTagHandler
 
-@property Class tuneClass;
+@property Class fbAppEvents;
 
 @end

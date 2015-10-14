@@ -9,14 +9,16 @@
 /* Begin PBXBuildFile section */
 		1A8C7BFB2CC8F46C95E51C50 /* libPods-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72932A8825F606067371B16B /* libPods-App.a */; };
 		6154FCF9D0E850405E251021 /* libPods-Cargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 680906E761508DD13995013D /* libPods-Cargo.a */; };
-		BF18DC8A1BC67D340067B593 /* CARMobileAppTrackingTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF18DC891BC67D340067B593 /* CARMobileAppTrackingTagHandler.m */; settings = {ASSET_TAGS = (); }; };
-		BF18DC8C1BC683B50067B593 /* CARMobileAppTrackingAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF18DC8B1BC683B50067B593 /* CARMobileAppTrackingAdapter.m */; settings = {ASSET_TAGS = (); }; };
-		BF18DC911BC686260067B593 /* MobileAppTrackingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF18DC901BC686260067B593 /* MobileAppTrackingTests.m */; settings = {ASSET_TAGS = (); }; };
-		BF37DE811BC51BB50031876D /* Cargo.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DE801BC51BB50031876D /* Cargo.m */; settings = {ASSET_TAGS = (); }; };
-		BF37DE851BC51BCC0031876D /* CARUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DE841BC51BCC0031876D /* CARUtils.m */; settings = {ASSET_TAGS = (); }; };
-		BF37DEAC1BC51CC80031876D /* FIFLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DEAB1BC51CC80031876D /* FIFLogger.m */; settings = {ASSET_TAGS = (); }; };
+		9CE17DE41BCE91F200833399 /* CARATInternetHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE17DE31BCE91F200833399 /* CARATInternetHandler.m */; };
+		9CE17DE91BCEA05D00833399 /* ATInternetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE17DE81BCEA05D00833399 /* ATInternetTests.m */; };
+		BF18DC8A1BC67D340067B593 /* CARMobileAppTrackingTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF18DC891BC67D340067B593 /* CARMobileAppTrackingTagHandler.m */; };
+		BF18DC8C1BC683B50067B593 /* CARMobileAppTrackingAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF18DC8B1BC683B50067B593 /* CARMobileAppTrackingAdapter.m */; };
+		BF18DC911BC686260067B593 /* MobileAppTrackingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF18DC901BC686260067B593 /* MobileAppTrackingTests.m */; };
+		BF37DE811BC51BB50031876D /* Cargo.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DE801BC51BB50031876D /* Cargo.m */; };
+		BF37DE851BC51BCC0031876D /* CARUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DE841BC51BCC0031876D /* CARUtils.m */; };
+		BF37DEAC1BC51CC80031876D /* FIFLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DEAB1BC51CC80031876D /* FIFLogger.m */; };
 		BF37DEB41BC51FF90031876D /* CargoTest.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DEB31BC51FF90031876D /* CargoTest.m */; };
-		BF37DEB61BC51FF90031876D /* libCargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF37DD591BC512450031876D /* libCargo.a */; settings = {ASSET_TAGS = (); }; };
+		BF37DEB61BC51FF90031876D /* libCargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF37DD591BC512450031876D /* libCargo.a */; };
 		BF37DED01BC540A80031876D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DECF1BC540A80031876D /* main.m */; };
 		BF37DED31BC540A80031876D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DED21BC540A80031876D /* AppDelegate.m */; };
 		BF37DED61BC540A80031876D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DED51BC540A80031876D /* ViewController.m */; };
@@ -27,12 +29,12 @@
 		BF37DEEC1BC540A80031876D /* AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DEEB1BC540A80031876D /* AppTests.m */; };
 		BF37DEF71BC540A80031876D /* AppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DEF61BC540A80031876D /* AppUITests.m */; };
 		BF37DF041BC544F80031876D /* libCargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF37DD591BC512450031876D /* libCargo.a */; };
-		BF37DF2C1BC57B530031876D /* CARAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF201BC57B530031876D /* CARAdapter.m */; settings = {ASSET_TAGS = (); }; };
-		BF37DF2D1BC57B530031876D /* CARMacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF221BC57B530031876D /* CARMacroHandler.m */; settings = {ASSET_TAGS = (); }; };
-		BF37DF2E1BC57B530031876D /* CARTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF241BC57B530031876D /* CARTagHandler.m */; settings = {ASSET_TAGS = (); }; };
-		BF37DF301BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF291BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m */; settings = {ASSET_TAGS = (); }; };
-		BF37DF311BC57B530031876D /* CARGoogleAnalyticsTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF2B1BC57B530031876D /* CARGoogleAnalyticsTagHandler.m */; settings = {ASSET_TAGS = (); }; };
-		BF37DF341BC57B880031876D /* GoogleAnalyticsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF321BC57B790031876D /* GoogleAnalyticsTests.m */; settings = {ASSET_TAGS = (); }; };
+		BF37DF2C1BC57B530031876D /* CARAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF201BC57B530031876D /* CARAdapter.m */; };
+		BF37DF2D1BC57B530031876D /* CARMacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF221BC57B530031876D /* CARMacroHandler.m */; };
+		BF37DF2E1BC57B530031876D /* CARTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF241BC57B530031876D /* CARTagHandler.m */; };
+		BF37DF301BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF291BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m */; };
+		BF37DF311BC57B530031876D /* CARGoogleAnalyticsTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF2B1BC57B530031876D /* CARGoogleAnalyticsTagHandler.m */; };
+		BF37DF341BC57B880031876D /* GoogleAnalyticsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF321BC57B790031876D /* GoogleAnalyticsTests.m */; };
 		CC7A54C9950811C93AC64F77 /* libPods-CargoTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31CA301CC394842635AE9AE9 /* libPods-CargoTest.a */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +89,9 @@
 		72932A8825F606067371B16B /* libPods-App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		80006E9E0F1BD93666E907CB /* Pods-CargoTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CargoTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CargoTest/Pods-CargoTest.debug.xcconfig"; sourceTree = "<group>"; };
 		8EEB530E06FC762D3420EA2F /* Pods-Cargo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.release.xcconfig"; sourceTree = "<group>"; };
+		9CE17DE21BCE91E200833399 /* CARATInternetTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CARATInternetTagHandler.h; path = ATInternet/CARATInternetTagHandler.h; sourceTree = "<group>"; };
+		9CE17DE31BCE91F200833399 /* CARATInternetHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CARATInternetHandler.m; path = ATInternet/CARATInternetHandler.m; sourceTree = "<group>"; };
+		9CE17DE81BCEA05D00833399 /* ATInternetTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATInternetTests.m; sourceTree = "<group>"; };
 		AC40A7DA512F2D96CC022648 /* Pods-Cargo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.debug.xcconfig"; sourceTree = "<group>"; };
 		BF18DC881BC67D340067B593 /* CARMobileAppTrackingTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARMobileAppTrackingTagHandler.h; sourceTree = "<group>"; };
 		BF18DC891BC67D340067B593 /* CARMobileAppTrackingTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARMobileAppTrackingTagHandler.m; sourceTree = "<group>"; };
@@ -203,6 +208,23 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		9CE17DE51BCE91F700833399 /* ATInternet */ = {
+			isa = PBXGroup;
+			children = (
+				9CE17DE21BCE91E200833399 /* CARATInternetTagHandler.h */,
+				9CE17DE31BCE91F200833399 /* CARATInternetHandler.m */,
+			);
+			name = ATInternet;
+			sourceTree = "<group>";
+		};
+		9CE17DE71BCEA01200833399 /* AT */ = {
+			isa = PBXGroup;
+			children = (
+				9CE17DE81BCEA05D00833399 /* ATInternetTests.m */,
+			);
+			path = AT;
+			sourceTree = "<group>";
+		};
 		BF18DC871BC67C880067B593 /* MobileAppTracking */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,8 +297,9 @@
 		BF37DEB21BC51FF90031876D /* CargoTest */ = {
 			isa = PBXGroup;
 			children = (
-				BF18DC8F1BC686030067B593 /* MobileAppTracking */,
+				9CE17DE71BCEA01200833399 /* AT */,
 				BF37DEBC1BC520D30031876D /* GA */,
+				BF18DC8F1BC686030067B593 /* MobileAppTracking */,
 				BF37DEB31BC51FF90031876D /* CargoTest.m */,
 				BF37DEB51BC51FF90031876D /* Info.plist */,
 			);
@@ -343,6 +366,7 @@
 				BF37DF221BC57B530031876D /* CARMacroHandler.m */,
 				BF37DF231BC57B530031876D /* CARTagHandler.h */,
 				BF37DF241BC57B530031876D /* CARTagHandler.m */,
+				9CE17DE51BCE91F700833399 /* ATInternet */,
 				BF18DC871BC67C880067B593 /* MobileAppTracking */,
 				BF37DF251BC57B530031876D /* GoogleAnalytics */,
 			);
@@ -391,6 +415,7 @@
 				BF37DEAE1BC51FF90031876D /* Frameworks */,
 				BF37DEAF1BC51FF90031876D /* Resources */,
 				B16E0743D94DE33823CF4FB5 /* Copy Pods Resources */,
+				F84A58D9A9E51448F032DF57 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -411,6 +436,7 @@
 				BF37DEC91BC540A80031876D /* Frameworks */,
 				BF37DECA1BC540A80031876D /* Resources */,
 				A338A7FADBAC9182D77B22F8 /* Copy Pods Resources */,
+				8BC10B838F86CD486D7ACA6E /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -588,6 +614,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Cargo/Pods-Cargo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		8BC10B838F86CD486D7ACA6E /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-App/Pods-App-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A338A7FADBAC9182D77B22F8 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -633,6 +674,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		F84A58D9A9E51448F032DF57 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CargoTest/Pods-CargoTest-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -643,6 +699,7 @@
 				BF37DE851BC51BCC0031876D /* CARUtils.m in Sources */,
 				BF37DF2D1BC57B530031876D /* CARMacroHandler.m in Sources */,
 				BF37DF2E1BC57B530031876D /* CARTagHandler.m in Sources */,
+				9CE17DE41BCE91F200833399 /* CARATInternetHandler.m in Sources */,
 				BF37DF311BC57B530031876D /* CARGoogleAnalyticsTagHandler.m in Sources */,
 				BF18DC8C1BC683B50067B593 /* CARMobileAppTrackingAdapter.m in Sources */,
 				BF37DF301BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m in Sources */,
@@ -658,6 +715,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF18DC911BC686260067B593 /* MobileAppTrackingTests.m in Sources */,
+				9CE17DE91BCEA05D00833399 /* ATInternetTests.m in Sources */,
 				BF37DEB41BC51FF90031876D /* CargoTest.m in Sources */,
 				BF37DF341BC57B880031876D /* GoogleAnalyticsTests.m in Sources */,
 			);

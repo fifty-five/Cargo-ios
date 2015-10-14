@@ -9,14 +9,16 @@
 /* Begin PBXBuildFile section */
 		1A8C7BFB2CC8F46C95E51C50 /* libPods-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72932A8825F606067371B16B /* libPods-App.a */; };
 		6154FCF9D0E850405E251021 /* libPods-Cargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 680906E761508DD13995013D /* libPods-Cargo.a */; };
-		BF18DC8A1BC67D340067B593 /* CARMobileAppTrackingTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF18DC891BC67D340067B593 /* CARMobileAppTrackingTagHandler.m */; settings = {ASSET_TAGS = (); }; };
-		BF18DC8C1BC683B50067B593 /* CARMobileAppTrackingAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF18DC8B1BC683B50067B593 /* CARMobileAppTrackingAdapter.m */; settings = {ASSET_TAGS = (); }; };
-		BF18DC911BC686260067B593 /* MobileAppTrackingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF18DC901BC686260067B593 /* MobileAppTrackingTests.m */; settings = {ASSET_TAGS = (); }; };
-		BF37DE811BC51BB50031876D /* Cargo.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DE801BC51BB50031876D /* Cargo.m */; settings = {ASSET_TAGS = (); }; };
-		BF37DE851BC51BCC0031876D /* CARUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DE841BC51BCC0031876D /* CARUtils.m */; settings = {ASSET_TAGS = (); }; };
-		BF37DEAC1BC51CC80031876D /* FIFLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DEAB1BC51CC80031876D /* FIFLogger.m */; settings = {ASSET_TAGS = (); }; };
+		803606791BCE9191006EDA98 /* CARFacebookTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 803606781BCE9191006EDA98 /* CARFacebookTagHandler.m */; };
+		8036067D1BCE9964006EDA98 /* FacebookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8036067C1BCE9964006EDA98 /* FacebookTests.m */; };
+		BF18DC8A1BC67D340067B593 /* CARMobileAppTrackingTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF18DC891BC67D340067B593 /* CARMobileAppTrackingTagHandler.m */; };
+		BF18DC8C1BC683B50067B593 /* CARMobileAppTrackingAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF18DC8B1BC683B50067B593 /* CARMobileAppTrackingAdapter.m */; };
+		BF18DC911BC686260067B593 /* MobileAppTrackingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF18DC901BC686260067B593 /* MobileAppTrackingTests.m */; };
+		BF37DE811BC51BB50031876D /* Cargo.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DE801BC51BB50031876D /* Cargo.m */; };
+		BF37DE851BC51BCC0031876D /* CARUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DE841BC51BCC0031876D /* CARUtils.m */; };
+		BF37DEAC1BC51CC80031876D /* FIFLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DEAB1BC51CC80031876D /* FIFLogger.m */; };
 		BF37DEB41BC51FF90031876D /* CargoTest.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DEB31BC51FF90031876D /* CargoTest.m */; };
-		BF37DEB61BC51FF90031876D /* libCargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF37DD591BC512450031876D /* libCargo.a */; settings = {ASSET_TAGS = (); }; };
+		BF37DEB61BC51FF90031876D /* libCargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF37DD591BC512450031876D /* libCargo.a */; };
 		BF37DED01BC540A80031876D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DECF1BC540A80031876D /* main.m */; };
 		BF37DED31BC540A80031876D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DED21BC540A80031876D /* AppDelegate.m */; };
 		BF37DED61BC540A80031876D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DED51BC540A80031876D /* ViewController.m */; };
@@ -27,12 +29,12 @@
 		BF37DEEC1BC540A80031876D /* AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DEEB1BC540A80031876D /* AppTests.m */; };
 		BF37DEF71BC540A80031876D /* AppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DEF61BC540A80031876D /* AppUITests.m */; };
 		BF37DF041BC544F80031876D /* libCargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF37DD591BC512450031876D /* libCargo.a */; };
-		BF37DF2C1BC57B530031876D /* CARAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF201BC57B530031876D /* CARAdapter.m */; settings = {ASSET_TAGS = (); }; };
-		BF37DF2D1BC57B530031876D /* CARMacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF221BC57B530031876D /* CARMacroHandler.m */; settings = {ASSET_TAGS = (); }; };
-		BF37DF2E1BC57B530031876D /* CARTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF241BC57B530031876D /* CARTagHandler.m */; settings = {ASSET_TAGS = (); }; };
-		BF37DF301BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF291BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m */; settings = {ASSET_TAGS = (); }; };
-		BF37DF311BC57B530031876D /* CARGoogleAnalyticsTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF2B1BC57B530031876D /* CARGoogleAnalyticsTagHandler.m */; settings = {ASSET_TAGS = (); }; };
-		BF37DF341BC57B880031876D /* GoogleAnalyticsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF321BC57B790031876D /* GoogleAnalyticsTests.m */; settings = {ASSET_TAGS = (); }; };
+		BF37DF2C1BC57B530031876D /* CARAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF201BC57B530031876D /* CARAdapter.m */; };
+		BF37DF2D1BC57B530031876D /* CARMacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF221BC57B530031876D /* CARMacroHandler.m */; };
+		BF37DF2E1BC57B530031876D /* CARTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF241BC57B530031876D /* CARTagHandler.m */; };
+		BF37DF301BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF291BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m */; };
+		BF37DF311BC57B530031876D /* CARGoogleAnalyticsTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF2B1BC57B530031876D /* CARGoogleAnalyticsTagHandler.m */; };
+		BF37DF341BC57B880031876D /* GoogleAnalyticsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF321BC57B790031876D /* GoogleAnalyticsTests.m */; };
 		CC7A54C9950811C93AC64F77 /* libPods-CargoTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31CA301CC394842635AE9AE9 /* libPods-CargoTest.a */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +88,9 @@
 		680906E761508DD13995013D /* libPods-Cargo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Cargo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		72932A8825F606067371B16B /* libPods-App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		80006E9E0F1BD93666E907CB /* Pods-CargoTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CargoTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CargoTest/Pods-CargoTest.debug.xcconfig"; sourceTree = "<group>"; };
+		803606771BCE9191006EDA98 /* CARFacebookTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARFacebookTagHandler.h; sourceTree = "<group>"; };
+		803606781BCE9191006EDA98 /* CARFacebookTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARFacebookTagHandler.m; sourceTree = "<group>"; };
+		8036067C1BCE9964006EDA98 /* FacebookTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookTests.m; sourceTree = "<group>"; };
 		8EEB530E06FC762D3420EA2F /* Pods-Cargo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.release.xcconfig"; sourceTree = "<group>"; };
 		AC40A7DA512F2D96CC022648 /* Pods-Cargo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.debug.xcconfig"; sourceTree = "<group>"; };
 		BF18DC881BC67D340067B593 /* CARMobileAppTrackingTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARMobileAppTrackingTagHandler.h; sourceTree = "<group>"; };
@@ -190,6 +195,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		803606761BCE9191006EDA98 /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+				803606771BCE9191006EDA98 /* CARFacebookTagHandler.h */,
+				803606781BCE9191006EDA98 /* CARFacebookTagHandler.m */,
+			);
+			path = Facebook;
+			sourceTree = "<group>";
+		};
+		8036067B1BCE9964006EDA98 /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+				8036067C1BCE9964006EDA98 /* FacebookTests.m */,
+			);
+			path = Facebook;
+			sourceTree = "<group>";
+		};
 		94286D1F6E02148CFAB1F627 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,6 +297,7 @@
 		BF37DEB21BC51FF90031876D /* CargoTest */ = {
 			isa = PBXGroup;
 			children = (
+				8036067B1BCE9964006EDA98 /* Facebook */,
 				BF18DC8F1BC686030067B593 /* MobileAppTracking */,
 				BF37DEBC1BC520D30031876D /* GA */,
 				BF37DEB31BC51FF90031876D /* CargoTest.m */,
@@ -337,6 +360,7 @@
 		BF37DF1E1BC57B530031876D /* Handlers */ = {
 			isa = PBXGroup;
 			children = (
+				803606761BCE9191006EDA98 /* Facebook */,
 				BF37DF1F1BC57B530031876D /* CARAdapter.h */,
 				BF37DF201BC57B530031876D /* CARAdapter.m */,
 				BF37DF211BC57B530031876D /* CARMacroHandler.h */,
@@ -648,6 +672,7 @@
 				BF37DF301BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m in Sources */,
 				BF18DC8A1BC67D340067B593 /* CARMobileAppTrackingTagHandler.m in Sources */,
 				BF37DE811BC51BB50031876D /* Cargo.m in Sources */,
+				803606791BCE9191006EDA98 /* CARFacebookTagHandler.m in Sources */,
 				BF37DF2C1BC57B530031876D /* CARAdapter.m in Sources */,
 				BF37DEAC1BC51CC80031876D /* FIFLogger.m in Sources */,
 			);
@@ -660,6 +685,7 @@
 				BF18DC911BC686260067B593 /* MobileAppTrackingTests.m in Sources */,
 				BF37DEB41BC51FF90031876D /* CargoTest.m in Sources */,
 				BF37DF341BC57B880031876D /* GoogleAnalyticsTests.m in Sources */,
+				8036067D1BCE9964006EDA98 /* FacebookTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

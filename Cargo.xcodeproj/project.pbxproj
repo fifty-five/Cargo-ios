@@ -352,11 +352,11 @@
 		BF37DF1E1BC57B530031876D /* Handlers */ = {
 			isa = PBXGroup;
 			children = (
-				803606761BCE9191006EDA98 /* Facebook */,
 				BF37DF211BC57B530031876D /* CARMacroHandler.h */,
 				BF37DF221BC57B530031876D /* CARMacroHandler.m */,
 				BF37DF231BC57B530031876D /* CARTagHandler.h */,
 				BF37DF241BC57B530031876D /* CARTagHandler.m */,
+				803606761BCE9191006EDA98 /* Facebook */,
 				BF18DC871BC67C880067B593 /* MobileAppTracking */,
 				BF37DF251BC57B530031876D /* GoogleAnalytics */,
 			);

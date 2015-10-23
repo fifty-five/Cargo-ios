@@ -17,10 +17,21 @@ function _cargo_test(){
     (cd `dirname $0`/..; xctool -workspace Cargo.xcworkspace -scheme Cargo build test -sdk iphonesimulator)
 }
 
+
+function _cargo_push(){
+    echo "Push from current branch"
+    (cd `dirname $0`/..;git push origin)
+}
+
 case "$1" in
     test)
         _cargo_install_pod
         _cargo_test
+    ;;
+    push)
+        _cargo_install_pod
+        _cargo_test
+        _cargo_push
     ;;
     *)
         _cargo_usage

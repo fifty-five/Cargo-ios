@@ -9,7 +9,6 @@
 #import "CARMobileAppTrackingTagHandler.h"
 #import "CARScreen.h"
 
-
 @implementation CARMobileAppTrackingTagHandler
 
 

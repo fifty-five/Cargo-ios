@@ -5,3 +5,6 @@ xcode_scheme: Cargo
 
 script:
   - xctool -workspace Cargo.xcworkspace -scheme Cargo build test -sdk iphonesimulator
+
+notifications:
+  slack: cargo55:oT6MdyRm7WZzNe51cLdbsVo7

@@ -7,7 +7,8 @@
 //
 
 #import "CARMobileAppTrackingTagHandler.h"
-#import "CARScreen.h"
+#import "CARUser.h"
+#import "CARModelScreen.h"
 
 @implementation CARMobileAppTrackingTagHandler
 
@@ -88,7 +89,7 @@
 
 
 - (void)tagScreen:(NSDictionary *)parameters {
-    CARScreen *screen = [[CARScreen alloc] init];
+    CARModelScreen *screen = [[CARModelScreen alloc] init];
     [screen setValuesForKeysWithDictionary:parameters];
     
     TuneEventItem *item1 = [TuneEventItem eventItemWithName:[screen screenName] unitPrice:0 quantity:0];

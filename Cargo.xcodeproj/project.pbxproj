@@ -33,7 +33,7 @@
 		BF37DF301BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF291BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m */; };
 		BF37DF311BC57B530031876D /* CARGoogleAnalyticsTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF2B1BC57B530031876D /* CARGoogleAnalyticsTagHandler.m */; };
 		BF37DF341BC57B880031876D /* GoogleAnalyticsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF321BC57B790031876D /* GoogleAnalyticsTests.m */; };
-		BFAB2F781BECF07400BF532A /* CARScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAB2F771BECF07400BF532A /* CARScreen.m */; settings = {ASSET_TAGS = (); }; };
+		BF8372151BED1C07007406EA /* CARModelScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8372141BED1C07007406EA /* CARModelScreen.m */; settings = {ASSET_TAGS = (); }; };
 		CC7A54C9950811C93AC64F77 /* libPods-CargoTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31CA301CC394842635AE9AE9 /* libPods-CargoTest.a */; };
 /* End PBXBuildFile section */
 
@@ -133,13 +133,13 @@
 		BF37DF2A1BC57B530031876D /* CARGoogleAnalyticsTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARGoogleAnalyticsTagHandler.h; sourceTree = "<group>"; };
 		BF37DF2B1BC57B530031876D /* CARGoogleAnalyticsTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARGoogleAnalyticsTagHandler.m; sourceTree = "<group>"; };
 		BF37DF321BC57B790031876D /* GoogleAnalyticsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleAnalyticsTests.m; sourceTree = "<group>"; };
+		BF8372131BED1C07007406EA /* CARModelScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARModelScreen.h; sourceTree = "<group>"; };
+		BF8372141BED1C07007406EA /* CARModelScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARModelScreen.m; sourceTree = "<group>"; };
 		BFAB2F701BECDDC000BF532A /* CARUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CARUser.h; sourceTree = "<group>"; };
 		BFAB2F711BECDF3E00BF532A /* CARTransaction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CARTransaction.h; sourceTree = "<group>"; };
 		BFAB2F721BECE61300BF532A /* CARTransactionProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARTransactionProduct.h; sourceTree = "<group>"; };
 		BFAB2F741BECE95600BF532A /* CAREvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAREvent.h; sourceTree = "<group>"; };
-		BFAB2F751BECE95600BF532A /* CARScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CARScreen.h; path = "/Users/louis/Documents/Product/Cargo-ios/Cargo/Models/CARScreen.h"; sourceTree = "<absolute>"; };
 		BFAB2F761BECE95600BF532A /* CARTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARTracker.h; sourceTree = "<group>"; };
-		BFAB2F771BECF07400BF532A /* CARScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARScreen.m; sourceTree = "<group>"; };
 		D599E70A993DAF60C839B10D /* Pods-CargoTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CargoTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-CargoTest/Pods-CargoTest.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -387,12 +387,12 @@
 			isa = PBXGroup;
 			children = (
 				BFAB2F741BECE95600BF532A /* CAREvent.h */,
-				BFAB2F751BECE95600BF532A /* CARScreen.h */,
-				BFAB2F771BECF07400BF532A /* CARScreen.m */,
 				BFAB2F761BECE95600BF532A /* CARTracker.h */,
 				BFAB2F701BECDDC000BF532A /* CARUser.h */,
 				BFAB2F711BECDF3E00BF532A /* CARTransaction.h */,
 				BFAB2F721BECE61300BF532A /* CARTransactionProduct.h */,
+				BF8372131BED1C07007406EA /* CARModelScreen.h */,
+				BF8372141BED1C07007406EA /* CARModelScreen.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -677,7 +677,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFAB2F781BECF07400BF532A /* CARScreen.m in Sources */,
+				BF8372151BED1C07007406EA /* CARModelScreen.m in Sources */,
 				BF37DE851BC51BCC0031876D /* CARUtils.m in Sources */,
 				BF37DF2D1BC57B530031876D /* CARMacroHandler.m in Sources */,
 				BF37DF2E1BC57B530031876D /* CARTagHandler.m in Sources */,

@@ -66,5 +66,13 @@
     
 }
 
+-(void) testScreenName {
+    NSDictionary * dict = [[NSDictionary alloc ]
+                           initWithObjectsAndKeys:@"A screen",@"screenName", nil];
+
+    
+    [_handler execute:@"MAT_tagScreen" parameters:dict];
+    [verifyCount(_tuneClassMock, times(1)) measureEvent:anything()];
+}
 
 @end

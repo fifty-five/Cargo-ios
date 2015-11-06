@@ -7,7 +7,7 @@
 //
 
 #import "CARMobileAppTrackingTagHandler.h"
-
+#import "CARScreen.h"
 
 
 @implementation CARMobileAppTrackingTagHandler
@@ -17,6 +17,9 @@
 +(void)load{
     CARMobileAppTrackingTagHandler *handler = [[CARMobileAppTrackingTagHandler alloc] init];
     [Cargo registerTagHandler:handler withKey:@"MAT_init"];
+    [Cargo registerTagHandler:handler withKey:@"MAT_tagEvent"];
+    [Cargo registerTagHandler:handler withKey:@"MAT_tagScreen"];
+    [Cargo registerTagHandler:handler withKey:@"MAT_identify"];
 }
 
 
@@ -25,7 +28,10 @@
     [super execute:tagName parameters:parameters];
     if([tagName isEqualToString:@"MAT_init"]){
         [self init:parameters];
+    } else if([tagName isEqualToString:@"MAT_tagScreen"]){
+        [self tagScreen:parameters];
     }
+        
 
 }
 
@@ -76,11 +82,25 @@
 
 
 
-
 - (void)set:(NSDictionary *)parameters {
     
     
 }
+
+
+- (void)tagScreen:(NSDictionary *)parameters {
+    CARScreen *screen = [[CARScreen alloc] init];
+    [screen setValuesForKeysWithDictionary:parameters];
+    
+    TuneEventItem *item1 = [TuneEventItem eventItemWithName:[screen screenName] unitPrice:0 quantity:0];
+    NSArray *eventItems = @[item1];
+    TuneEvent *event = [TuneEvent eventWithName:TUNE_EVENT_CONTENT_VIEW];
+    event.eventItems = eventItems;
+
+    [self.tuneClass measureEvent:event];
+    
+}
+
 
 
 

@@ -40,8 +40,8 @@ Pod::Spec.new do |s|
   # s.dependency 'AFNetworking', '~> 2.3'
 
   s.subspec 'Cargo-iOS' do |ss|
-    ss.public_header_files = ['Cargo/*.h', 'Cargo/Logger/*.h']
-    ss.source_files = ['Cargo/*.{h,m}', 'Cargo/Logger/*.{h,m}']
+    ss.public_header_files = ['Cargo/*.h', 'Cargo/Models/*.h']
+    ss.source_files = ['Cargo/*.{h,m}', 'Cargo/Logger/*.{h,m}', 'Cargo/Models/*.{h,m}']
     ss.platform = :ios, '7.0'
     s.xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => "CARGO_VERSION=#{s.version}" }
     s.dependency 'GoogleTagManager', '3.12.1'

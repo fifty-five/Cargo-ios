@@ -10,7 +10,7 @@
 
 #import "GAIFields.h"
 #import "FIFLogger.h"
-
+#import "CARConstants.h"
 
 @implementation CARGoogleAnalyticsMacroHandler
 
@@ -38,7 +38,7 @@
 
 #pragma mark - GTMFunctionMacroCallBack
 - (id)valueForMacro:(NSString *)functionName parameters:(NSDictionary *)parameters {
-    if ([functionName isEqualToString:@"userGoogleId"]) {
+    if ([functionName isEqualToString:USER_GOOGLE_ID]) {
         TAGManager *tagManager = [[Cargo sharedHelper] tagManager];
         if (tagManager) {
             // Fetch the Google Id

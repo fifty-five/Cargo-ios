@@ -43,3 +43,37 @@ Once GTM is installed, Cargo set up is one line.
 [[Cargo sharedHelper] setLaunchOptions:launchOptions];
 [[Cargo sharedHelper] registerHandlers];
 ```
+
+
+## Universal DataLayer
+
+Cargo used an universal DataLayer that fits all tools. Do worry about refactor your tracking again.
+Here are a list of dataLayer constants used
+
+#### Tracker DataLayer
+
+| Name            | Definittion   |
+|----------       |:-------------|
+| **Tracker DataLayer** |
+| enableDebug     |  Enable debug mode for your tracker |
+| enableOptOut    |  Opt-out tracking for a specific customer |
+| disableTracking |  Disable all tracking |
+| dispatchPeriod   |  Define an interval of time to dispatch hits |
+| **Screen DataLayer** |
+| screenName     |  Name of the screen |
+| **Event DataLayer** |
+| eventName     |  Name of the event |
+| **User DataLayer** |
+| userGoogleId     |  Google Id of the user |
+| userFacebookId     |  Facebook Id of the user |
+| userId     |  CRM Id of the user |
+| **Transaction DataLayer** |
+| transactionId       |  A unique Id of the transaction |
+| transactionTotal    |  Total amount of the transaction |
+| transactionProducts |  An array of products in the transaction |
+| **Product DataLayer** |
+| name                |  Name of the product |
+| sku                 | Sku of the product |
+| price               |  Price of the product |
+| category            |  Category of the product |
+| quantity            |  Quantity of the product |

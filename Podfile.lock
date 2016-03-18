@@ -1,4 +1,5 @@
 PODS:
+  - Accengage-iOS-SDK@iOS-stars (5.4.0)
   - Bolts (1.6.0):
     - Bolts/AppLinks (= 1.6.0)
     - Bolts/Tasks (= 1.6.0)
@@ -16,6 +17,7 @@ PODS:
     - OCHamcrest (~> 4.0)
 
 DEPENDENCIES:
+  - Accengage-iOS-SDK@iOS-stars (= 5.4.0)
   - FBSDKCoreKit (= 4.9.0)
   - GoogleAnalytics (= 3.13.0)
   - GoogleTagManager (= 3.12.1)
@@ -23,6 +25,7 @@ DEPENDENCIES:
   - OCMockito (~> 1.0)
 
 SPEC CHECKSUMS:
+  Accengage-iOS-SDK@iOS-stars: f6c80e3989283ebfb13a5044a5cf88cacbd9a452
   Bolts: f52a250053bb517ca874523c3913776359ab3def
   FBSDKCoreKit: c4f25d27949a6ac80206063804d12ad1c7879612
   GoogleAnalytics: fcf1f1cad57ae1a9a53520018f0f680ceeeb8b49

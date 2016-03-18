@@ -16,11 +16,13 @@ NSString *const ENABLE_OPTOUT = @"enableOptOut";
 NSString *const DISABLE_TRACKING = @"disableTracking";
 NSString *const DISPATCH_PERIOD = @"dispatchPeriod";
 
+
 #pragma screen
 NSString *const SCREEN_NAME = @"screenName";
 
 #pragma event
 NSString *const EVENT_NAME = @"eventName";
+NSString *const EVENT_VALUE = @"eventValue";
 
 #pragma user
 NSString *const USER_GOOGLE_ID = @"userGoogleId";

@@ -7,7 +7,10 @@
 //
 
 #import "CARTagHandler.h"
+#import "BMA4SSDK.h"
 
 @interface CARAccengageTagHandler : CARTagHandler
+
+@property Class tracker;
 
 @end

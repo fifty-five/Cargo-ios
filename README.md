@@ -63,6 +63,7 @@ Here are a list of dataLayer constants used
 | screenName     |  Name of the screen |
 | **Event DataLayer** |
 | eventName     |  Name of the event |
+| eventValue     |  Value for the event |
 | **User DataLayer** |
 | userGoogleId     |  Google Id of the user |
 | userFacebookId     |  Facebook Id of the user |

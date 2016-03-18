@@ -26,6 +26,15 @@
           "version" : "4.9.0"
         }
       ]
+    },
+    {
+      "name":"Accengage",
+      "dependencies":[
+        {
+          "name": "Accengage-iOS-SDK@iOS-stars",
+          "version" : "5.4.0"
+        }
+      ]
     }
   ]
 

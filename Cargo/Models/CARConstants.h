@@ -21,6 +21,7 @@ extern NSString *const SCREEN_NAME;
 
 #pragma events
 extern NSString *const EVENT_NAME;
+extern NSString *const EVENT_VALUE;
 
 #pragma user
 extern NSString *const USER_GOOGLE_ID;

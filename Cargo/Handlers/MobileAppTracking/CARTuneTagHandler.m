@@ -29,8 +29,13 @@
         [self init:parameters];
     } else if([tagName isEqualToString:@"Tune_tagScreen"]){
         [self tagScreen:parameters];
+    } else if([tagName isEqualToString:@"Tune_identify"]){
+        [self identify:parameters];
+    }else if([tagName isEqualToString:@"Tune_tagEvent"]){
+        [self tagEvent:parameters];
     }
-        
+
+    
 
 }
 
@@ -78,7 +83,16 @@
     
 }
 
+-(void) identify:(NSDictionary*) parameters{
+    [Tune setUserId:[parameters valueForKey:USER_ID]];
+    [Tune setFacebookUserId:[parameters valueForKey:USER_FACEBOOK_ID]];
+    [Tune setGoogleUserId:[parameters valueForKey:USER_GOOGLE_ID]];
+}
 
+-(void) tagEvent:(NSDictionary*) parameters{
+    TuneEvent *event = [TuneEvent eventWithName:[parameters valueForKey:EVENT_NAME]];
+    [Tune measureEvent:event];
+}
 
 
 - (void)set:(NSDictionary *)parameters {

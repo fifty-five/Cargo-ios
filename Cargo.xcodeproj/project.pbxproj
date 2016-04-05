@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0F1174161C9C3F24006C4F3B /* CARAccengageTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1174151C9C3F24006C4F3B /* CARAccengageTagHandler.m */; };
 		0F11741A1C9C46B3006C4F3B /* AccengageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1174191C9C46B3006C4F3B /* AccengageTests.m */; };
 		1A8C7BFB2CC8F46C95E51C50 /* libPods-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72932A8825F606067371B16B /* libPods-App.a */; };
 		6154FCF9D0E850405E251021 /* libPods-Cargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 680906E761508DD13995013D /* libPods-Cargo.a */; };
@@ -83,8 +82,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0F1174141C9C3F24006C4F3B /* CARAccengageTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARAccengageTagHandler.h; sourceTree = "<group>"; };
-		0F1174151C9C3F24006C4F3B /* CARAccengageTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARAccengageTagHandler.m; sourceTree = "<group>"; };
 		0F1174191C9C46B3006C4F3B /* AccengageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccengageTests.m; sourceTree = "<group>"; };
 		31CA301CC394842635AE9AE9 /* libPods-CargoTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CargoTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DE4C4DAF4703D2A53FCEE5F /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
@@ -186,15 +183,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0F1174131C9C3EDA006C4F3B /* Accengage */ = {
-			isa = PBXGroup;
-			children = (
-				0F1174141C9C3F24006C4F3B /* CARAccengageTagHandler.h */,
-				0F1174151C9C3F24006C4F3B /* CARAccengageTagHandler.m */,
-			);
-			path = Accengage;
-			sourceTree = "<group>";
-		};
 		0F1174181C9C469C006C4F3B /* Accengage */ = {
 			isa = PBXGroup;
 			children = (
@@ -377,7 +365,6 @@
 		BF37DF1E1BC57B530031876D /* Handlers */ = {
 			isa = PBXGroup;
 			children = (
-				0F1174131C9C3EDA006C4F3B /* Accengage */,
 				BF37DF211BC57B530031876D /* CARMacroHandler.h */,
 				BF37DF221BC57B530031876D /* CARMacroHandler.m */,
 				BF37DF231BC57B530031876D /* CARTagHandler.h */,
@@ -727,7 +714,6 @@
 				BF37DF2E1BC57B530031876D /* CARTagHandler.m in Sources */,
 				BF37DF311BC57B530031876D /* CARGoogleAnalyticsTagHandler.m in Sources */,
 				BF37DF301BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m in Sources */,
-				0F1174161C9C3F24006C4F3B /* CARAccengageTagHandler.m in Sources */,
 				BF18DC8A1BC67D340067B593 /* CARMobileAppTrackingTagHandler.m in Sources */,
 				BF37DE811BC51BB50031876D /* Cargo.m in Sources */,
 				803606791BCE9191006EDA98 /* CARFacebookTagHandler.m in Sources */,

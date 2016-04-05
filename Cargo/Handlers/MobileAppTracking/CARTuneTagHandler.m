@@ -1,33 +1,33 @@
 //
-//  CARMobileAppTrackingTagHandler.m
+//  CARTuneTagHandler.m
 //  Cargo
 //
 //  Created by louis chavane on 08/10/15.
 //  Copyright © 2015 55 SAS. All rights reserved.
 //
 
-#import "CARMobileAppTrackingTagHandler.h"
+#import "CARTuneTagHandler.h"
 #import "CARConstants.h"
 
-@implementation CARMobileAppTrackingTagHandler
+@implementation CARTuneTagHandler
 
 
 
 +(void)load{
-    CARMobileAppTrackingTagHandler *handler = [[CARMobileAppTrackingTagHandler alloc] init];
-    [Cargo registerTagHandler:handler withKey:@"MAT_init"];
-    [Cargo registerTagHandler:handler withKey:@"MAT_tagEvent"];
-    [Cargo registerTagHandler:handler withKey:@"MAT_tagScreen"];
-    [Cargo registerTagHandler:handler withKey:@"MAT_identify"];
+    CARTuneTagHandler *handler = [[CARTuneTagHandler alloc] init];
+    [Cargo registerTagHandler:handler withKey:@"Tune_init"];
+    [Cargo registerTagHandler:handler withKey:@"Tune_tagEvent"];
+    [Cargo registerTagHandler:handler withKey:@"Tune_tagScreen"];
+    [Cargo registerTagHandler:handler withKey:@"Tune_identify"];
 }
 
 
 
 -(void) execute:(NSString *)tagName parameters:(NSDictionary *)parameters{
     [super execute:tagName parameters:parameters];
-    if([tagName isEqualToString:@"MAT_init"]){
+    if([tagName isEqualToString:@"Tune_init"]){
         [self init:parameters];
-    } else if([tagName isEqualToString:@"MAT_tagScreen"]){
+    } else if([tagName isEqualToString:@"Tune_tagScreen"]){
         [self tagScreen:parameters];
     }
         
@@ -38,8 +38,8 @@
 - (id)init
 {
     if (self = [super init]) {
-        self.key = @"MAT";
-        self.name = @"Mobile App Tracking";
+        self.key = @"Tune";
+        self.name = @"Tune";
         self.valid = NO;
         self.initialized = NO;
         self.tuneClass = [Tune class];

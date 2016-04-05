@@ -1,5 +1,5 @@
 //
-//  CARMobileAppTrackingTagHandler.h
+//  CARTuneTagHandler.h
 //  Cargo
 //
 //  Created by louis chavane on 08/10/15.
@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "CARTagHandler.h"
-#import <MobileAppTracker/MobileAppTracker.h>
+#import <Tune/Tune.h>
 
 
 
-@interface CARMobileAppTrackingTagHandler : CARTagHandler
+@interface CARTuneTagHandler : CARTagHandler
 
 @property Class tuneClass;
 

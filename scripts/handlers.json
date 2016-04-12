@@ -10,11 +10,20 @@
       ]
     },
     {
-      "name":"MobileAppTracking",
+      "name":"Tune",
       "dependencies":[
         {
-          "name": "MobileAppTracker",
-          "version" : "3.13.0"
+          "name": "Tune",
+          "version" : "4.1.0"
+        }
+      ]
+    },
+    {
+      "name":"Facebook",
+      "dependencies":[
+        {
+          "name": "FBSDKCoreKit",
+          "version" : "4.10.1"
         }
       ]
     },

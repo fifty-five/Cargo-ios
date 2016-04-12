@@ -61,9 +61,9 @@ void FIFLog(TAGLoggerLogLevelType intentLevel,
 - (void)setLevel:(TAGLoggerLogLevelType)logLevel {
     level = logLevel;
     if (level == kTAGLoggerLogLevelVerbose &&
-        [context isEqualToString:@"FIFTagHandler"]) {
+        [context isEqualToString:@"Cargo"]) {
         FIFLog(kTAGLoggerLogLevelWarning,
-              @"FIFTagHandler Verbose Mode Enabled."
+              @"Cargo Verbose Mode Enabled."
               " Use only when debugging. Do not release with this enabled");
     }
 }

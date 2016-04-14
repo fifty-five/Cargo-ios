@@ -10,12 +10,15 @@
 
 
 #import "CARTagHandler.h"
-#import "ATInternet.h"
+#import <UIKit/UIKit.h>
+#import <ATInternet.h>
+#import <ATScreen.h>
+#import <ATCustomObject.h>
 
 
 
 /**
- *  The class handle all interaction and event calls shipped to Google Analytics.
+ *  The class handle all interaction and event calls shipped to AT Internet.
  */
 @interface CARATInternetTagHandler : CARTagHandler
 

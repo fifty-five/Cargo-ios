@@ -7,6 +7,7 @@
 //
 
 #import "CARATInternetTagHandler.h"
+#import "CARConstants.h"
 
 #import "FIFLogger.h"
 
@@ -22,8 +23,9 @@
 
 +(void)load{
     CARATInternetTagHandler *handler = [[CARATInternetTagHandler alloc] init];
-    
     [Cargo registerTagHandler:handler withKey:@"AT_init"];
+    [Cargo registerTagHandler:handler withKey:@"AT_identify"];
+    [Cargo registerTagHandler:handler withKey: @"AT_tagScreen"];
 }
 
 
@@ -33,6 +35,12 @@
 
     if ([tagName isEqualToString:@"AT_init"]){
         [self init:parameters];
+    }
+    else if ([tagName isEqualToString:@"AT_tagScreen"]){
+        [self tagScreen:parameters];
+    }
+    else if ([tagName isEqualToString:@"AT_identify"]){
+        [self identify:parameters];
     }
 }
 
@@ -58,12 +66,12 @@
 }
 
 -(void)init:(NSDictionary*)parameters{
-    NSString* domain = [parameters objectForKey:@"domain"];
+    NSString* domain = [parameters valueForKey:@"domain"];
     if(domain){
         [self.tracker setConfig:@"domain" value:domain completionHandler:nil];
     }
     
-    NSString* siteId = [parameters objectForKey:@"siteId"];
+    NSString* siteId = [parameters valueForKey:@"siteId"];
     if (siteId) {
         [self.tracker setConfig:@"siteId" value:siteId completionHandler:nil];
     
@@ -73,6 +81,31 @@
 }
 
 
+- (void)tagScreen:(NSDictionary*)parameters{
+    
+    NSString* screenName = [parameters valueForKey:SCREEN_NAME];
+    
+    if ([parameters valueForKey:CUSTOM_DIM1] && [parameters valueForKey:CUSTOM_DIM2]){
+        NSString *customDim1 = [parameters valueForKey:CUSTOM_DIM1];
+        NSString *customDim2 = [parameters valueForKey:CUSTOM_DIM2];
+        
+        [self.tracker.customObjects addWithDictionary:@{CUSTOM_DIM1: customDim1, CUSTOM_DIM2: customDim2}];
+    }
+
+    ATScreen *screen = [self.tracker.screens addWithName:screenName];
+    screen.level2 = (int)[[parameters valueForKey:LEVEL2] integerValue];
+    [screen sendView];
+}
+
+
+- (void)identify:(NSDictionary*)parameters{
+  
+    if ([parameters valueForKey:USER_ID]){
+        [self.tracker setConfig:USER_ID value:[parameters valueForKey:USER_ID] completionHandler:nil];
+        return;
+    }
+    NSLog(@"Missing USER_ID parameter in AT_identify");
+}
 
 
 @end

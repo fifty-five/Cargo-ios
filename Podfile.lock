@@ -13,9 +13,9 @@ PODS:
   - GoogleAnalytics (3.13.0)
   - GoogleTagManager (3.12.1):
     - GoogleAnalytics (~> 3.13.0)
-  - OCHamcrest (4.3.0)
-  - OCMockito (1.4.0):
-    - OCHamcrest (~> 4.0)
+  - OCHamcrest (5.2.0)
+  - OCMockito (3.0.1):
+    - OCHamcrest (~> 5.1)
   - Tune (4.1.0)
 
 DEPENDENCIES:
@@ -23,7 +23,7 @@ DEPENDENCIES:
   - FBSDKCoreKit (= 4.10.1)
   - GoogleAnalytics (= 3.13.0)
   - GoogleTagManager (= 3.12.1)
-  - OCMockito (~> 1.0)
+  - OCMockito (~> 3.0)
   - Tune (= 4.1.0)
 
 SPEC CHECKSUMS:
@@ -32,8 +32,8 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: d2aaed5e9ab7d8d6301c533376a1fbff1cf3deb5
   GoogleAnalytics: fcf1f1cad57ae1a9a53520018f0f680ceeeb8b49
   GoogleTagManager: d93ce3ea323b5989f07c7cf24a59e69ed36841b6
-  OCHamcrest: cd63d27f48a266d4412c0b295b01b8f0940efa81
-  OCMockito: 4981140c9a9ec06c31af40f636e3c0f25f27e6b2
+  OCHamcrest: 218dc4022a5e928a275771da70c5dbea9f859287
+  OCMockito: 9eee3c61e42f7cb8aa015d66f8cc16849701d973
   Tune: 5f57aa437d29fd9a94f83283457c1f867cf4cec1
 
 COCOAPODS: 0.39.0

@@ -15,6 +15,9 @@ extern NSString *const ENABLE_DEBUG;
 extern NSString *const DISPATCH_PERIOD;
 extern NSString *const ENABLE_OPTOUT;
 extern NSString *const DISABLE_TRACKING;
+extern NSString *const LEVEL2;
+extern NSString *const CUSTOM_DIM1;
+extern NSString *const CUSTOM_DIM2;
 
 #pragma screen
 extern NSString *const SCREEN_NAME;

@@ -26,6 +26,7 @@ NSString *const SCREEN_NAME = @"screenName";
 #pragma event
 NSString *const EVENT_NAME = @"eventName";
 NSString *const EVENT_VALUE = @"eventValue";
+NSString *const EVENT_TYPE = @"eventType";
 
 #pragma user
 NSString *const USER_GOOGLE_ID = @"userGoogleId";

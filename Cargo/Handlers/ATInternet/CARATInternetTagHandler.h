@@ -13,6 +13,7 @@
 #import <UIKit/UIKit.h>
 #import <ATInternet.h>
 #import <ATScreen.h>
+#import <ATGesture.h>
 #import <ATCustomObject.h>
 
 

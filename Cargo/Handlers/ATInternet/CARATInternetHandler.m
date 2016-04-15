@@ -42,6 +42,9 @@
     else if ([tagName isEqualToString:@"AT_identify"]){
         [self identify:parameters];
     }
+    else if ([tagName isEqualToString:@"AT_tagEvent"]){
+        [self tagEvent:parameters];
+    }
 }
 
 
@@ -97,14 +100,56 @@
     [screen sendView];
 }
 
-
 - (void)identify:(NSDictionary*)parameters{
   
     if ([parameters valueForKey:USER_ID]){
         [self.tracker setConfig:USER_ID value:[parameters valueForKey:USER_ID] completionHandler:nil];
         return;
     }
-    NSLog(@"Missing USER_ID parameter in AT_identify");
+    NSLog(@"CARGO_ATInternet_identify: missing USER_ID (UUID) parameter. USER_ID hasn't been set");
+}
+
+
+- (void)tagEvent:(NSDictionary*)parameters{
+    
+    NSString* tagName = [parameters valueForKey:EVENT_NAME];
+    NSString* tagValue = [parameters valueForKey:EVENT_TYPE];
+    
+    ATGesture *gesture = [self.tracker.gestures addWithName:tagName];
+    
+    if ([parameters valueForKey:@"chapter1"]){
+        
+        [gesture setChapter1:[parameters valueForKey:@"chapter1"]];
+        if ([parameters valueForKey:@"chapter2"]){
+            
+            [gesture setChapter2: [parameters valueForKey:@"chapter2"]];
+            if ([parameters valueForKey:@"chapter3"]){
+                
+                [gesture setChapter3: [parameters valueForKey:@"chapter3"]];
+            }
+        }
+    }
+    
+    gesture.level2 = (int)[[parameters valueForKey:LEVEL2] integerValue];
+    
+    if ([tagValue isEqualToString:@"sendTouch"]) {
+        [gesture sendTouch];
+    }
+    else if ([tagValue isEqualToString:@"sendNavigation"]){
+        [gesture sendNavigation];
+    }
+    else if ([tagValue isEqualToString:@"sendDownload"]){
+        [gesture sendDownload];
+    }
+    else if ([tagValue isEqualToString:@"sendExit"]){
+        [gesture sendExit];
+    }
+    else if ([tagValue isEqualToString:@"sendSearch"]){
+        [gesture sendSearch];
+    }
+    else{
+        NSLog(@"CARGO_ATInternet_tagEvent: no EVENT_TYPE provided. Event hasn't been sent.");
+    }
 }
 
 

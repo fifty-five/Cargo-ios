@@ -25,7 +25,8 @@
     CARATInternetTagHandler *handler = [[CARATInternetTagHandler alloc] init];
     [Cargo registerTagHandler:handler withKey:@"AT_init"];
     [Cargo registerTagHandler:handler withKey:@"AT_identify"];
-    [Cargo registerTagHandler:handler withKey: @"AT_tagScreen"];
+    [Cargo registerTagHandler:handler withKey:@"AT_tagScreen"];
+    [Cargo registerTagHandler:handler withKey:@"AT_tagEvent"];
 }
 
 

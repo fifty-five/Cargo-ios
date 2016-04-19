@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1A8C7BFB2CC8F46C95E51C50 /* libPods-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72932A8825F606067371B16B /* libPods-App.a */; };
 		6154FCF9D0E850405E251021 /* libPods-Cargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 680906E761508DD13995013D /* libPods-Cargo.a */; };
+		9CE17DE41BCE91F200833399 /* CARATInternetHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE17DE31BCE91F200833399 /* CARATInternetHandler.m */; };
+		9CE17DE91BCEA05D00833399 /* ATInternetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE17DE81BCEA05D00833399 /* ATInternetTests.m */; };
 		803606791BCE9191006EDA98 /* CARFacebookTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 803606781BCE9191006EDA98 /* CARFacebookTagHandler.m */; };
 		8036067D1BCE9964006EDA98 /* FacebookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8036067C1BCE9964006EDA98 /* FacebookTests.m */; };
 		BF18DC8A1BC67D340067B593 /* CARTuneTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF18DC891BC67D340067B593 /* CARTuneTagHandler.m */; };
@@ -29,6 +31,7 @@
 		BF37DEEC1BC540A80031876D /* AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DEEB1BC540A80031876D /* AppTests.m */; };
 		BF37DEF71BC540A80031876D /* AppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DEF61BC540A80031876D /* AppUITests.m */; };
 		BF37DF041BC544F80031876D /* libCargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF37DD591BC512450031876D /* libCargo.a */; };
+		BF37DF2C1BC57B530031876D /* CARAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF201BC57B530031876D /* CARAdapter.m */; };
 		BF37DF2D1BC57B530031876D /* CARMacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF221BC57B530031876D /* CARMacroHandler.m */; };
 		BF37DF2E1BC57B530031876D /* CARTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF241BC57B530031876D /* CARTagHandler.m */; };
 		BF37DF301BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF291BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m */; };
@@ -91,6 +94,9 @@
 		803606781BCE9191006EDA98 /* CARFacebookTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARFacebookTagHandler.m; sourceTree = "<group>"; };
 		8036067C1BCE9964006EDA98 /* FacebookTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookTests.m; sourceTree = "<group>"; };
 		8EEB530E06FC762D3420EA2F /* Pods-Cargo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.release.xcconfig"; sourceTree = "<group>"; };
+		9CE17DE21BCE91E200833399 /* CARATInternetTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CARATInternetTagHandler.h; path = ATInternet/CARATInternetTagHandler.h; sourceTree = "<group>"; };
+		9CE17DE31BCE91F200833399 /* CARATInternetHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CARATInternetHandler.m; path = ATInternet/CARATInternetHandler.m; sourceTree = "<group>"; };
+		9CE17DE81BCEA05D00833399 /* ATInternetTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATInternetTests.m; sourceTree = "<group>"; };
 		AC40A7DA512F2D96CC022648 /* Pods-Cargo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.debug.xcconfig"; sourceTree = "<group>"; };
 		BF18DC881BC67D340067B593 /* CARTuneTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARTuneTagHandler.h; sourceTree = "<group>"; };
 		BF18DC891BC67D340067B593 /* CARTuneTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARTuneTagHandler.m; sourceTree = "<group>"; };
@@ -221,6 +227,23 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		9CE17DE51BCE91F700833399 /* ATInternet */ = {
+			isa = PBXGroup;
+			children = (
+				9CE17DE21BCE91E200833399 /* CARATInternetTagHandler.h */,
+				9CE17DE31BCE91F200833399 /* CARATInternetHandler.m */,
+			);
+			name = ATInternet;
+			sourceTree = "<group>";
+		};
+		9CE17DE71BCEA01200833399 /* AT */ = {
+			isa = PBXGroup;
+			children = (
+				9CE17DE81BCEA05D00833399 /* ATInternetTests.m */,
+			);
+			path = AT;
+			sourceTree = "<group>";
+		};
 		BF18DC871BC67C880067B593 /* Tune */ = {
 			isa = PBXGroup;
 			children = (
@@ -293,6 +316,7 @@
 		BF37DEB21BC51FF90031876D /* CargoTest */ = {
 			isa = PBXGroup;
 			children = (
+				9CE17DE71BCEA01200833399 /* AT */,
 				8036067B1BCE9964006EDA98 /* Facebook */,
 				BF18DC8F1BC686030067B593 /* Tune */,
 				BF37DEBC1BC520D30031876D /* GA */,
@@ -360,6 +384,7 @@
 				BF37DF221BC57B530031876D /* CARMacroHandler.m */,
 				BF37DF231BC57B530031876D /* CARTagHandler.h */,
 				BF37DF241BC57B530031876D /* CARTagHandler.m */,
+				9CE17DE51BCE91F700833399 /* ATInternet */,
 				803606761BCE9191006EDA98 /* Facebook */,
 				BF18DC871BC67C880067B593 /* Tune */,
 				BF37DF251BC57B530031876D /* GoogleAnalytics */,
@@ -703,6 +728,7 @@
 				BF37DF2D1BC57B530031876D /* CARMacroHandler.m in Sources */,
 				BF2B699C1C10A1090083964A /* CARConstants.m in Sources */,
 				BF37DF2E1BC57B530031876D /* CARTagHandler.m in Sources */,
+				9CE17DE41BCE91F200833399 /* CARATInternetHandler.m in Sources */,
 				BF37DF311BC57B530031876D /* CARGoogleAnalyticsTagHandler.m in Sources */,
 				BF37DF301BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m in Sources */,
 				BF18DC8A1BC67D340067B593 /* CARTuneTagHandler.m in Sources */,
@@ -716,6 +742,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CE17DE91BCEA05D00833399 /* ATInternetTests.m in Sources */,
 				BF18DC911BC686260067B593 /* TuneTests.m in Sources */,
 				BF37DEB41BC51FF90031876D /* CargoTest.m in Sources */,
 				BF37DF341BC57B880031876D /* GoogleAnalyticsTests.m in Sources */,

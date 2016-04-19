@@ -22,7 +22,7 @@ end
 target 'CargoTest', :exclusive => true do
   import_gtm
   import_pods
-  pod 'OCMockito', '~> 1.0'
+  pod 'OCMockito', '~> 3.0'
 end
 
 target 'App' do

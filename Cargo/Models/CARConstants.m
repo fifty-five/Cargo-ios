@@ -15,6 +15,9 @@ NSString *const ENABLE_DEBUG = @"enableDebug";
 NSString *const ENABLE_OPTOUT = @"enableOptOut";
 NSString *const DISABLE_TRACKING = @"disableTracking";
 NSString *const DISPATCH_PERIOD = @"dispatchPeriod";
+NSString *const LEVEL2 = @"level2";
+NSString *const CUSTOM_DIM1 = @"customDim1";
+NSString *const CUSTOM_DIM2 = @"customDim2";
 
 
 #pragma screen
@@ -23,6 +26,7 @@ NSString *const SCREEN_NAME = @"screenName";
 #pragma event
 NSString *const EVENT_NAME = @"eventName";
 NSString *const EVENT_VALUE = @"eventValue";
+NSString *const EVENT_TYPE = @"eventType";
 
 #pragma user
 NSString *const USER_GOOGLE_ID = @"userGoogleId";

@@ -26,6 +26,15 @@
           "version" : "4.10.1"
         }
       ]
+    },
+    {
+      "name":"ATInternet",
+      "dependencies":[
+        {
+          "name": "ATInternet-iOS-ObjC-SDK/iOS",
+          "version" : "2.2.0"
+        }
+      ]
     }
   ]
 }

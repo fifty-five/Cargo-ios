@@ -46,6 +46,8 @@
     else if ([tagName isEqualToString:@"AT_tagEvent"]){
         [self tagEvent:parameters];
     }
+    else
+        NSLog(@"Function %@ is not registered in the AT Internet handler of Cargo", tagName);
 }
 
 

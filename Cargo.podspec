@@ -13,7 +13,7 @@ end
 
 Pod::Spec.new do |s|
   s.name             = "Cargo"
-  s.version          = "0.1.0"
+  s.version          = "0.1.2"
   s.summary          = "A short description of TestPod."
 
 # This description is used to generate tags and improve search results.
@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "louis" => "louis.chavane@gmail.com" }
-  s.source           = { :git => "https://github.com/fifty-five/Cargo-ios.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/fifty-five/Cargo-ios.git" }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.platform     = :ios, '7.0'

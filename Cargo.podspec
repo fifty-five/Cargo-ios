@@ -13,7 +13,7 @@ end
 
 Pod::Spec.new do |s|
   s.name             = "Cargo"
-  s.version          = "0.1.0"
+  s.version          = "v0.1.2"
   s.summary          = "A short description of TestPod."
 
 # This description is used to generate tags and improve search results.
@@ -40,8 +40,8 @@ Pod::Spec.new do |s|
   # s.dependency 'AFNetworking', '~> 2.3'
 
   s.subspec 'Cargo-iOS' do |ss|
-    ss.public_header_files = ['Cargo/*.h', 'Cargo/Models/*.h']
-    ss.source_files = ['Cargo/*.{h,m}', 'Cargo/Logger/*.{h,m}', 'Cargo/Models/*.{h,m}']
+    ss.public_header_files = ['Cargo/*.h', 'Cargo/*/*.h']
+    ss.source_files = ['Cargo/*.{h,m}', 'Cargo/*/*.{h,m}']
     ss.platform = :ios, '7.0'
     s.xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => "CARGO_VERSION=#{s.version}" }
     s.dependency 'GoogleTagManager', '3.12.1'

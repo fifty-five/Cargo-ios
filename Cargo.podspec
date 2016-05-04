@@ -13,8 +13,8 @@ end
 
 Pod::Spec.new do |s|
   s.name             = "Cargo"
-  s.version          = "0.1.4"
-  s.summary          = "A short description of TestPod."
+  s.version          = "0.1.3"
+  s.summary          = "A short description of Cargo should be here."
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -33,9 +33,6 @@ Pod::Spec.new do |s|
 
   s.platform     = :ios, '7.0'
   s.requires_arc = true
-  puts "HERE FIRST PRINT BELOW"
-  puts(s.to_s)
-  puts
 
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
@@ -46,30 +43,15 @@ Pod::Spec.new do |s|
     ss.public_header_files = ['Cargo/*.h', 'Cargo/Logger/*.h', 'Cargo/Models/*.h', 'Cargo/Handlers/*.h', 'Cargo/Handler/*/*.h']
     ss.source_files = ['Cargo/*.{h,m}', 'Cargo/Logger/*.{h,m}', 'Cargo/Models/*.{h,m}', 'Cargo/Handlers/*.{h,m}', 'Cargo/Handler/*/*.{h,m}']
     ss.platform = :ios, '7.0'
-    puts "HERE SECOND PRINT BELOW"
-    puts(ss.to_s)
-    puts
     s.xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => "CARGO_VERSION=#{s.version}" }
     s.dependency 'GoogleTagManager', '3.12.1'
-    puts "HERE THIRD PRINT BELOW"
-    puts(s.to_s)
-    puts
   end
 
   Build.subspecs.each do |a|
-    puts "HERE FOURTH PRINT BELOW"
-    puts(a.name)
-    puts(a.dependencies)
-    puts(a.to_s)
-    puts
     s.subspec a.name do |ss|
       ss.prefix_header_contents = "#define USE_CARGO_#{a.name.upcase} 1"
-      # ss.public_header_files = ['Cargo/Handlers/*.h', "Cargo/Handlers/#{a.name}/*.h"]
-      # ss.ios.source_files = "Cargo/Handlers/#{a.name}/*.{h,m}"
+
       ss.platform = :ios, '7.0'
-      puts "HERE FIFTH PRINT BELOW"
-      puts(ss.to_s)
-      puts
 
       ss.dependency 'Cargo/Cargo-iOS'
 
@@ -78,9 +60,6 @@ Pod::Spec.new do |s|
           ss.dependency d.name, d.version
         else
           ss.dependency d.name
-        puts "HERE SIXTH PRINT BELOW"
-        puts(d.to_s)
-        puts
         end
       end
     end

@@ -50,8 +50,8 @@ Pod::Spec.new do |s|
   Build.subspecs.each do |a|
     s.subspec a.name do |ss|
       ss.prefix_header_contents = "#define USE_CARGO_#{a.name.upcase} 1"
-      ss.public_header_files = ["Cargo/Handlers/*.h", "Cargo/Handlers/#{a.name}/*.h"]
-      ss.ios.source_files = ["Cargo/Handlers/*.{h,m}", "Cargo/Handlers/#{a.name}/*.{h,m}"]
+      ss.public_header_files = ["Cargo/Handlers/#{a.name}/*.h"]
+      ss.ios.source_files = "Cargo/Handlers/#{a.name}/*.{h,m}"
       ss.platform = :ios, '7.0'
 
       ss.dependency 'Cargo/Cargo-iOS'

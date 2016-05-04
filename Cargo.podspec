@@ -13,8 +13,8 @@ end
 
 Pod::Spec.new do |s|
   s.name             = "Cargo"
-  s.version          = "0.1.0"
-  s.summary          = "A short description of TestPod."
+  s.version          = "0.1.3"
+  s.summary          = "A short description of Cargo should be here."
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -40,8 +40,8 @@ Pod::Spec.new do |s|
   # s.dependency 'AFNetworking', '~> 2.3'
 
   s.subspec 'Cargo-iOS' do |ss|
-    ss.public_header_files = ['Cargo/*.h', 'Cargo/Models/*.h']
-    ss.source_files = ['Cargo/*.{h,m}', 'Cargo/Logger/*.{h,m}', 'Cargo/Models/*.{h,m}']
+    ss.public_header_files = ['Cargo/*.h', 'Cargo/Logger/*.h', 'Cargo/Models/*.h', 'Cargo/Handlers/*.h', 'Cargo/Handler/*/*.h']
+    ss.source_files = ['Cargo/*.{h,m}', 'Cargo/Logger/*.{h,m}', 'Cargo/Models/*.{h,m}', 'Cargo/Handlers/*.{h,m}', 'Cargo/Handler/*/*.{h,m}']
     ss.platform = :ios, '7.0'
     s.xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => "CARGO_VERSION=#{s.version}" }
     s.dependency 'GoogleTagManager', '3.12.1'
@@ -50,8 +50,7 @@ Pod::Spec.new do |s|
   Build.subspecs.each do |a|
     s.subspec a.name do |ss|
       ss.prefix_header_contents = "#define USE_CARGO_#{a.name.upcase} 1"
-      ss.public_header_files = ['Cargo/Handlers/*.h', "Cargo/Handlers/#{a.name}/*.h"]
-      ss.ios.source_files = "Cargo/Handlers/#{a.name}/*.{h,m}"
+
       ss.platform = :ios, '7.0'
 
       ss.dependency 'Cargo/Cargo-iOS'

@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#if GA_v3_10_0
 #import "TAGContainer.h"
 #import "Cargo.h"
 #import "CARUtils.h"
@@ -22,6 +21,3 @@
 @interface CARGoogleAnalyticsMacroHandler :CARMacroHandler
 
 @end
-
-
-#endif

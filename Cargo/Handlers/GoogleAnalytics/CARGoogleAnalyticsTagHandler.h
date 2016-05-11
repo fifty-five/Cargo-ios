@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#if GA_v3_10_0
-
 #import "CARTagHandler.h"
 #import "GAI.h"
 
@@ -24,4 +22,3 @@
 @property id<GAITracker> tracker;
 
 @end
-#endif

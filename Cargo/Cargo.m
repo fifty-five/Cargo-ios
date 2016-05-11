@@ -22,8 +22,8 @@
 @synthesize logger;
 
 static Cargo * _sharedHelper;
-static NSMutableDictionary * _registeredTagHandlers;
-static NSMutableDictionary * _registeredMacroHandlers;
+static NSMutableDictionary * registeredTagHandlers;
+static NSMutableDictionary * registeredMacroHandlers;
 
 
 
@@ -70,15 +70,10 @@ static NSMutableDictionary * _registeredMacroHandlers;
     return self.launchOptionsFlag;
 }
 
-
-
-
-
-
 -(void) registerHandlers{
-    for (NSString* key in _registeredTagHandlers) {
+    for (NSString* key in registeredTagHandlers) {
         
-        CARTagHandler *handler = _registeredTagHandlers[key];
+        CARTagHandler *handler = registeredTagHandlers[key];
         [handler validate];
         
         if(handler.valid){
@@ -90,8 +85,8 @@ static NSMutableDictionary * _registeredMacroHandlers;
     }
     
     // For all macro handlers registered
-    for(NSString* key in _registeredMacroHandlers ){
-        CARMacroHandler *macroHandler = _registeredMacroHandlers[key];
+    for(NSString* key in registeredMacroHandlers ){
+        CARMacroHandler *macroHandler = registeredMacroHandlers[key];
         [self.container registerFunctionCallMacroHandler:macroHandler forMacro:key];
         NSLog(@"Macro %@ has been registered", key);
     }
@@ -99,20 +94,19 @@ static NSMutableDictionary * _registeredMacroHandlers;
 }
 
 + (void) registerTagHandler:(CARTagHandler*)handler withKey:(NSString*) key {
-    if(_registeredTagHandlers == NULL){
-        _registeredTagHandlers = [[NSMutableDictionary alloc] init];
+    if(registeredTagHandlers == NULL){
+        registeredTagHandlers = [[NSMutableDictionary alloc] init];
     }
     
-    [_registeredTagHandlers setValue:handler forKey:key];
+    [registeredTagHandlers setValue:handler forKey:key];
 }
 
 + (void) registerMacroHandler:(CARMacroHandler*)handler forMacro:(NSString*) macro {
-    if(_registeredMacroHandlers == NULL){
-        _registeredMacroHandlers = [[NSMutableDictionary alloc] init];
+    if(registeredMacroHandlers == NULL){
+        registeredMacroHandlers = [[NSMutableDictionary alloc] init];
     }
     
-    [_registeredMacroHandlers setValue:handler forKey:macro];
+    [registeredMacroHandlers setValue:handler forKey:macro];
 }
-
 
 @end

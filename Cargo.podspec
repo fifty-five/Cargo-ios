@@ -13,7 +13,7 @@ end
 
 Pod::Spec.new do |s|
   s.name             = "Cargo"
-  s.version          = "0.0.56"
+  s.version          = "0.0.42"
   s.summary          = "A short description of Cargo should be here."
 
 # This description is used to generate tags and improve search results.

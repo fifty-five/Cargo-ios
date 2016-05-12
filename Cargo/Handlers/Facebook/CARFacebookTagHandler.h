@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CARTagHandler.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
-
+#import "CARConstants.h"
 
 
 @interface CARFacebookTagHandler : CARTagHandler

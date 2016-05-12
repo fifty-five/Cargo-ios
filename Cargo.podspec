@@ -13,8 +13,8 @@ end
 
 Pod::Spec.new do |s|
   s.name             = "Cargo"
-  s.version          = "0.0.42"
-  s.summary          = "A short description of Cargo should be here."
+  s.version          = "1.0.3"
+  s.summary          = "Cargo makes it easier to track your mobile apps"
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -22,6 +22,8 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description      = <<-DESC
+  Cargo works with Google Tag Manager and makes easier the clientside tracking 
+  of your mobile apps with several handlers sending data to your favorite SDKs
                        DESC
 
   s.homepage         = "https://github.com/fifty-five/Cargo-ios"

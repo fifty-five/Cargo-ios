@@ -21,6 +21,10 @@
 @implementation CARATInternetTagHandler
 
 
+// The runtime sends the load message very soon after the class object
+// is loaded in the process's address space. (http://stackoverflow.com/a/13326633)
+//
+// Instanciate the handler, and register its callback methods to GTM through a Cargo method
 +(void)load{
     CARATInternetTagHandler *handler = [[CARATInternetTagHandler alloc] init];
     [Cargo registerTagHandler:handler withKey:@"AT_init"];
@@ -30,7 +34,10 @@
 }
 
 
-
+// This one will be called after a tag has been sent
+//
+// @param tagName       The method you aime to call (this should be define in GTM interface)
+// @param parameters    A dictionary key-object used as a way to give parameters to the class method aimed here
 -(void) execute:(NSString *)tagName parameters:(NSDictionary *)parameters{
     [super execute:tagName parameters:parameters];
 
@@ -51,6 +58,7 @@
 }
 
 
+// Called in +load method, setup what is needed for Cargo and the ATInternet SDK
 - (id)init
 {
     if (self = [super init]) {
@@ -71,6 +79,7 @@
     self.valid = TRUE;
 }
 
+// Initialize ATInternet with required parameters
 -(void)init:(NSDictionary*)parameters{
     NSString* domain = [parameters valueForKey:@"domain"];
     if(domain){
@@ -87,6 +96,8 @@
 }
 
 
+// Send a tag for the screen changes to Tune
+// Allow you to add custom_dim to your tag
 - (void)tagScreen:(NSDictionary*)parameters{
     
     NSString* screenName = [parameters valueForKey:SCREEN_NAME];
@@ -103,6 +114,7 @@
     [screen sendView];
 }
 
+// Allow you to identify the user through the UUID you have to give as a parameter under the USER_ID key
 - (void)identify:(NSDictionary*)parameters{
   
     if ([parameters valueForKey:USER_ID]){
@@ -112,7 +124,9 @@
     NSLog(@"CARGO_ATInternet_identify: missing USER_ID (UUID) parameter. USER_ID hasn't been set");
 }
 
-
+// Send a custom event to ATInternet
+// Please provide a event name and type as mandatory parameters
+// Possibility to attach up to 3 chapters to the event
 - (void)tagEvent:(NSDictionary*)parameters{
     
     NSString* tagName = [parameters valueForKey:EVENT_NAME];

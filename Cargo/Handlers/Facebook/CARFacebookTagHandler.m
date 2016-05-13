@@ -17,6 +17,7 @@
 +(void)load{
     CARFacebookTagHandler *handler = [[CARFacebookTagHandler alloc] init];
     [Cargo registerTagHandler:handler withKey:@"FB_init"];
+    [Cargo registerTagHandler:handler withKey:@"FB_tagEvent"];
 }
 
 
@@ -25,6 +26,9 @@
     [super execute:tagName parameters:parameters];
     if([tagName isEqualToString:@"FB_init"]){
         [self init:parameters];
+    }
+    else if([tagName isEqualToString:@"FB_tagEvent"]){
+        [self tagEvent:parameters];
     }
 
 }
@@ -57,7 +61,7 @@
     NSString *applicationId = [parameters objectForKey:@"applicationId"];
     
     
-    if(applicationId){
+    if (applicationId){
         [self.fbAppEvents setLoggingOverrideAppID:applicationId];
         FIFLog(kTAGLoggerLogLevelInfo, @" Facebook appId set to %@ ", applicationId);
 
@@ -74,8 +78,9 @@
     
 }
 
-
-
+-(void) tagEvent:(NSDictionary*) parameters{
+    [FBSDKAppEvents logEvent:[parameters objectForKey:EVENT_NAME]];
+}
 
 
 - (void)set:(NSDictionary *)parameters {

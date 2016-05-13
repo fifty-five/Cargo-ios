@@ -15,19 +15,21 @@
 #import "TAGDataLayer.h"
 
 
-
-
-
 @implementation Cargo
 @synthesize logger;
 
+// THE Cargo instance
 static Cargo * _sharedHelper;
+// Dictionaries storing the instances of Tag/Macro handlers
 static NSMutableDictionary * registeredTagHandlers;
 static NSMutableDictionary * registeredMacroHandlers;
 
 
-
 #pragma mark - SharedInstance
+
+// Allow the user to retrieve a cargo instance
+// If Cargo hasn't been init until now, creates and returns a fresh cargo instance
+// If Cargo is already init, returns the instance stocked in _sharedHelper var
 + (Cargo *) sharedHelper {
     
     if (_sharedHelper) {
@@ -38,7 +40,7 @@ static NSMutableDictionary * registeredMacroHandlers;
     return _sharedHelper;
 }
 
-
+// Returns a fresh initialized Cargo instance after started its logger
 -(id)init {
     if (self = [super init]) {
         logger = [[FIFLogger alloc] initLogger:@"Cargo"];
@@ -49,7 +51,10 @@ static NSMutableDictionary * registeredMacroHandlers;
 }
 
 
+
 #pragma mark - GTM
+// Setup the tagManager and the GTM container
+// Setup the log level of cargo after the level of the tagManager
 - (void)initTagHandlerWithManager:(TAGManager *)tagManager
                         container:(TAGContainer *)container {
     //GTM
@@ -58,18 +63,28 @@ static NSMutableDictionary * registeredMacroHandlers;
     
     //Logger
     [self.logger setLevel:[self.tagManager.logger logLevel]];
-    
 }
+
+
+
 
 -(void) setLaunchOptions:(NSDictionary *)l{
     _launchOptions = l;
     _launchOptionsFlag = true;
 }
 
+
+
+// Returns true or false according the options flag is set or not
 -(BOOL) isLaunchOptionsSet{
     return self.launchOptionsFlag;
 }
 
+
+
+// For each handler stored in the registeredTagHandlers variable,
+// validate the handler in order to register its GTM callback methods
+// does the same with the GTM callback macros
 -(void) registerHandlers{
     for (NSString* key in registeredTagHandlers) {
         
@@ -79,7 +94,6 @@ static NSMutableDictionary * registeredMacroHandlers;
         if(handler.valid){
             [self.container registerFunctionCallTagHandler:handler forTag:key];
         }
-
         
         NSLog(@"Handler with key %@ has been registered", key );
     }
@@ -90,9 +104,12 @@ static NSMutableDictionary * registeredMacroHandlers;
         [self.container registerFunctionCallMacroHandler:macroHandler forMacro:key];
         NSLog(@"Macro %@ has been registered", key);
     }
-    
 }
 
+
+
+// Called by each handler (in its +load method) to register itself
+// in the registeredTagHandlers variable, which is initialized if it wasn't already
 + (void) registerTagHandler:(CARTagHandler*)handler withKey:(NSString*) key {
     if(registeredTagHandlers == NULL){
         registeredTagHandlers = [[NSMutableDictionary alloc] init];
@@ -101,6 +118,10 @@ static NSMutableDictionary * registeredMacroHandlers;
     [registeredTagHandlers setValue:handler forKey:key];
 }
 
+
+
+// Called by each macro handler (in its +load method) to register itself
+// in the registeredMacroHandlers variable, which is initialized if it wasn't already
 + (void) registerMacroHandler:(CARMacroHandler*)handler forMacro:(NSString*) macro {
     if(registeredMacroHandlers == NULL){
         registeredMacroHandlers = [[NSMutableDictionary alloc] init];

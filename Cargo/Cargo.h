@@ -31,7 +31,6 @@
 /** GTM tag manager */
 @property (nonatomic, strong) TAGManager *tagManager;
 
-
 /** GTM container */
 @property (nonatomic, strong) TAGContainer *container;
 

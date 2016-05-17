@@ -12,6 +12,7 @@
 #import "GAI.h"
 #import "GAIFields.h"
 #import "FIFLogger.h"
+#import "Cargo.h"
 
 
 @interface CARGoogleAnalyticsTagHandler()

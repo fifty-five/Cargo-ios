@@ -12,7 +12,10 @@
 @implementation CARTuneTagHandler
 
 
-
+// The runtime sends the load message very soon after the class object
+// is loaded in the process's address space. (http://stackoverflow.com/a/13326633)
+//
+// Instanciate the handler, and register its callback methods to GTM through a Cargo method
 +(void)load{
     CARTuneTagHandler *handler = [[CARTuneTagHandler alloc] init];
     [Cargo registerTagHandler:handler withKey:@"Tune_init"];
@@ -22,7 +25,10 @@
 }
 
 
-
+// This one will be called after a tag has been sent
+//
+// @param tagName       The method you aime to call (this should be define in GTM interface)
+// @param parameters    A dictionary key-object used as a way to give parameters to the class method aimed here
 -(void) execute:(NSString *)tagName parameters:(NSDictionary *)parameters{
     [super execute:tagName parameters:parameters];
     if([tagName isEqualToString:@"Tune_init"]){
@@ -34,12 +40,10 @@
     }else if([tagName isEqualToString:@"Tune_tagEvent"]){
         [self tagEvent:parameters];
     }
-
-    
-
 }
 
 
+// Called in +load method, setup what is needed for Cargo and the Tune SDK
 - (id)init
 {
     if (self = [super init]) {
@@ -53,14 +57,13 @@
 }
 
 
-
-
 - (void)validate
 {
     // Nothing is required
     self.valid = TRUE;
 }
 
+// Setup Tune SDK with required parameters
 -(void) init:(NSDictionary*) parameters{
     
     //Initialize Tune with required parameters
@@ -83,12 +86,14 @@
     
 }
 
+// Allow you to identify the user through several ways
 -(void) identify:(NSDictionary*) parameters{
     [Tune setUserId:[parameters valueForKey:USER_ID]];
     [Tune setFacebookUserId:[parameters valueForKey:USER_FACEBOOK_ID]];
     [Tune setGoogleUserId:[parameters valueForKey:USER_GOOGLE_ID]];
 }
 
+// Send a custom event to Tune
 -(void) tagEvent:(NSDictionary*) parameters{
     TuneEvent *event = [TuneEvent eventWithName:[parameters valueForKey:EVENT_NAME]];
     [Tune measureEvent:event];
@@ -99,7 +104,7 @@
     
 }
 
-
+// Send a tag for the screen changes to Tune
 - (void)tagScreen:(NSDictionary *)parameters {
 
     NSString* screenName = [parameters valueForKey:SCREEN_NAME];

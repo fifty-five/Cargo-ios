@@ -90,21 +90,20 @@
 // Allow you to identify the user through several ways
 -(void) identify:(NSDictionary*) parameters{
     
-    
     NSString *userId = [CARUtils castToNSString:[parameters valueForKey:USER_ID]];
     if (userId == nil){
         NSLog(@"Cargo TuneHandler : in identify() missing mandatory parameter USER_ID. USER_ID and any other parameters given haven't been set");
         return ;
     }
-    [Tune setUserId:userId];
+    [self.tuneClass setUserId:userId];
     if ([parameters objectForKey:USER_FACEBOOK_ID])
-        [Tune setFacebookUserId:[CARUtils castToNSString:[parameters valueForKey:USER_FACEBOOK_ID]]];
+        [self.tuneClass setFacebookUserId:[CARUtils castToNSString:[parameters valueForKey:USER_FACEBOOK_ID]]];
     if ([parameters objectForKey:USER_GOOGLE_ID])
-        [Tune setGoogleUserId:[CARUtils castToNSString:[parameters valueForKey:USER_GOOGLE_ID]]];
+        [self.tuneClass setGoogleUserId:[CARUtils castToNSString:[parameters valueForKey:USER_GOOGLE_ID]]];
     if ([parameters objectForKey:USER_TWITTER_ID])
-        [Tune setTwitterUserId:[CARUtils castToNSString:[parameters valueForKey:USER_TWITTER_ID]]];
+        [self.tuneClass setTwitterUserId:[CARUtils castToNSString:[parameters valueForKey:USER_TWITTER_ID]]];
     if ([parameters objectForKey:USER_AGE])
-        [Tune setAge:[[parameters valueForKey:USER_AGE] intValue]];
+        [self.tuneClass setAge:[[parameters valueForKey:USER_AGE] intValue]];
     if ([parameters objectForKey:USER_GENDER])
         [self setGender:[CARUtils castToNSString:[parameters valueForKey:USER_GENDER]]];
 }
@@ -118,20 +117,22 @@
 
     NSString *upperGender = [gender uppercaseString];
     if ([upperGender isEqualToString:@"MALE"])
-        [Tune setGender:TuneGenderMale];
+        [self.tuneClass setGender:TuneGenderMale];
     else if ([upperGender isEqualToString:@"FEMALE"])
-        [Tune setGender:TuneGenderFemale];
+        [self.tuneClass setGender:TuneGenderFemale];
     else {
-        [Tune setGender:TuneGenderUnknown];
+        [self.tuneClass setGender:TuneGenderUnknown];
         NSLog(@"Cargo TuneHandler : Gender should be MALE/FEMALE. Gender set to UNKNOWN");
     }
 }
 
 // Send a custom event to Tune
 -(void) tagEvent:(NSDictionary*) parameters{
+
     NSString* eventName = [CARUtils castToNSString:[parameters valueForKey:EVENT_NAME]];
+
     TuneEvent *event = [TuneEvent eventWithName:eventName];
-    [Tune measureEvent:event];
+    [self.tuneClass measureEvent:event];
 }
 
 

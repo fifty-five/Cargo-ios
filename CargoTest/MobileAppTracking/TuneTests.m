@@ -10,6 +10,7 @@
 #import "TAGManager.h"
 #import "CARTuneTagHandler.h"
 #import <Tune/Tune.h>
+#import "CARConstants.h"
 
 #define HC_SHORTHAND
 #import <OCHamcrest/OCHamcrest.h>
@@ -66,12 +67,53 @@
     
 }
 
+-(void) testTuneIdentify {
+    NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys:@"234", USER_ID, @"55", USER_AGE, @"Male", USER_GENDER, @"01223456789", USER_FACEBOOK_ID, nil];
+    [_handler execute:@"Tune_identify" parameters:dict];
+    
+    [verifyCount(_tuneClassMock, times(1)) setUserId:@"234"];
+    [verifyCount(_tuneClassMock, times(1)) setFacebookUserId:@"01223456789"];
+    [verifyCount(_tuneClassMock, times(1)) setGender:TuneGenderMale];
+    [verifyCount(_tuneClassMock, times(1)) setAge:55];
+    [verifyCount(_tuneClassMock, times(0)) setTwitterUserId:anything()];
+    [verifyCount(_tuneClassMock, times(0)) setGoogleUserId:anything()];
+}
+
+-(void) testTuneIdentifyWithoutUserId {
+    NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys: @"55", USER_AGE, @"Male", USER_GENDER, @"01223456789", USER_FACEBOOK_ID, nil];
+    [_handler execute:@"Tune_identify" parameters:dict];
+    
+    [verifyCount(_tuneClassMock, times(0)) setUserId:anything()];
+    [verifyCount(_tuneClassMock, times(0)) setFacebookUserId:anything()];
+    [verifyCount(_tuneClassMock, times(0)) setGender:anything()];
+    [verifyCount(_tuneClassMock, times(0)) setAge:anything()];
+    [verifyCount(_tuneClassMock, times(0)) setTwitterUserId:anything()];
+    [verifyCount(_tuneClassMock, times(0)) setGoogleUserId:anything()];
+}
+
+-(void) testTuneIdentifyWithWeirdGender {
+    NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys: @"55", USER_ID, @"skdjhf", USER_GENDER, nil];
+    [_handler execute:@"Tune_identify" parameters:dict];
+    
+    [verifyCount(_tuneClassMock, times(1)) setUserId:@"55"];
+    [verifyCount(_tuneClassMock, times(1)) setGender:TuneGenderUnknown];
+}
+
 -(void) testScreenName {
     NSDictionary * dict = [[NSDictionary alloc ]
                            initWithObjectsAndKeys:@"A screen",@"screenName", nil];
 
     
     [_handler execute:@"Tune_tagScreen" parameters:dict];
+    [verifyCount(_tuneClassMock, times(1)) measureEvent:anything()];
+}
+
+-(void) testTageEvent {
+    NSDictionary * dict = [[NSDictionary alloc ]
+                           initWithObjectsAndKeys:@"aRandomEventName",EVENT_NAME, nil];
+    
+    
+    [_handler execute:@"Tune_tagEvent" parameters:dict];
     [verifyCount(_tuneClassMock, times(1)) measureEvent:anything()];
 }
 

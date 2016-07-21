@@ -95,7 +95,9 @@
         NSLog(@"Cargo TuneHandler : in identify() missing mandatory parameter USER_ID. USER_ID and any other parameters given haven't been set");
         return ;
     }
-    [self.tuneClass setUserId:userId];
+    else
+        [self.tuneClass setUserId:userId];
+
     if ([parameters objectForKey:USER_FACEBOOK_ID])
         [self.tuneClass setFacebookUserId:[CARUtils castToNSString:[parameters valueForKey:USER_FACEBOOK_ID]]];
     if ([parameters objectForKey:USER_GOOGLE_ID])

@@ -30,7 +30,10 @@ extern NSString *const EVENT_TYPE;
 #pragma user
 extern NSString *const USER_GOOGLE_ID;
 extern NSString *const USER_FACEBOOK_ID;
+extern NSString *const USER_TWITTER_ID;
 extern NSString *const USER_ID;
+extern NSString *const USER_AGE;
+extern NSString *const USER_GENDER;
 
 #pragma transaction
 extern NSString *const TRANSACTION_ID;

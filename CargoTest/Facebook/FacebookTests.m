@@ -56,9 +56,9 @@
 -(void) testInitFacebook {
     [_handler execute:@"FB_init" parameters:nil];
     [verifyCount(_fbEventsMock, times(1)) activateApp];
-    
+
     XCTAssertTrue(_handler.initialized);
-    
+
 }
 
 -(void) testInitFacebookWithAppId {
@@ -66,11 +66,57 @@
     [_handler execute:@"FB_init" parameters:dict];
     [verifyCount(_fbEventsMock, times(1)) setLoggingOverrideAppID:@"1234"];
     [verifyCount(_fbEventsMock, times(1)) activateApp];
-    
+
     XCTAssertTrue(_handler.initialized);
-    
+
 }
 
+-(void) testSimpleTagEvent {
+    NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys:@"testName", EVENT_NAME, nil];
 
+    [_handler execute:@"FB_tagEvent" parameters:dict];
+
+    [verifyCount(_fbEventsMock, times(1)) logEvent:@"testName"];
+}
+
+-(void) testFailedSimpleTagEvent {
+    NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys:@"testName", EVENT_TYPE, nil];
+
+    [_handler execute:@"FB_tagEvent" parameters:dict];
+
+    [verifyCount(_fbEventsMock, never()) logEvent:anything()];
+}
+
+-(void) testTagEventWithVTS {
+    NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys:@"testName", EVENT_NAME, [NSNumber numberWithDouble:55.42], @"valueToSum", nil];
+
+    [_handler execute:@"FB_tagEvent" parameters:dict];
+
+    [verifyCount(_fbEventsMock, times(1)) logEvent:@"testName" valueToSum:55.42];
+}
+
+-(void) testTagEventWithVTSAndParams {
+    NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys:FBSDKAppEventNameAddedToCart, EVENT_NAME, [NSNumber numberWithDouble:55.42], @"valueToSum", @"USD", FBSDKAppEventParameterNameCurrency, @"product", FBSDKAppEventParameterNameContentType, @"HDFU-8452", FBSDKAppEventParameterNameContentID, nil];
+
+    [_handler execute:@"FB_tagEvent" parameters:dict];
+
+    [verifyCount(_fbEventsMock, times(1)) logEvent:FBSDKAppEventNameAddedToCart valueToSum:55.42 parameters:@{ FBSDKAppEventParameterNameCurrency    : @"USD",                                                                                                               FBSDKAppEventParameterNameContentType : @"product",                                                                                                               FBSDKAppEventParameterNameContentID   : @"HDFU-8452" }];
+}
+
+-(void) testTagEventWithParams {
+    NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys:FBSDKAppEventNameAddedToCart, EVENT_NAME, @"USD", FBSDKAppEventParameterNameCurrency, @"product", FBSDKAppEventParameterNameContentType, @"HDFU-8452", FBSDKAppEventParameterNameContentID, nil];
+
+    [_handler execute:@"FB_tagEvent" parameters:dict];
+
+    [verifyCount(_fbEventsMock, times(1)) logEvent:FBSDKAppEventNameAddedToCart parameters:@{ FBSDKAppEventParameterNameCurrency    : @"USD",                                                                                                               FBSDKAppEventParameterNameContentType : @"product",                                                                                                               FBSDKAppEventParameterNameContentID   : @"HDFU-8452" }];
+}
+
+-(void) testPurchase {
+    NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys: @"USD", @"currencyCode", [NSNumber numberWithDouble:15.15], @"purchaseAmount", nil];
+
+    [_handler execute:@"FB_purchase" parameters:dict];
+
+    [verifyCount(_fbEventsMock, times(1)) logPurchase:15.15 currency:@"USD"];
+}
 
 @end

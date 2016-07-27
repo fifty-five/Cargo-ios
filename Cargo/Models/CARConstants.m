@@ -29,9 +29,12 @@ NSString *const EVENT_VALUE = @"eventValue";
 NSString *const EVENT_TYPE = @"eventType";
 
 #pragma user
-NSString *const USER_GOOGLE_ID = @"userGoogleId";
-NSString *const USER_FACEBOOK_ID = @"userFacebookId";
 NSString *const USER_ID = @"userId";
+NSString *const USER_AGE = @"userAge";
+NSString *const USER_GENDER = @"userGender";
+NSString *const USER_GOOGLE_ID = @"userGoogleId";
+NSString *const USER_TWITTER_ID = @"userTwitterId";
+NSString *const USER_FACEBOOK_ID = @"userFacebookId";
 
 #pragma transaction
 

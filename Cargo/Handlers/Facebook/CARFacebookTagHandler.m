@@ -20,7 +20,9 @@
 +(void)load{
     CARFacebookTagHandler *handler = [[CARFacebookTagHandler alloc] init];
     [Cargo registerTagHandler:handler withKey:@"FB_init"];
+    [Cargo registerTagHandler:handler withKey:@"FB_activateApp"];
     [Cargo registerTagHandler:handler withKey:@"FB_tagEvent"];
+    [Cargo registerTagHandler:handler withKey:@"FB_purchase"];
 }
 
 
@@ -33,8 +35,14 @@
     if([tagName isEqualToString:@"FB_init"]){
         [self init:parameters];
     }
+    else if([tagName isEqualToString:@"FB_activateApp"]){
+        [self activateApp];
+    }
     else if([tagName isEqualToString:@"FB_tagEvent"]){
         [self tagEvent:parameters];
+    }
+    else if([tagName isEqualToString:@"FB_purchase"]){
+        [self purchase:parameters];
     }
 
 }
@@ -75,32 +83,66 @@
 
     }
     
-    // let the fb sdk know that your app has been launched
-    [self.fbAppEvents activateApp];
     self.initialized = TRUE;
-    
-    
-    //then set values if necessary
-    NSMutableDictionary * mutParams = [parameters mutableCopy];
-    [mutParams removeObjectForKey:@"applicationId"];
-    [self set:mutParams];
-    
+    [self activateApp];
 }
 
-// Send an event to facebook SDK
+
+// let the fb sdk know that your app has been launched in order to measure sessions
+// Call it in your app delegate's applicationDidBecomeActive method once the handler has been initialized
+-(void) activateApp{
+    [self.fbAppEvents activateApp];
+}
+
+
+// Send an event to facebook SDK. Calls differents methods depending on which parameters have been given
+// Each events can be logged with a valueToSum and a set of parameters (up to 25 parameters).
+// When reported, all of the valueToSum properties will be summed together. It is an arbitrary number
+// that can represent any value (e.g., a price or a quantity).
+// Note that both the valueToSum and parameters arguments are optional.
 -(void) tagEvent:(NSDictionary*) parameters{
-    // retrieves the custom event from parameters and send its to FB
-    [FBSDKAppEvents logEvent:[parameters objectForKey:EVENT_NAME]];
+    if (![parameters objectForKey:EVENT_NAME]){
+        NSLog(@"Cargo FacebookHandler : in tagEvent() missing mandatory parameter EVENT_NAME. The event hasn't been sent");
+        return ;
+    }
+    NSMutableDictionary *params = [parameters mutableCopy];
+    NSString *eventName = [CARUtils castToNSString:[params objectForKey:EVENT_NAME]];
+    [params removeObjectForKey:EVENT_NAME];
+
+    if ([params objectForKey:@"valueToSum"]){
+        double valueToSum = [[CARUtils castToNSNumber:[params objectForKey:@"valueToSum"]] doubleValue];
+        [params removeObjectForKey:@"valueToSum"];
+
+        if (params.count > 0){
+            [self.fbAppEvents logEvent:eventName valueToSum:valueToSum parameters:params];
+            return ;
+        }
+        [self.fbAppEvents logEvent:eventName valueToSum:valueToSum];
+        return ;
+    }
+    if (params.count > 0) {
+        [self.fbAppEvents logEvent:eventName parameters:params];
+        return ;
+    }
+    [self.fbAppEvents logEvent:eventName];
 }
 
 
-- (void)set:(NSDictionary *)parameters {
-    
-    
+// Logs a purchase in your app. with purchaseAmount the money spent, and currencyCode the currency code.
+// The currency specification is expected to be an ISO 4217 currency code.
+-(void) purchase:(NSDictionary*) parameters{
+    if (![parameters objectForKey:@"purchaseAmount"] || ![parameters objectForKey:@"currencyCode"]){
+        NSLog(@"Cargo FacebookHandler : in purchase() missing at least one of the parameters. The purchase hasn't been registered");
+        return ;
+    }
+    double purchaseAmount = [[CARUtils castToNSNumber:[parameters objectForKey:@"purchaseAmount"]] doubleValue];
+    NSString* currencyCode = [CARUtils castToNSString:[parameters objectForKey:@"currencyCode"]];
+    [self.fbAppEvents logPurchase:purchaseAmount currency:currencyCode];
 }
 
 
-
-
+- (BOOL)isInitialized{
+    return self.initialized;
+}
 
 @end

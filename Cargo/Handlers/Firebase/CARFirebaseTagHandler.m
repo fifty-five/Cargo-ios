@@ -50,6 +50,8 @@ NSString *const ENABLE_COLLECTION = @"enableCollection";
         self.name = @"Firebase";
         self.valid = NO;
         self.initialized = NO;
+        self.fireAnalyticsClass = [FIRAnalytics class];
+        self.fireConfClass = [FIRAnalyticsConfiguration class];
     }
     return self;
 }
@@ -65,10 +67,9 @@ NSString *const ENABLE_COLLECTION = @"enableCollection";
 // The parameter requested is a boolean true/false for collection enabled/disabled
 // This setting is persisted across app sessions. By default it is enabled.
 -(void) init:(NSDictionary*) parameters{
-    if ([parameters objectForKey:ENABLE_COLLECTION]) {
-        Boolean enabled = (Boolean)[parameters valueForKey:ENABLE_COLLECTION];
-        [[FIRAnalyticsConfiguration sharedInstance] setAnalyticsCollectionEnabled:enabled];
-    }
+    id value = [parameters valueForKey:ENABLE_COLLECTION];
+    Boolean enabled = value ? [value boolValue] : YES;
+    [[self.fireConfClass sharedInstance] setAnalyticsCollectionEnabled:enabled];
 }
 
 // Allow you to identify the user and to define the segment it belongs to
@@ -76,13 +77,13 @@ NSString *const ENABLE_COLLECTION = @"enableCollection";
     
     NSMutableDictionary *params = [parameters mutableCopy];
     if ([params objectForKey:USER_ID]) {
-        [FIRAnalytics setUserID:[CARUtils castToNSString:[params valueForKey:USER_ID]]];
+        [self.fireAnalyticsClass setUserID:[CARUtils castToNSString:[params valueForKey:USER_ID]]];
         [params removeObjectForKey:USER_ID];
     }
     
     for(id key in params) {
         NSString *value = [CARUtils castToNSString:[params valueForKey:key]];
-        [FIRAnalytics setUserPropertyString:value forName:[CARUtils castToNSString:key]];
+        [self.fireAnalyticsClass setUserPropertyString:value forName:[CARUtils castToNSString:key]];
     }
 }
 
@@ -105,11 +106,11 @@ NSString *const ENABLE_COLLECTION = @"enableCollection";
         NSString* eventName = [CARUtils castToNSString:[params valueForKey:EVENT_NAME]];
         [params removeObjectForKey:EVENT_NAME];
 
-        if (params.count == 0) {
-            [FIRAnalytics logEventWithName:eventName parameters:nil];
+        if (params.count > 0) {
+            [self.fireAnalyticsClass logEventWithName:eventName parameters:params];
             return ;
         }
-        [FIRAnalytics logEventWithName:eventName parameters:params];
+        [self.fireAnalyticsClass logEventWithName:eventName parameters:nil];
     }
     else
         NSLog(@"Cargo FirebaseHandler: in order to create an event, an eventName is required. The event hasn't been created.");

@@ -12,4 +12,7 @@
 
 @interface CARFirebaseTagHandler : CARTagHandler
 
+@property Class fireAnalyticsClass;
+@property Class fireConfClass;
+
 @end

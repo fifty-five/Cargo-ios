@@ -35,6 +35,15 @@
           "version" : "2.2.0"
         }
       ]
+    },
+    {
+      "name":"Firebase",
+      "dependencies":[
+        {
+          "name": "Firebase",
+          "version" : "3.3.0"
+        }
+      ]
     }
   ]
 }

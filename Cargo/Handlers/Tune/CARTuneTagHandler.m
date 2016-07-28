@@ -28,7 +28,7 @@
 
 // This one will be called after a tag has been sent
 //
-// @param tagName       The method you aime to call (this should be define in GTM interface)
+// @param tagName       The method you aim to call (this should be define in GTM interface)
 // @param parameters    A dictionary key-object used as a way to give parameters to the class method aimed here
 -(void) execute:(NSString *)tagName parameters:(NSDictionary *)parameters{
     [super execute:tagName parameters:parameters];
@@ -44,7 +44,7 @@
 }
 
 
-// Called in +load method, setup what is needed for Cargo and the Tune SDK
+// Setup what is needed for Cargo and the Tune SDK
 - (id)init
 {
     if (self = [super init]) {
@@ -95,7 +95,9 @@
         NSLog(@"Cargo TuneHandler : in identify() missing mandatory parameter USER_ID. USER_ID and any other parameters given haven't been set");
         return ;
     }
-    [self.tuneClass setUserId:userId];
+    else
+        [self.tuneClass setUserId:userId];
+
     if ([parameters objectForKey:USER_FACEBOOK_ID])
         [self.tuneClass setFacebookUserId:[CARUtils castToNSString:[parameters valueForKey:USER_FACEBOOK_ID]]];
     if ([parameters objectForKey:USER_GOOGLE_ID])

@@ -11,14 +11,14 @@
 
 
 /**
- *  This class is a set of method used to check 
+ *  This class is a set of method used to check
  *  data types and manage castings
  */
 @interface CARUtils : NSObject
 
 
 /**
- *  This class method checks if a passed object 
+ *  This class method checks if a passed object
  *  is an instance of NSNumber
  *  and cast it if possible.
  *
@@ -30,7 +30,29 @@
 
 
 /**
- *  This class method checks if a passed object 
+ *  This class method calls on castToNSNumber
+ *  and cast the result as an int.
+ *
+ *  @param value The value to check
+ *
+ *  @return the casted value, -1 if the given value is nil
+ */
++ (int)castToNSInteger:(id)value withDefault:(int)defaultValue;
+
+
+/**
+ *  This class method calls on castToNSNumber
+ *  and cast the result as a float.
+ *
+ *  @param value The value to check
+ *
+ *  @return the casted value, -1 if the given value is nil
+ */
++ (int)castToFloat:(id)value withDefault:(float)defaultValue;
+
+
+/**
+ *  This class method checks if a passed object
  *  is an instance of NSString
  *  and cast it if possible.
  *
@@ -75,6 +97,18 @@
  *  @return nil or the casted value
  */
 + (NSData *)castToNSData:(id)value;
+
+
+/**
+ *  This class method checks if a passed object
+ *  is an instance of NSDate
+ *  and cast it if possible.
+ *
+ *  @param value The value to check
+ *
+ *  @return nil or the casted value
+ */
++ (NSDate *)castToNSDate:(id)value;
 
 
 /**

@@ -24,16 +24,20 @@ extern NSString *const SCREEN_NAME;
 
 #pragma events
 extern NSString *const EVENT_NAME;
+extern NSString *const EVENT_ID;
 extern NSString *const EVENT_VALUE;
 extern NSString *const EVENT_TYPE;
 
 #pragma user
+extern NSString *const USER_ID;
+extern NSString *const USER_EMAIL;
+extern NSString *const USER_NAME;
+extern NSString *const USER_AGE;
+extern NSString *const USER_GENDER;
+
 extern NSString *const USER_GOOGLE_ID;
 extern NSString *const USER_FACEBOOK_ID;
 extern NSString *const USER_TWITTER_ID;
-extern NSString *const USER_ID;
-extern NSString *const USER_AGE;
-extern NSString *const USER_GENDER;
 
 #pragma transaction
 extern NSString *const TRANSACTION_ID;

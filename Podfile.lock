@@ -33,7 +33,7 @@ PODS:
   - OCHamcrest (5.4.0)
   - OCMockito (3.0.2):
     - OCHamcrest (~> 5.1)
-  - Tune (4.1.0)
+  - Tune (4.5.0)
 
 DEPENDENCIES:
   - ATInternet-iOS-ObjC-SDK/iOS (= 2.2.0)
@@ -42,7 +42,7 @@ DEPENDENCIES:
   - GoogleAnalytics (= 3.13.0)
   - GoogleTagManager (= 3.12.1)
   - OCMockito (~> 3.0)
-  - Tune (= 4.1.0)
+  - Tune (= 4.5.0)
 
 SPEC CHECKSUMS:
   ATInternet-iOS-ObjC-SDK: 8d6fea9247384678f2e3d4347ec8b015460b6c8f
@@ -58,6 +58,6 @@ SPEC CHECKSUMS:
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
   OCHamcrest: 5c1d441c5a82fb18ac17c2aeb52ec1a99edb971b
   OCMockito: 2cb6c2267cbc76537be56281cd47cdb5a7c27541
-  Tune: 5f57aa437d29fd9a94f83283457c1f867cf4cec1
+  Tune: e1f0d196e70360e514708ad5eee9fc9180b7b4f9
 
 COCOAPODS: 0.39.0

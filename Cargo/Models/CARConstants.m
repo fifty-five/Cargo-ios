@@ -25,12 +25,15 @@ NSString *const SCREEN_NAME = @"screenName";
 
 #pragma event
 NSString *const EVENT_NAME = @"eventName";
+NSString *const EVENT_ID = @"eventId";
 NSString *const EVENT_VALUE = @"eventValue";
 NSString *const EVENT_TYPE = @"eventType";
 
 #pragma user
 NSString *const USER_ID = @"userId";
 NSString *const USER_AGE = @"userAge";
+NSString *const USER_EMAIL = @"userEmail";
+NSString *const USER_NAME = @"userName";
 NSString *const USER_GENDER = @"userGender";
 NSString *const USER_GOOGLE_ID = @"userGoogleId";
 NSString *const USER_TWITTER_ID = @"userTwitterId";

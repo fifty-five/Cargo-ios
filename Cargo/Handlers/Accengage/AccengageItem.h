@@ -10,4 +10,10 @@
 
 @interface AccengageItem : NSObject
 
+@property NSString* ID;
+@property NSString* label;
+@property NSString* category;
+@property double price;
+@property NSInteger quantity;
+
 @end

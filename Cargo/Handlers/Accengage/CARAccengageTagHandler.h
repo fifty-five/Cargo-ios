@@ -7,7 +7,15 @@
 //
 
 #import "CARTagHandler.h"
+#import "AccengageItem.h"
+#import "CARConstants.h"
+#import "BMA4SSDK.h"
 
+/**
+ *  The class which handles all the interactions and event calls with the Accengage SDK.
+ */
 @interface CARAccengageTagHandler : CARTagHandler
+
+@property Cargo* cargo;
 
 @end

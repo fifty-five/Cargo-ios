@@ -5,7 +5,7 @@
       "dependencies":[
         {
           "name": "GoogleAnalytics",
-          "version" : "3.13.0"
+          "version" : "~> 3.16.0"
         }
       ]
     },
@@ -42,6 +42,15 @@
         {
           "name": "Firebase",
           "version" : "3.3.0"
+        }
+      ]
+    },
+    {
+      "name":"Accengage",
+      "dependencies":[
+        {
+          "name": "Accengage-iOS-SDK",
+          "version" : "~> 5.6.0"
         }
       ]
     }

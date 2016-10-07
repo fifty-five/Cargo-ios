@@ -46,6 +46,7 @@
 
 
 -(void) registerHandlers;
+-(BOOL) isLaunchOptionsSet;
 
 
 /**

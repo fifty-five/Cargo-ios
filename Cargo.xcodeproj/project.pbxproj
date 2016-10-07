@@ -556,6 +556,7 @@
 					};
 					BF37DECB1BC540A80031876D = {
 						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = 79FS8B67FE;
 					};
 					BF37DEE61BC540A80031876D = {
 						CreatedOnToolsVersion = 7.0.1;
@@ -987,6 +988,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 79FS8B67FE;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1005,6 +1007,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 79FS8B67FE;
 				INFOPLIST_FILE = App/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fiftyfive.App;

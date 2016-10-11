@@ -10,6 +10,7 @@
 		409D190B835F1142118477A3 /* libPods-Cargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65ED3BB5BA6DE253B88CCEFF /* libPods-Cargo.a */; };
 		803606791BCE9191006EDA98 /* CARFacebookTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 803606781BCE9191006EDA98 /* CARFacebookTagHandler.m */; };
 		8036067D1BCE9964006EDA98 /* FacebookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8036067C1BCE9964006EDA98 /* FacebookTests.m */; };
+		804093D21DABF76F00E564A2 /* AccengageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 804093D11DABF76F00E564A2 /* AccengageTests.m */; };
 		80A88A1C1DA7A9E2005C15C9 /* CARAccengageTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A88A1B1DA7A9E2005C15C9 /* CARAccengageTagHandler.m */; };
 		80A88A1F1DA7F292005C15C9 /* AccengageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A88A1E1DA7F292005C15C9 /* AccengageItem.m */; };
 		80C3DDBE1D3E879D00BE290A /* CARFirebaseTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C3DDBD1D3E879D00BE290A /* CARFirebaseTagHandler.m */; };
@@ -99,6 +100,7 @@
 		803606771BCE9191006EDA98 /* CARFacebookTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARFacebookTagHandler.h; sourceTree = "<group>"; };
 		803606781BCE9191006EDA98 /* CARFacebookTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARFacebookTagHandler.m; sourceTree = "<group>"; };
 		8036067C1BCE9964006EDA98 /* FacebookTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookTests.m; sourceTree = "<group>"; };
+		804093D11DABF76F00E564A2 /* AccengageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccengageTests.m; path = Accengage/AccengageTests.m; sourceTree = "<group>"; };
 		80A88A1A1DA7A9E2005C15C9 /* CARAccengageTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CARAccengageTagHandler.h; path = Accengage/CARAccengageTagHandler.h; sourceTree = "<group>"; };
 		80A88A1B1DA7A9E2005C15C9 /* CARAccengageTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CARAccengageTagHandler.m; path = Accengage/CARAccengageTagHandler.m; sourceTree = "<group>"; };
 		80A88A1D1DA7F292005C15C9 /* AccengageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccengageItem.h; path = Accengage/AccengageItem.h; sourceTree = "<group>"; };
@@ -229,6 +231,14 @@
 			path = Facebook;
 			sourceTree = "<group>";
 		};
+		804093D01DABF70200E564A2 /* Accengage */ = {
+			isa = PBXGroup;
+			children = (
+				804093D11DABF76F00E564A2 /* AccengageTests.m */,
+			);
+			name = Accengage;
+			sourceTree = "<group>";
+		};
 		80A88A191DA7A99C005C15C9 /* Accengage */ = {
 			isa = PBXGroup;
 			children = (
@@ -345,6 +355,7 @@
 		BF37DEB21BC51FF90031876D /* CargoTest */ = {
 			isa = PBXGroup;
 			children = (
+				804093D01DABF70200E564A2 /* Accengage */,
 				9CE17DE71BCEA01200833399 /* AT */,
 				8036067B1BCE9964006EDA98 /* Facebook */,
 				80C3DDCC1D3FC13100BE290A /* Firebase */,
@@ -800,6 +811,7 @@
 				80C3DDCF1D3FC13100BE290A /* FirebaseTests.m in Sources */,
 				80C3DDCA1D3FC0E500BE290A /* TuneTests.m in Sources */,
 				BF37DF341BC57B880031876D /* GoogleAnalyticsTests.m in Sources */,
+				804093D21DABF76F00E564A2 /* AccengageTests.m in Sources */,
 				8036067D1BCE9964006EDA98 /* FacebookTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

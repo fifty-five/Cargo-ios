@@ -44,21 +44,27 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
     if([tagName isEqualToString:ACC_init]){
         [self init:parameters];
     }
-    else if([tagName isEqualToString:ACC_tagEvent]){
-        [self tagEvent:parameters];
+    else if (self.initialized) {
+        if([tagName isEqualToString:ACC_tagEvent]){
+            [self tagEvent:parameters];
+        }
+        else if([tagName isEqualToString:ACC_tagPurchaseEvent]){
+            [self tagEventPurchase:parameters];
+        }
+        else if([tagName isEqualToString:ACC_tagCartEvent]){
+            [self tagCartEvent:parameters];
+        }
+        else if([tagName isEqualToString:ACC_tagLead]){
+            [self tagLead:parameters];
+        }
+        else if([tagName isEqualToString:ACC_updateDeviceInfo]){
+            [self updateDeviceInfo:parameters];
+        }
+        else
+            NSLog(@"Function %@ is not registered in the Accengage handler of Cargo", tagName);
     }
-    else if([tagName isEqualToString:ACC_tagPurchaseEvent]){
-        [self tagEventPurchase:parameters];
-    }
-    else if([tagName isEqualToString:ACC_tagCartEvent]){
-        [self tagCartEvent:parameters];
-    }
-    else if([tagName isEqualToString:ACC_tagLead]){
-        [self tagLead:parameters];
-    }
-    else if([tagName isEqualToString:ACC_updateDeviceInfo]){
-        [self updateDeviceInfo:parameters];
-    }
+    else
+        [[self.cargo logger] logUninitializedFramework];
 }
 
 - (id)init{
@@ -68,6 +74,7 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
         self.valid = NO;
         self.initialized = NO;
         self.cargo = [Cargo sharedHelper];
+        self.tracker = [BMA4STracker class];
     }
     return self;
 }
@@ -87,8 +94,13 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
     NSURL* url = [parameters objectForKey:@"url"];
 
     if(partnerId && privateKey){
-        if ([self.cargo isLaunchOptionsSet])
-            [BMA4STracker trackWithPartnerId:partnerId privateKey:privateKey options:[self.cargo launchOptions]];
+        if ([self.cargo isLaunchOptionsSet]) {
+            [self.tracker trackWithPartnerId:partnerId privateKey:privateKey options:[self.cargo launchOptions]];
+            self.initialized = TRUE;
+        }
+        else {
+            [[self.cargo logger] logMissingParam:@"launchOptions has to be set and" inMethod:@"Accengage/init"];
+        }
     }
     else {
         [[self.cargo logger] logMissingParam:@"partnerId or privateKey" inMethod: @"Accengage/init"];
@@ -96,9 +108,7 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
 
     if (url){
         [[BMA4SNotification sharedBMA4S] applicationHandleOpenUrl:url];
-    }
-    else {
-         [[self.cargo logger] logMissingParam:@"url" inMethod: ACC_init];
+        [[self.cargo logger] logParamSetWithSuccess:@"url" withValue:url];
     }
 }
 
@@ -113,17 +123,17 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
 -(void)tagEvent:(NSDictionary*)parameters{
     // change the parameters as a mutable dictionary
     NSMutableDictionary *params = [parameters mutableCopy];
-    NSMutableArray *eventParams = [[NSMutableArray init] alloc];
+    NSMutableArray *eventParams = [[NSMutableArray alloc] init];
     NSInteger eventType = [CARUtils castToNSInteger:[params objectForKey:EVENT_TYPE] withDefault:-1];
     // remove the entry for EVENT_TYPE in order to avoid finding it in the array of parameters
     [params removeObjectForKey:EVENT_TYPE];
-    if (eventType != -1) {
+    if (eventType > 1000) {
         for (NSMutableString *key in params) {
             // rebuilding the dictionary as an array of strings
-            [eventParams addObject:[key stringByAppendingString:params[key]]];
+            [eventParams addObject:[key stringByAppendingString:[@": " stringByAppendingString:params[key]]]];
         }
         // send the event
-        [BMA4STracker trackEventWithType:(NSInteger) eventType parameters:(NSArray *) eventParams];
+        [self.tracker trackEventWithType:(NSInteger) eventType parameters:(NSArray *) eventParams];
     }
     else {
         [[self.cargo logger] logMissingParam:EVENT_TYPE inMethod: ACC_tagEvent];
@@ -147,25 +157,21 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
     if (currencyCode && purchaseId) {
         // check for TRANSACTION_PRODUCTS, creation of an array of accengage items
         NSArray *itemArray = [CARUtils castToNSArray:[parameters objectForKey:TRANSACTION_PRODUCTS]];
-        if (itemArray) {
+        if (itemArray && [itemArray[0] class] == [AccengageItem class]) {
             NSMutableArray *finalArray = [NSMutableArray array];
             for (AccengageItem* item in itemArray) {
-                [finalArray addObject:[BMA4SPurchasedItem itemWithId:item.ID
-                                                               label:item.label
-                                                            category:item.category
-                                                               price:item.price
-                                                            quantity:item.quantity]];
+                [finalArray addObject:[item toA4SItem]];
             }
             double total = [[CARUtils castToNSNumber:[parameters objectForKey:TRANSACTION_TOTAL]] doubleValue];
             if (total)
-                [BMA4STracker trackPurchaseWithId:purchaseId currency:currencyCode items:finalArray totalPrice: total];
+                [self.tracker trackPurchaseWithId:purchaseId currency:currencyCode items:finalArray totalPrice: total];
             else
-                [BMA4STracker trackPurchaseWithId:purchaseId currency:currencyCode items:finalArray];
+                [self.tracker trackPurchaseWithId:purchaseId currency:currencyCode items:finalArray];
         }
         // if TRANSACTION_PRODUCTS isn't set, check for TRANSACTION_TOTAL
         else if ([parameters objectForKey:TRANSACTION_TOTAL]) {
             double total = [[CARUtils castToNSNumber:[parameters objectForKey:TRANSACTION_TOTAL]] doubleValue];
-            [BMA4STracker trackPurchaseWithId:purchaseId currency:currencyCode totalPrice: total];
+            [self.tracker trackPurchaseWithId:purchaseId currency:currencyCode totalPrice: total];
         }
         else
             [[self.cargo logger] logMissingParam:@"transactionTotal and/or transactionProducts" inMethod: ACC_tagPurchaseEvent];
@@ -187,7 +193,7 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
     NSString *currencyCode = [CARUtils castToNSString:[parameters objectForKey:@"currencyCode"]];
     AccengageItem* item = [parameters objectForKey:@"product"];
     if (cartId && currencyCode && item) {
-        [BMA4STracker trackCartWithId:cartId forArticleWithId:item.ID andLabel:item.label category:item.category price:item.price currency:currencyCode quantity:item.quantity];
+        [self.tracker trackCartWithId:cartId forArticleWithId:item.ID andLabel:item.label category:item.category price:item.price currency:currencyCode quantity:item.quantity];
     }
     else
         [[self.cargo logger] logMissingParam:@"cartId or currencyCode or product" inMethod: ACC_tagCartEvent];
@@ -203,7 +209,7 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
     NSString *leadLabel = [CARUtils castToNSString:[parameters objectForKey:@"leadLabel"]];
     NSString *leadValue = [CARUtils castToNSString:[parameters objectForKey:@"leadValue"]];
     if (leadLabel && leadValue)
-        [BMA4STracker trackLeadWithLabel:leadLabel value:leadValue];
+        [self.tracker trackLeadWithLabel:leadLabel value:leadValue];
     else
         [[self.cargo logger] logMissingParam:@"leadLabel or leadValue" inMethod: ACC_tagLead];
 }
@@ -214,7 +220,7 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
 //
 //@param parameters Dictionary of parameters you want to be set for this device.
 -(void)updateDeviceInfo:(NSDictionary*)parameters{
-    [BMA4STracker updateDeviceInfo:parameters];
+    [self.tracker updateDeviceInfo:parameters];
 }
 
 @end

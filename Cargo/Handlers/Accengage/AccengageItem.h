@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BMA4SSDK.h"
 
 @interface AccengageItem : NSObject
 
@@ -15,5 +16,8 @@
 @property NSString* category;
 @property double price;
 @property NSInteger quantity;
+
+- (id)initWithId:(NSString*)ID label:(NSString*)label category:(NSString*)category price:(double)price quantity:(NSInteger)quantity;
+-(BMA4SPurchasedItem*)toA4SItem;
 
 @end

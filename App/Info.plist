@@ -43,9 +43,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+    	<string>bma4sreceiver</string>
+	</array>
 </dict>
-<key>LSApplicationQueriesSchemes</key>
-<array>
-    <string>bma4sreceiver</string>
-</array>
 </plist>

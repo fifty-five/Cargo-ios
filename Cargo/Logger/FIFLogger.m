@@ -30,7 +30,7 @@ void FIFLog(TAGLoggerLogLevelType intentLevel,
         NSString *logMessage = [[NSString alloc]
                                  initWithFormat:messageFormat
                                  arguments:args];
-        NSLog(refToSelf.format,
+        NSLog(@"[%@] - %@ - %@",
               refToSelf.context,
               [refToSelf nameOfLevel:intentLevel],
               logMessage);

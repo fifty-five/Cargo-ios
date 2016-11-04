@@ -24,7 +24,7 @@ end
 target 'CargoTest' do
   import_gtm
   import_pods
-  pod 'OCMockito', '~> 3.0'
+  pod 'OCMockito', '~> 4.0.0'
 end
 
 target 'App' do

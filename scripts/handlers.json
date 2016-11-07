@@ -50,7 +50,7 @@
       "dependencies":[
         {
           "name": "Accengage-iOS-SDK",
-          "version" : "~> 5.6.0"
+          "version" : "~> 6.0.0"
         }
       ]
     }

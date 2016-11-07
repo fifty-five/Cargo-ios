@@ -74,7 +74,7 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
         self.valid = NO;
         self.initialized = NO;
         self.cargo = [Cargo sharedHelper];
-        self.tracker = [BMA4STracker class];
+        self.tracker = [Accengage class];
     }
     return self;
 }
@@ -89,26 +89,19 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
 //
 //@param parameters   Dictionary of parameters which should contain the partner_id and the private_key
 -(void)init:(NSDictionary*)parameters{
-    NSString* partnerId = [CARUtils castToNSString:[parameters objectForKey:@"partnerId"]];
+    NSString* appId = [CARUtils castToNSString:[parameters objectForKey:@"applicationId"]];
     NSString* privateKey = [CARUtils castToNSString:[parameters objectForKey:@"privateKey"]];
-    NSURL* url = [parameters objectForKey:@"url"];
 
-    if(partnerId && privateKey){
-        if ([self.cargo isLaunchOptionsSet]) {
-            [self.tracker trackWithPartnerId:partnerId privateKey:privateKey options:[self.cargo launchOptions]];
-            self.initialized = TRUE;
-        }
-        else {
-            [[self.cargo logger] logMissingParam:@"launchOptions has to be set and" inMethod:@"Accengage/init"];
-        }
+    if(appId && privateKey){
+        ACCConfiguration *config = [ACCConfiguration defaultConfig];
+        config.appId = appId;
+        config.appPrivateKey = privateKey;
+        
+        [self.tracker startWithConfig:config];
+        self.initialized = TRUE;
     }
     else {
         [[self.cargo logger] logMissingParam:@"partnerId or privateKey" inMethod: @"Accengage/init"];
-    }
-
-    if (url){
-        [[BMA4SNotification sharedBMA4S] applicationHandleOpenUrl:url];
-        [[self.cargo logger] logParamSetWithSuccess:@"url" withValue:url];
     }
 }
 
@@ -133,7 +126,7 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
             [eventParams addObject:[key stringByAppendingString:[@": " stringByAppendingString:params[key]]]];
         }
         // send the event
-        [self.tracker trackEventWithType:(NSInteger) eventType parameters:(NSArray *) eventParams];
+        [self.tracker trackEvent:eventType withParameters:eventParams];
     }
     else {
         [[self.cargo logger] logMissingParam:EVENT_TYPE inMethod: ACC_tagEvent];
@@ -162,16 +155,16 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
             for (AccengageItem* item in itemArray) {
                 [finalArray addObject:[item toA4SItem]];
             }
-            double total = [[CARUtils castToNSNumber:[parameters objectForKey:TRANSACTION_TOTAL]] doubleValue];
+            NSNumber* total = [CARUtils castToNSNumber:[parameters objectForKey:TRANSACTION_TOTAL]];
             if (total)
-                [self.tracker trackPurchaseWithId:purchaseId currency:currencyCode items:finalArray totalPrice: total];
+               [self.tracker trackPurchase:purchaseId currency:currencyCode items:finalArray amount: total];
             else
-                [self.tracker trackPurchaseWithId:purchaseId currency:currencyCode items:finalArray];
+                [self.tracker trackPurchase:purchaseId currency:currencyCode items:finalArray amount:nil];
         }
         // if TRANSACTION_PRODUCTS isn't set, check for TRANSACTION_TOTAL
         else if ([parameters objectForKey:TRANSACTION_TOTAL]) {
-            double total = [[CARUtils castToNSNumber:[parameters objectForKey:TRANSACTION_TOTAL]] doubleValue];
-            [self.tracker trackPurchaseWithId:purchaseId currency:currencyCode totalPrice: total];
+            NSNumber* total = [CARUtils castToNSNumber:[parameters objectForKey:TRANSACTION_TOTAL]];
+            [self.tracker trackPurchase:purchaseId currency:currencyCode items:nil amount: total];
         }
         else
             [[self.cargo logger] logMissingParam:@"transactionTotal and/or transactionProducts" inMethod: ACC_tagPurchaseEvent];
@@ -193,7 +186,7 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
     NSString *currencyCode = [CARUtils castToNSString:[parameters objectForKey:@"currencyCode"]];
     AccengageItem* item = [parameters objectForKey:@"product"];
     if (cartId && currencyCode && item) {
-        [self.tracker trackCartWithId:cartId forArticleWithId:item.ID andLabel:item.label category:item.category price:item.price currency:currencyCode quantity:item.quantity];
+        [self.tracker trackCart:cartId currency:currencyCode item:[item toA4SItem]];
     }
     else
         [[self.cargo logger] logMissingParam:@"cartId or currencyCode or product" inMethod: ACC_tagCartEvent];
@@ -209,7 +202,7 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
     NSString *leadLabel = [CARUtils castToNSString:[parameters objectForKey:@"leadLabel"]];
     NSString *leadValue = [CARUtils castToNSString:[parameters objectForKey:@"leadValue"]];
     if (leadLabel && leadValue)
-        [self.tracker trackLeadWithLabel:leadLabel value:leadValue];
+        [self.tracker trackLead:leadLabel value:leadValue];
     else
         [[self.cargo logger] logMissingParam:@"leadLabel or leadValue" inMethod: ACC_tagLead];
 }

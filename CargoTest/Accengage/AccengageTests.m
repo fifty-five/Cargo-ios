@@ -48,7 +48,7 @@ NSString *ACC_TAG_UPDATE = @"ACC_updateDeviceInfo";
     // Put setup code here. This method is called before the invocation of each test method in the class.
     _handler = [[CARAccengageTagHandler alloc] init];
     _cargoMock = mock([Cargo class]);
-    _trackMock = mockClass([BMA4STracker class]);
+    _trackMock = mockClass([Accengage class]);
     
     [_handler setCargo:_cargoMock];
     [_handler setTracker:_trackMock];
@@ -66,28 +66,19 @@ NSString *ACC_TAG_UPDATE = @"ACC_updateDeviceInfo";
 -(void)testValidACC_init{
     [given([_cargoMock isLaunchOptionsSet]) willReturnBool:true];
     
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"fifty-five.com", @"partnerId",@"2345",@"privateKey", nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"fifty-five.com", @"applicationId",@"2345",@"privateKey", nil];
     [_handler execute:ACC_INIT parameters:dict];
     
-    [verify(_trackMock) trackWithPartnerId:anything() privateKey:anything() options:anything()];
+    [verify(_trackMock) startWithConfig:anything()];
 }
 
--(void)testFailACC_init1{
-    [given([_cargoMock isLaunchOptionsSet]) willReturnBool:false];
-    
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"fifty-five.com", @"partnerId",@"2345",@"privateKey", nil];
-    [_handler execute:ACC_INIT parameters:dict];
-    
-    [verifyCount(_trackMock, times(0)) trackWithPartnerId:anything() privateKey:anything() options:anything()];
-}
-
--(void)testFailACC_init2{
+-(void)testFailACC_init{
     [given([_cargoMock isLaunchOptionsSet]) willReturnBool:true];
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"2345",@"privateKey", nil];
     [_handler execute:ACC_INIT parameters:dict];
     
-    [verifyCount(_trackMock, times(0)) trackWithPartnerId:anything() privateKey:anything() options:anything()];
+    [verifyCount(_trackMock, times(0)) startWithConfig:anything()];
 }
 
 
@@ -97,7 +88,7 @@ NSString *ACC_TAG_UPDATE = @"ACC_updateDeviceInfo";
     [_handler setInitialized:false];
     [_handler execute:ACC_TAG_EVENT parameters:dict];
     
-    [verifyCount(_trackMock, times(0)) trackEventWithType:1002 parameters:anything()];
+    [verifyCount(_trackMock, times(0)) trackEvent:1002 withParameters:anything()];
 }
 
 
@@ -107,7 +98,7 @@ NSString *ACC_TAG_UPDATE = @"ACC_updateDeviceInfo";
     [_handler setInitialized:true];
     [_handler execute:ACC_TAG_EVENT parameters:dict];
     
-    [verify(_trackMock) trackEventWithType:1002 parameters:@[]];
+    [verify(_trackMock) trackEvent:1002 withParameters:@[]];
 }
 
 -(void)testComplexCorrectACC_tagEvent{
@@ -115,7 +106,7 @@ NSString *ACC_TAG_UPDATE = @"ACC_updateDeviceInfo";
     [_handler setInitialized:true];
     [_handler execute:ACC_TAG_EVENT parameters:dict];
     
-    [verify(_trackMock) trackEventWithType:1005 parameters:@[@"param1: value1", @"param2: value2"]];
+    [verify(_trackMock) trackEvent:1005 withParameters:@[@"param1: value1", @"param2: value2"]];
 }
 
 -(void)testFailACC_tagEvent{
@@ -123,7 +114,7 @@ NSString *ACC_TAG_UPDATE = @"ACC_updateDeviceInfo";
     [_handler setInitialized:true];
     [_handler execute:ACC_TAG_EVENT parameters:dict];
     
-    [verifyCount(_trackMock, times(0)) trackEventWithType:1000 parameters:anything()];
+    [verifyCount(_trackMock, times(0)) trackEvent:1000 withParameters:anything()];
 }
 
 
@@ -136,17 +127,19 @@ NSString *ACC_TAG_UPDATE = @"ACC_updateDeviceInfo";
     [_handler setInitialized:true];
     [_handler execute:ACC_TAG_PURCHASE parameters:dict];
     
-    [verify(_trackMock) trackPurchaseWithId:@"5542" currency:@"USD" totalPrice: 14.99];
+    [verify(_trackMock) trackPurchase:@"5542" currency:@"USD" items:nil amount:[NSNumber numberWithDouble:14.99]];
 }
 
 -(void)testMediumCorrectACC_tagPurchase{
     AccengageItem *item1 = [[AccengageItem alloc] initWithId:@"abd123"
-                                                    label:@"item1"
-                                                 category:@"cat1"
-                                                    price:(double)19.99
-                                                 quantity: 10];
+                                                        name:@"item1"
+                                                       brand:@"brand1"
+                                                    category:@"cat1"
+                                                       price:(double)19.99
+                                                    quantity: 10];
     AccengageItem *item2 = [[AccengageItem alloc] initWithId:@"321abc"
-                                                       label:@"item2"
+                                                        name:@"item2"
+                                                       brand:@"brand2"
                                                     category:@"cat2"
                                                        price:(double)99.99
                                                     quantity: 2];
@@ -158,19 +151,19 @@ NSString *ACC_TAG_UPDATE = @"ACC_updateDeviceInfo";
     [_handler setInitialized:true];
     [_handler execute:ACC_TAG_PURCHASE parameters:dict];
     
-    [verifyCount(_trackMock, times(1)) trackPurchaseWithId:@"5542" currency:@"USD" items: anything()];
-    [verifyCount(_trackMock, times(0)) trackPurchaseWithId:@"5542" currency:@"USD" totalPrice:14.99];;
-    [verifyCount(_trackMock, times(0)) trackPurchaseWithId:@"5542" currency:@"USD" items: anything() totalPrice:14.99];
+    [verifyCount(_trackMock, times(1)) trackPurchase:@"5542" currency:@"USD" items:anything() amount:nil];
 }
 
 -(void)testComplexCorrectACC_tagPurchase{
     AccengageItem *item1 = [[AccengageItem alloc] initWithId:@"abd123"
-                                                       label:@"item1"
+                                                        name:@"item1"
+                                                       brand:@"brand1"
                                                     category:@"cat1"
                                                        price:(double)19.99
                                                     quantity: 10];
     AccengageItem *item2 = [[AccengageItem alloc] initWithId:@"321abc"
-                                                       label:@"item2"
+                                                        name:@"item2"
+                                                       brand:@"brand2"
                                                     category:@"cat2"
                                                        price:(double)99.99
                                                     quantity: 2];
@@ -183,9 +176,7 @@ NSString *ACC_TAG_UPDATE = @"ACC_updateDeviceInfo";
     [_handler setInitialized:true];
     [_handler execute:ACC_TAG_PURCHASE parameters:dict];
     
-    [verifyCount(_trackMock, times(0)) trackPurchaseWithId:@"5542" currency:@"USD" items: anything()];
-    [verifyCount(_trackMock, times(0)) trackPurchaseWithId:@"5542" currency:@"USD" totalPrice:14.99];;
-    [verifyCount(_trackMock, times(1)) trackPurchaseWithId:@"5542" currency:@"USD" items: anything() totalPrice:14.99];
+    [verifyCount(_trackMock, times(1)) trackPurchase:@"5542" currency:@"USD" items:anything() amount:[NSNumber numberWithDouble:14.99]];
 }
 
 -(void)testFallbackACC_tagPurchase{
@@ -200,9 +191,7 @@ NSString *ACC_TAG_UPDATE = @"ACC_updateDeviceInfo";
     [_handler setInitialized:true];
     [_handler execute:ACC_TAG_PURCHASE parameters:dict];
     
-    [verifyCount(_trackMock, times(0)) trackPurchaseWithId:@"5542" currency:@"USD" items: anything()];
-    [verifyCount(_trackMock, times(1)) trackPurchaseWithId:@"5542" currency:@"USD" totalPrice:14.99];
-    [verifyCount(_trackMock, times(0)) trackPurchaseWithId:@"5542" currency:@"USD" items: anything() totalPrice:14.99];
+    [verifyCount(_trackMock, times(1)) trackPurchase:@"5542" currency:@"USD" items:nil amount:[NSNumber numberWithDouble:14.99]];
 }
 
 -(void)testFailedACC_tagPurchase{
@@ -212,14 +201,15 @@ NSString *ACC_TAG_UPDATE = @"ACC_updateDeviceInfo";
     [_handler setInitialized:true];
     [_handler execute:ACC_TAG_PURCHASE parameters:dict];
     
-    [verifyCount(_trackMock, times(0)) trackPurchaseWithId:@"5542" currency:@"USD" totalPrice:14.99];
+    [verifyCount(_trackMock, times(0)) trackPurchase:anything() currency:anything() items:anything() amount:anything()];
 }
 
 
 
 -(void)testCorrectACC_tagCart{
     AccengageItem *item1 = [[AccengageItem alloc] initWithId:@"abd123"
-                                                       label:@"item1"
+                                                        name:@"item1"
+                                                       brand:@"brand1"
                                                     category:@"cat1"
                                                        price:(double)19.99
                                                     quantity: 10];
@@ -230,7 +220,7 @@ NSString *ACC_TAG_UPDATE = @"ACC_updateDeviceInfo";
     [_handler setInitialized:true];
     [_handler execute:ACC_TAG_Cart parameters:dict];
     
-    [verify(_trackMock) trackCartWithId:@"5542" forArticleWithId:item1.ID andLabel:item1.label category:item1.category price:item1.price currency:@"USD" quantity:item1.quantity];
+    [verify(_trackMock) trackCart:@"5542" currency:@"USD" item:anything()];
 }
 
 
@@ -242,7 +232,7 @@ NSString *ACC_TAG_UPDATE = @"ACC_updateDeviceInfo";
     [_handler setInitialized:true];
     [_handler execute:ACC_TAG_LEAD parameters:dict];
     
-    [verify(_trackMock) trackLeadWithLabel:@"test1" value:@"test2"];
+    [verify(_trackMock) trackLead:@"test1" value:@"test2"];
 }
 
 
@@ -254,25 +244,7 @@ NSString *ACC_TAG_UPDATE = @"ACC_updateDeviceInfo";
     [_handler setInitialized:true];
     [_handler execute:ACC_TAG_UPDATE parameters:dict];
     
-    [verify(_trackMock) updateDeviceInfo:dict];
+    [verify(_trackMock) updateDeviceInfo:@{@"leadLabel":@"test1", @"leadValue":@"test2"}];
 }
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -5,6 +5,7 @@ xcode_scheme: Cargo
 xcode_sdk: iphonesimulator8.4
 
 before_install: gem install cocoapods --pre
+before_install: pod repo update
 
 script:
   - xctool -workspace Cargo.xcworkspace -scheme Cargo build test -sdk iphonesimulator

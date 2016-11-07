@@ -10,10 +10,11 @@
 
 @implementation AccengageItem
 
-- (id)initWithId:(NSString*)ID label:(NSString*)label category:(NSString*)category price:(double)price quantity:(NSInteger)quantity {
+- (id)initWithId:(NSString*)ID name:(NSString*)name brand:(NSString*)brand category:(NSString*)category price:(double)price quantity:(NSInteger)quantity {
     if (self = [super init]) {
         self.ID = ID;
-        self.label = label;
+        self.name = name;
+        self.brand = brand;
         self.category = category;
         self.price = price;
         self.quantity = quantity;
@@ -21,12 +22,13 @@
     return self;
 }
 
--(BMA4SPurchasedItem*)toA4SItem{
-    BMA4SPurchasedItem *item = [BMA4SPurchasedItem itemWithId:self.ID
-                                                        label:self.label
-                                                     category:self.category
-                                                        price:self.price
-                                                     quantity:self.quantity];
+-(ACCCartItem*)toA4SItem{
+    ACCCartItem *item = [ACCCartItem itemWithId:self.ID
+                                           name:self.name
+                                          brand:self.brand
+                                       category:self.category
+                                          price:self.price
+                                       quantity:self.quantity];
     return item;
 }
 

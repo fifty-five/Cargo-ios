@@ -2,13 +2,13 @@ language: objective-c
 osx_image: xcode8
 xcode_workspace: Cargo.xcworkspace
 xcode_scheme: Cargo
-xcode_sdk: iphonesimulator8.4
+xcode_sdk: iphonesimulator9.3
 
 before_install: gem install cocoapods --pre
 before_install: pod repo update
 
 script:
-  - xctool -workspace Cargo.xcworkspace -scheme Cargo build test -sdk iphonesimulator
+  - xcodebuild -workspace Cargo.xcworkspace -scheme Cargo build test -destination iphonesimulator9.3
 
 notifications:
   slack: cargo55:oT6MdyRm7WZzNe51cLdbsVo7

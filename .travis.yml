@@ -5,7 +5,7 @@ before_install: gem install cocoapods --pre
 before_install: pod repo update --silent
 
 script:
-  - xcodebuild build test 'ONLY_ACTIVE_ARCH=NO' 'ARCHS=arm64 armv7 armv7s i386 x86_64' -workspace Cargo.xcworkspace -scheme Cargo -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4'
+  - xcodebuild build 'ONLY_ACTIVE_ARCH=NO' 'ARCHS=arm64 armv7 armv7s i386 x86_64' -workspace Cargo.xcworkspace -scheme Cargo -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4'
   - xcodebuild test 'ONLY_ACTIVE_ARCH=NO' 'ARCHS=arm64 armv7 armv7s i386 x86_64' -workspace Cargo.xcworkspace -scheme Cargo -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4'
 
 notifications:

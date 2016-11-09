@@ -8,7 +8,7 @@ before_install: gem install cocoapods --pre
 before_install: pod repo update --silent
 
 script:
-  - xcodebuild -workspace Cargo.xcworkspace -scheme Cargo -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' iphonesimulator build test
+  - xcodebuild -workspace Cargo.xcworkspace -scheme Cargo -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' build test
 
 notifications:
   slack: cargo55:oT6MdyRm7WZzNe51cLdbsVo7

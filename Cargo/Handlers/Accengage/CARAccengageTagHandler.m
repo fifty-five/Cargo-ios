@@ -14,8 +14,15 @@
 
 @end
 
+
+/**
+ The class which handles interactions with the Accengage SDK.
+ */
 @implementation CARAccengageTagHandler
 
+/* *********************************** Variables Declaration ************************************ */
+
+/** Constants used to define callbacks in the register and in the execute method */
 NSString *ACC_init = @"ACC_init";
 NSString *ACC_tagEvent = @"ACC_tagEvent";
 NSString *ACC_tagPurchaseEvent = @"ACC_tagPurchaseEvent";
@@ -23,6 +30,14 @@ NSString *ACC_tagCartEvent = @"ACC_tagCartEvent";
 NSString *ACC_tagLead = @"ACC_tagLead";
 NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
 
+
+/* ********************************** Handler core methods ************************************** */
+
+/**
+ Called on runtime to instantiate the handler.
+ Register the callbacks to the container. After a [dataLayer push:@{}],
+ these will trigger the execute method of this handler.
+ */
 +(void)load{
     CARAccengageTagHandler *handler = [[CARAccengageTagHandler alloc] init];
     
@@ -34,16 +49,39 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
     [Cargo registerTagHandler:handler withKey:ACC_updateDeviceInfo];
 }
 
-//Call back from GTM container to execute a specific action
-//after tag and parameters are received
-//
-//@param tagName  The tag name
-//@param parameters   Dictionary of parameters
+
+/**
+ Instantiate the handler with its key and name properties
+ Initialize its attribute to the default values.
+
+ @return returns the instance of the class
+ */
+- (id)init{
+    if (self = [super init]) {
+        self.key = @"ACC";
+        self.name = @"Accengage";
+
+        self.valid = NO;
+        self.initialized = NO;
+        self.cargo = [Cargo sharedHelper];
+        self.tracker = [Accengage class];
+    }
+    return self;
+}
+
+/**
+ Call back from GTM container to execute a specific action
+ after tag and parameters are received
+
+ @param tagName The tag name of the aimed method
+ @param parameters Dictionary of parameters
+ */
 -(void) execute:(NSString *)tagName parameters:(NSDictionary *)parameters{
     [super execute:tagName parameters:parameters];
     if([tagName isEqualToString:ACC_init]){
         [self init:parameters];
     }
+    // check whether the SDK has been initialized before calling any method
     else if (self.initialized) {
         if([tagName isEqualToString:ACC_tagEvent]){
             [self tagEvent:parameters];
@@ -67,52 +105,58 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
         [[self.cargo logger] logUninitializedFramework];
 }
 
-- (id)init{
-    if (self = [super init]) {
-        self.key = @"ACC";
-        self.name = @"Accengage";
-        self.valid = NO;
-        self.initialized = NO;
-        self.cargo = [Cargo sharedHelper];
-        self.tracker = [Accengage class];
-    }
-    return self;
-}
-
+/**
+ Called in registerHandlers to validate a handler and check for its initialization.
+ */
 - (void)validate
 {
     // Nothing is required
     self.valid = TRUE;
 }
 
-//Is called to set the tracking ID
-//
-//@param parameters   Dictionary of parameters which should contain the partner_id and the private_key
+
+/* ************************************ SDK initialization ************************************** */
+
+/**
+ The method you need to call first. Allow you to initialize Accengage SDK
+ Register the private key and the partner ID to the Accengage SDK.
+
+ @param parameters :
+    - privateKey: private key Accengage gives when you register your app
+    - partnerId: partner ID Accengage gives when you register your app
+ */
 -(void)init:(NSDictionary*)parameters{
-    NSString* appId = [CARUtils castToNSString:[parameters objectForKey:@"applicationId"]];
+    NSString* partnerId = [CARUtils castToNSString:[parameters objectForKey:@"partnerId"]];
     NSString* privateKey = [CARUtils castToNSString:[parameters objectForKey:@"privateKey"]];
 
-    if(appId && privateKey){
+    if(partnerId && privateKey){
         ACCConfiguration *config = [ACCConfiguration defaultConfig];
-        config.appId = appId;
+        config.appId = partnerId;
         config.appPrivateKey = privateKey;
         
         [self.tracker startWithConfig:config];
+        // now the handler is initialized
         self.initialized = TRUE;
     }
     else {
-        [[self.cargo logger] logMissingParam:@"partnerId or privateKey" inMethod: @"Accengage/init"];
+        [[self.cargo logger] logMissingParam:@"partnerId and/or privateKey" inMethod: @"Accengage/init"];
     }
 }
 
-//The method used to send events to Accengage
-//
-//@param parameters Dictionary of parameters which should contain at least the eventType
-//
-//The event type is an integer defining the type of event. The values below 1000 are reserved for Accengage usage.
-//You can use custom event types starting from 1001.
-//
-//The left content of parameters will be changed into an array of strings. All the strings in the array will be sent.
+
+/* ****************************************** Tracking ****************************************** */
+
+/**
+ Method used to create and fire an event to the Accengage interface
+ The mandatory parameter is EVENT_ID which is a necessity to build the event.
+
+ @param parameters :
+    - eventId: an integer defining the type of event.
+               The values below 1000 are reserved for Accengage usage.
+               You can use custom event types starting from 1001.
+    - other parameters: will be changed into an array of strings build from key + value.
+                        All the strings in the array will be sent.
+ */
 -(void)tagEvent:(NSDictionary*)parameters{
     // change the parameters as a mutable dictionary
     NSMutableDictionary *params = [parameters mutableCopy];
@@ -123,7 +167,9 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
     if (eventType > 1000) {
         for (NSMutableString *key in params) {
             // rebuilding the dictionary as an array of strings
-            [eventParams addObject:[key stringByAppendingString:[@": " stringByAppendingString:params[key]]]];
+            [eventParams addObject:[key stringByAppendingString:
+                                    [@": " stringByAppendingString:params[key]]
+                                    ]];
         }
         // send the event
         [self.tracker trackEvent:eventType withParameters:eventParams];
@@ -133,15 +179,17 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
     }
 }
 
-//The method used to send purchase events to Accengage
-//
-//@param parameters Dictionary of parameters which should contain at least TRANSACTION_ID, currencyCode,
-//and TRANSACTION_TOTAL or TRANSACTION_PRODUCTS
-//
-//                * TRANSACTION_ID : the ID linked to the purchase.
-//                * currencyCode : the currency used for the transaction.
-//                * TRANSACTION_TOTAL : the total amount of the purchase.
-//                * TRANSACTION_PRODUCTS : an array of AccengageItem objects, the items purchased.
+/**
+ The method used to report a purchase in your app in Accengage.
+ TRANSACTION_ID, TRANSACTION_CURRENCY_CODE are required.
+ TRANSACTION_TOTAL and/or TRANSACTION_PRODUCTS is required.
+
+ @param parameters :
+    - transactionId : the ID linked to the purchase.
+    - transactionCurrencyCode : the currency used for the transaction.
+    - transactionTotal : the total amount of the purchase.
+    - transactionProducts : an array of AccengageItem objects, the items purchased.
+ */
 -(void)tagEventPurchase:(NSDictionary*)parameters{
     NSString *purchaseId = [CARUtils castToNSString:[parameters objectForKey:TRANSACTION_ID]];
     NSString *currencyCode = [CARUtils castToNSString:[parameters objectForKey:@"currencyCode"]];
@@ -155,6 +203,7 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
             for (AccengageItem* item in itemArray) {
                 [finalArray addObject:[item toA4SItem]];
             }
+            // if TRANSACTION_TOTAL is set, send a hit with it. Otherwise, send a hit without total.
             NSNumber* total = [CARUtils castToNSNumber:[parameters objectForKey:TRANSACTION_TOTAL]];
             if (total)
                [self.tracker trackPurchase:purchaseId currency:currencyCode items:finalArray amount: total];
@@ -174,17 +223,21 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
     }
 }
 
-//The method used to report add-to-cart events to Accengage
-//
-//@param parameters Dictionary of parameters
-//
-//                * cartId : the ID linked to the add to cart event.
-//                * currencyCode : the currency used for the pricing.
-//                * product : an AccengageItem object, the one added to cart.
+/**
+ The method used to report an "add to cart" event to Accengage. It logs the id of the cart,
+ the currency code and the item which has been added. All the parameters are mandatory.
+
+ @param parameters :
+    - transactionId : the id associated to this cart.
+    - transactionCurrencyCode : the currency used for the transaction.
+    - item (AccengageItem) : the item which is added to the cart.
+ */
 -(void)tagCartEvent:(NSDictionary*)parameters{
     NSString *cartId = [CARUtils castToNSString:[parameters objectForKey:@"cartId"]];
     NSString *currencyCode = [CARUtils castToNSString:[parameters objectForKey:@"currencyCode"]];
     AccengageItem* item = [parameters objectForKey:@"product"];
+
+    // if all the mandatory parameters are set, send the hit
     if (cartId && currencyCode && item) {
         [self.tracker trackCart:cartId currency:currencyCode item:[item toA4SItem]];
     }
@@ -192,12 +245,14 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
         [[self.cargo logger] logMissingParam:@"cartId or currencyCode or product" inMethod: ACC_tagCartEvent];
 }
 
-//The method used to track a lead in Accengage
-//
-//@param parameters Dictionary of parameters
-//
-//                * leadLabel : the label.
-//                * leadValue : the value.
+/**
+ The method used to create and fire a custom lead to Accengage.
+ Both parameters are mandatory.
+
+ @param parameters :
+    - leadLabel : label of the lead
+    - leadValue : value of the lead
+ */
 -(void)tagLead:(NSDictionary*)parameters{
     NSString *leadLabel = [CARUtils castToNSString:[parameters objectForKey:@"leadLabel"]];
     NSString *leadValue = [CARUtils castToNSString:[parameters objectForKey:@"leadValue"]];
@@ -207,11 +262,16 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
         [[self.cargo logger] logMissingParam:@"leadLabel or leadValue" inMethod: ACC_tagLead];
 }
 
+/**
+ A device profile is a set of key/value that are uploaded to Accengage server.
+ You can create a device profile for each device in order to qualify the profile
+ (for example, registering whether the user is opt in for or
+ out of some categories of notifications).
+ In order to update information about a device profile, use this method.
+ If you want to send a date, be sure it is formatted as it follows : "yyyy-MM-dd HH:mm:ss zzz"
 
-//Method used in order to update the device infos, like the device id or name...
-//If you want to send a date, be sure it is formatted as it follows : "yyyy-MM-dd HH:mm:ss zzz"
-//
-//@param parameters Dictionary of parameters you want to be set for this device.
+ @param parameters a dictionary of parameters to update the profile with.
+ */
 -(void)updateDeviceInfo:(NSDictionary*)parameters{
     [self.tracker updateDeviceInfo:parameters];
 }

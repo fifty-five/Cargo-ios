@@ -8,9 +8,27 @@
 
 #import "AccengageItem.h"
 
+
+/**
+ A class which handles item objects transfer from the app to Accengage SDK
+ */
 @implementation AccengageItem
 
-- (id)initWithId:(NSString*)ID name:(NSString*)name brand:(NSString*)brand category:(NSString*)category price:(double)price quantity:(NSInteger)quantity {
+
+/**
+ The init method for the item object
+
+ @param ID the ID of the item
+ @param name the name of the item
+ @param brand the brand of the item
+ @param category the category the item belongs to
+ @param price the price of the item
+ @param quantity the quantity of items concerned
+ @return an item object
+ */
+- (id)initWithId:(NSString*)ID name:(NSString*)name
+           brand:(NSString*)brand category:(NSString*)category
+           price:(double)price quantity:(NSInteger)quantity {
     if (self = [super init]) {
         self.ID = ID;
         self.name = name;
@@ -22,6 +40,11 @@
     return self;
 }
 
+/**
+ A method used to transform an AccengageItem object to an ACCCartItem object
+
+ @return the ACCCartItem with correctly set attributes from the actual AccengageItem object.
+ */
 -(ACCCartItem*)toA4SItem{
     ACCCartItem *item = [ACCCartItem itemWithId:self.ID
                                            name:self.name

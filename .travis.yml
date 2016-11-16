@@ -4,10 +4,10 @@ xcode_workspace: Cargo.xcworkspace
 xcode_scheme: Cargo
 
 before_install: 
-	- gem install cocoapods --pre
-	- pod repo update --silent
-	- brew update
-	- brew install xctool
+  - gem install cocoapods --pre
+  - pod repo update --silent
+  - brew update
+  - brew install xctool
 
 script:
   - xctool -workspace Cargo.xcworkspace -scheme Cargo build test -sdk iphonesimulator

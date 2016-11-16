@@ -50,6 +50,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		80E5B4E11DDC9D2B003F00BE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BF37DD511BC512450031876D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BF37DECB1BC540A80031876D;
+			remoteInfo = App;
+		};
 		BF37DEB71BC51FF90031876D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BF37DD511BC512450031876D /* Project object */;
@@ -514,6 +521,7 @@
 			);
 			dependencies = (
 				BF37DEB81BC51FF90031876D /* PBXTargetDependency */,
+				80E5B4E21DDC9D2B003F00BE /* PBXTargetDependency */,
 			);
 			name = CargoTest;
 			productName = CargoTest;
@@ -591,6 +599,7 @@
 					};
 					BF37DEB01BC51FF90031876D = {
 						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = 79FS8B67FE;
 					};
 					BF37DECB1BC540A80031876D = {
 						CreatedOnToolsVersion = 7.0.1;
@@ -861,6 +870,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		80E5B4E21DDC9D2B003F00BE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BF37DECB1BC540A80031876D /* App */;
+			targetProxy = 80E5B4E11DDC9D2B003F00BE /* PBXContainerItemProxy */;
+		};
 		BF37DEB81BC51FF90031876D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BF37DD581BC512450031876D /* Cargo */;
@@ -1015,6 +1029,7 @@
 			baseConfigurationReference = 05B0D7E0F119185DBABE0A6B /* Pods-CargoTest.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 79FS8B67FE;
 				INFOPLIST_FILE = CargoTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1107,6 +1122,7 @@
 			baseConfigurationReference = 30E65FDB10C5D8C9F46E74B1 /* Pods-CargoTest.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 79FS8B67FE;
 				INFOPLIST_FILE = CargoTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

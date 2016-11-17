@@ -13,24 +13,29 @@
 #import "CARUtils.h"
 
 /**
- *  This class registers and handle all GTM event calls. This classe decides which framework to handle the call received from GTM and routes it.
+ *  This class registers and handle all GTM event calls. This class decides which framework 
+    handles the call received from GTM and routes it. 
+    It also defines basic attributes shared between handlers.
  */
 @class FIFLogger;
 @interface CARTagHandler : NSObject <TAGFunctionCallTagHandler>
 
-
-
 /** Context logger */
 @property (nonatomic, retain) FIFLogger *logger;
 
-
+/** Unique key for this handler */
 @property (nonatomic, retain) NSString *key;
+/** Name of the handler */
 @property (nonatomic, retain) NSString *name;
-@property(assign, readwrite) BOOL initialized;
+/** Defines whether the handler has been instanciated */
 @property(assign, readwrite) BOOL valid;
+/** Defines whether the SDK has been initialized */
+@property(assign, readwrite) BOOL initialized;
 
 
-
+/**
+ Method called in the Cargo class to mark the handler as initialized.
+ */
 - (void)validate;
 
 

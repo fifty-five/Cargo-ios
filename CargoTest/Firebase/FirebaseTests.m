@@ -78,7 +78,7 @@
 - (void)testInitCollectionDefault{
     [given([_firebaseConfMock sharedInstance]) willReturn:_confMock];
 
-    NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys: nil];
+    NSDictionary * dict = [[NSDictionary alloc ] init];
     [_handler execute:@"Firebase_init" parameters:dict];
 
     [verify(_confMock) setAnalyticsCollectionEnabled:YES];
@@ -110,7 +110,7 @@
 }
 
 - (void)testFailFirebaseIdentify{
-    NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys: nil];
+    NSDictionary * dict = [[NSDictionary alloc ] init];
     [_handler execute:@"Firebase_identify" parameters:dict];
 
     [verifyCount(_firebaseAnalyticsMock, times(0)) setUserID:anything()];

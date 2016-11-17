@@ -10,9 +10,14 @@
 #import <Firebase.h>
 #import "CARTagHandler.h"
 
+/**
+ The class which handles interactions with the Firebase SDK.
+ */
 @interface CARFirebaseTagHandler : CARTagHandler
 
+/** The firebase tracker */
 @property Class fireAnalyticsClass;
+/** The Firebase configurator helper */
 @property Class fireConfClass;
 
 @end

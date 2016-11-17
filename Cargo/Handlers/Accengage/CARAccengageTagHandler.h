@@ -16,7 +16,7 @@
  */
 @interface CARAccengageTagHandler : CARTagHandler
 
-@property Cargo* cargo;
+/** The Accengage tracker */
 @property Class tracker;
 
 @end

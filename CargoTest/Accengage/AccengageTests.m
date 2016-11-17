@@ -66,7 +66,7 @@ NSString *ACC_TAG_UPDATE = @"ACC_updateDeviceInfo";
 -(void)testValidACC_init{
     [given([_cargoMock isLaunchOptionsSet]) willReturnBool:true];
     
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"fifty-five.com", @"applicationId",@"2345",@"privateKey", nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"fifty-five.com", @"partnerId",@"2345",@"privateKey", nil];
     [_handler execute:ACC_INIT parameters:dict];
     
     [verify(_trackMock) startWithConfig:anything()];

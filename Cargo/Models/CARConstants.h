@@ -42,6 +42,7 @@ extern NSString *const USER_TWITTER_ID;
 #pragma transaction
 extern NSString *const TRANSACTION_ID;
 extern NSString *const TRANSACTION_TOTAL;
+extern NSString *const TRANSACTION_CURRENCY_CODE;
 extern NSString *const TRANSACTION_PRODUCTS;
 extern NSString *const TRANSACTION_PRODUCT_NAME;
 extern NSString *const TRANSACTION_PRODUCT_SKU;

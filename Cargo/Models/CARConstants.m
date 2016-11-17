@@ -40,9 +40,9 @@ NSString *const USER_TWITTER_ID = @"userTwitterId";
 NSString *const USER_FACEBOOK_ID = @"userFacebookId";
 
 #pragma transaction
-
 NSString *const TRANSACTION_ID = @"transactionId";
 NSString *const TRANSACTION_TOTAL = @"transactionTotal";
+NSString *const TRANSACTION_CURRENCY_CODE = @"transactionCurrencyCode";
 NSString *const TRANSACTION_PRODUCTS = @"transactionProducts";
 NSString *const TRANSACTION_PRODUCT_NAME = @"name";
 NSString *const TRANSACTION_PRODUCT_SKU = @"sku";

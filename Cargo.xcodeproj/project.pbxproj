@@ -24,7 +24,7 @@
 		80CD8C791DD21D450040B567 /* libCargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF37DD591BC512450031876D /* libCargo.a */; };
 		80CD8C7E1DD21E7A0040B567 /* libPods-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80CD8C7D1DD21E7A0040B567 /* libPods-App.a */; };
 		80CD8C7F1DD220A00040B567 /* libCargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF37DD591BC512450031876D /* libCargo.a */; };
-		9CE17DE41BCE91F200833399 /* CARATInternetHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE17DE31BCE91F200833399 /* CARATInternetHandler.m */; };
+		9CE17DE41BCE91F200833399 /* CARATInternetTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE17DE31BCE91F200833399 /* CARATInternetTagHandler.m */; };
 		9CE17DE91BCEA05D00833399 /* ATInternetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE17DE81BCEA05D00833399 /* ATInternetTests.m */; };
 		BB061DA1018ECA4AE6F5FEC3 /* libPods-CargoTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FFCEB8FB268A48BAA911C1 /* libPods-CargoTest.a */; };
 		BF2B699C1C10A1090083964A /* CARConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2B699B1C10A1090083964A /* CARConstants.m */; };
@@ -127,7 +127,7 @@
 		8F391E165F72C99D45877426 /* libPods-App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		987A30D35233E43599FF5F6E /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
 		9CE17DE21BCE91E200833399 /* CARATInternetTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CARATInternetTagHandler.h; path = ATInternet/CARATInternetTagHandler.h; sourceTree = "<group>"; };
-		9CE17DE31BCE91F200833399 /* CARATInternetHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CARATInternetHandler.m; path = ATInternet/CARATInternetHandler.m; sourceTree = "<group>"; };
+		9CE17DE31BCE91F200833399 /* CARATInternetTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CARATInternetTagHandler.m; path = ATInternet/CARATInternetTagHandler.m; sourceTree = "<group>"; };
 		9CE17DE81BCEA05D00833399 /* ATInternetTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATInternetTests.m; sourceTree = "<group>"; };
 		B5FFCEB8FB268A48BAA911C1 /* libPods-CargoTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CargoTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF2B699A1C10A1090083964A /* CARConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARConstants.h; sourceTree = "<group>"; };
@@ -317,7 +317,7 @@
 			isa = PBXGroup;
 			children = (
 				9CE17DE21BCE91E200833399 /* CARATInternetTagHandler.h */,
-				9CE17DE31BCE91F200833399 /* CARATInternetHandler.m */,
+				9CE17DE31BCE91F200833399 /* CARATInternetTagHandler.m */,
 			);
 			name = ATInternet;
 			sourceTree = "<group>";
@@ -816,7 +816,7 @@
 				BF2B699C1C10A1090083964A /* CARConstants.m in Sources */,
 				80C3DDBE1D3E879D00BE290A /* CARFirebaseTagHandler.m in Sources */,
 				BF37DF2E1BC57B530031876D /* CARTagHandler.m in Sources */,
-				9CE17DE41BCE91F200833399 /* CARATInternetHandler.m in Sources */,
+				9CE17DE41BCE91F200833399 /* CARATInternetTagHandler.m in Sources */,
 				BF37DF311BC57B530031876D /* CARGoogleAnalyticsTagHandler.m in Sources */,
 				BF37DF301BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m in Sources */,
 				BF37DE811BC51BB50031876D /* Cargo.m in Sources */,

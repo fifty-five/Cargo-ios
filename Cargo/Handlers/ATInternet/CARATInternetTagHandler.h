@@ -19,11 +19,13 @@
 
 
 /**
- *  The class handle all interaction and event calls shipped to AT Internet.
+ The class which handles interactions with the AT Internet SDK.
  */
 @interface CARATInternetTagHandler : CARTagHandler
 
+/** AT Internet tracker */
 @property ATTracker * tracker;
+/** AT Internet instance */
 @property ATInternet * instance;
 
 

@@ -5,14 +5,10 @@ xcode_scheme: Cargo
 
 before_install: 
   - gem install cocoapods --pre
-  - pod repo update
-  - brew update
-  - brew install xctool
-
-install: travis_wait 30 mvn install
+  - pod repo update --silent
 
 script:
-  - xctool -workspace Cargo.xcworkspace -scheme Cargo build test -sdk iphonesimulator
+  - travis_retry xcodebuild test -workspace Cargo.xcworkspace -scheme Cargo -destination 'platform=iOS Simulator,name=iPhone SE,OS=10.0' | xcpretty
 
 notifications:
   slack: cargo55:oT6MdyRm7WZzNe51cLdbsVo7

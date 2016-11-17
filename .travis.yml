@@ -5,7 +5,7 @@ xcode_scheme: Cargo
 
 before_install: 
   - gem install cocoapods --pre
-  - pod repo update --silent
+  - pod repo update
   - brew update
   - brew install xctool
 

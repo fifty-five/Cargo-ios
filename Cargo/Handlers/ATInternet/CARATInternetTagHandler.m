@@ -60,8 +60,6 @@ NSString *SITE_ID = @"siteId";
     if (self = [super init]) {
         self.key = @"AT";
         self.name = @"AT Internet";
-        self.valid = NO;
-        self.initialized = NO;
 
         self.tracker = [[ATInternet sharedInstance] defaultTracker];
         self.instance = [ATInternet sharedInstance];
@@ -234,7 +232,7 @@ NSString *SITE_ID = @"siteId";
 }
 
 
-/* ****************************************** Tracking ****************************************** */
+/* ****************************************** Utility ******************************************* */
 
 /**
  Send the event, depending on which eventType was given in AT_tagEvent method

@@ -44,5 +44,12 @@
     self.valid = true;
 }
 
+- (id)init{
+    self.valid = NO;
+    self.initialized = NO;
+
+    return self;
+}
+
 
 @end

@@ -33,6 +33,7 @@
 @property(assign, readwrite) BOOL initialized;
 
 
+
 /**
  Method called in the Cargo class to mark the handler as initialized.
  */

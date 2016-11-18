@@ -34,11 +34,10 @@
 @property (nonatomic, strong) GAI *instanceMock;
 @property (nonatomic, strong) id<GAITracker> trackerMock;
 
-
 @end
 
-@implementation GoogleAnalyticsTest
 
+@implementation GoogleAnalyticsTest
 
 - (void)setUp
 {
@@ -62,35 +61,56 @@
 
 
 #pragma mark - TestGoogleAnalytics
+-(void)testInit{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"myUUID", @"trackingId", nil];
 
-
+    [_handler execute:@"GA_init" parameters:dict];
+    [verifyCount(_instanceMock, times(1) ) trackerWithTrackingId:@"myUUID"];
+    XCTAssertTrue(_handler.initialized);
+}
 
 -(void) testSetDispatchInterval{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"10", @"dispatchInterval", nil];
 
+    [_handler setInitialized:true];
     [_handler execute:@"GA_set" parameters:dict];
     [verifyCount(_instanceMock, times(1) ) setDispatchInterval:10 ];
-
+    [verifyCount(_trackerMock, times(1) ) setAllowIDFACollection:true];
+    [verifyCount(_instanceMock, times(1) ) setTrackUncaughtExceptions:true];
 }
 
 
--(void) testEnableTrackUncaughtExceptions{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@true, @"trackUncaughtExceptions", nil];
+-(void) testTrackUncaughtExceptions{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@false, @"trackUncaughtExceptions", nil];
+
+    [_handler setInitialized:true];
     [_handler execute:@"GA_set" parameters:dict];
-    [verifyCount(_instanceMock, times(1) ) trackUncaughtExceptions ];
-
-
+    [verifyCount(_instanceMock, times(1) ) setTrackUncaughtExceptions:false];
+    [verifyCount(_trackerMock, times(1) ) setAllowIDFACollection:true];
+    [verifyCount(_instanceMock, times(1) ) setDispatchInterval:30];
 }
 
 
+-(void) testAllowIdfaCollection{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@false, @"allowIdfaCollection", nil];
 
--(void) testEnableAllowIdfaCollection{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@true, @"allowIdfaCollection", nil];
+    [_handler setInitialized:true];
     [_handler execute:@"GA_set" parameters:dict];
-    [verifyCount(_trackerMock, times(1) ) allowIDFACollection ];
-
+    [verifyCount(_trackerMock, times(1) ) setAllowIDFACollection:false];
+    [verifyCount(_instanceMock, times(1) ) setTrackUncaughtExceptions:true];
+    [verifyCount(_instanceMock, times(1) ) setDispatchInterval:30];
 }
 
+
+-(void) testDefaultValues{
+    NSDictionary * dict = [[NSDictionary alloc] init];
+
+    [_handler setInitialized:true];
+    [_handler execute:@"GA_set" parameters:dict];
+    [verifyCount(_trackerMock, times(1) ) setAllowIDFACollection:true];
+    [verifyCount(_instanceMock, times(1) ) setTrackUncaughtExceptions:true];
+    [verifyCount(_instanceMock, times(1) ) setDispatchInterval:30];
+}
 
 
 

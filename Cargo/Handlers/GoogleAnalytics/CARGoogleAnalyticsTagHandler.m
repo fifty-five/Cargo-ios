@@ -146,7 +146,7 @@ NSString* TRACKING_ID = @"trackingId";
                                          [parameters objectForKey:@"trackUncaughtExceptions"]];
     if(trackUncaughtException)
         trackException = [trackUncaughtException boolValue];
-    self.instance.trackUncaughtExceptions = trackException;
+    [self.instance setTrackUncaughtExceptions:trackException];
     [self.logger logParamSetWithSuccess:@"trackUncaughtExceptions"
                               withValue:[NSNumber numberWithBool:trackException]];
 
@@ -155,7 +155,7 @@ NSString* TRACKING_ID = @"trackingId";
                                          [parameters objectForKey:@"allowIdfaCollection"]];
     if(allowIdfaCollection)
         idfaCollection = [allowIdfaCollection boolValue];
-    self.tracker.allowIDFACollection = idfaCollection;
+    [self.tracker setAllowIDFACollection:idfaCollection];
     [self.logger logParamSetWithSuccess:@"allowIdfaCollection"
                               withValue: [NSNumber numberWithBool:idfaCollection]];
 
@@ -164,7 +164,7 @@ NSString* TRACKING_ID = @"trackingId";
                                       [parameters objectForKey:@"dispatchInterval"]];
     if(dispatchInterval)
         dispInterval = [dispatchInterval integerValue];
-    self.instance.dispatchInterval = dispInterval;
+    [self.instance  setDispatchInterval:dispInterval];
     [self.logger logParamSetWithSuccess:@"dispatchInterval"
                               withValue:[NSNumber numberWithInteger:dispInterval]];
 }

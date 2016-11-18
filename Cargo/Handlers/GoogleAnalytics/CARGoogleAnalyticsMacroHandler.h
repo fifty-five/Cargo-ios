@@ -16,7 +16,7 @@
 
 
 /**
- *  The class handle custom macros of Google Analytics.
+ *  The class which handles custom macros of Google Analytics.
  */
 @interface CARGoogleAnalyticsMacroHandler :CARMacroHandler
 

@@ -22,11 +22,14 @@
 @synthesize logger;
 
 
-
-
-
-
 #pragma mark - GTMFunctionCallBack
+
+/**
+ Called when a child "execute" method is called. Logs the method call and its parameters
+
+ @param functionName the tag name of the callback method
+ @param parameters the parameters sent to the method through a dictionary
+ */
 - (void)execute:(NSString *)functionName parameters:(NSDictionary *)parameters {
     FIFLog(kTAGLoggerLogLevelInfo, @"Function '%@' has been received with parameters '%@'",
            functionName,
@@ -34,8 +37,18 @@
     
 }
 
+/**
+ Method called in the Cargo class to mark the handler as initialized.
+ */
 - (void)validate{
     self.valid = true;
+}
+
+- (id)init{
+    self.valid = NO;
+    self.initialized = NO;
+
+    return self;
 }
 
 

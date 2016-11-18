@@ -23,12 +23,12 @@
 /* *********************************** Variables Declaration ************************************ */
 
 /** Constants used to define callbacks in the register and in the execute method */
-NSString *ACC_init = @"ACC_init";
-NSString *ACC_tagEvent = @"ACC_tagEvent";
-NSString *ACC_tagPurchaseEvent = @"ACC_tagPurchaseEvent";
-NSString *ACC_tagCartEvent = @"ACC_tagCartEvent";
-NSString *ACC_tagLead = @"ACC_tagLead";
-NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
+NSString* const ACC_init = @"ACC_init";
+NSString* const ACC_tagEvent = @"ACC_tagEvent";
+NSString* const ACC_tagPurchaseEvent = @"ACC_tagPurchaseEvent";
+NSString* const ACC_tagCartEvent = @"ACC_tagCartEvent";
+NSString* const ACC_tagLead = @"ACC_tagLead";
+NSString* const ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
 
 
 /* ********************************** Handler core methods ************************************** */
@@ -40,7 +40,7 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
  */
 +(void)load{
     CARAccengageTagHandler *handler = [[CARAccengageTagHandler alloc] init];
-    
+
     [Cargo registerTagHandler:handler withKey:ACC_init];
     [Cargo registerTagHandler:handler withKey:ACC_tagEvent];
     [Cargo registerTagHandler:handler withKey:ACC_tagPurchaseEvent];
@@ -49,20 +49,17 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
     [Cargo registerTagHandler:handler withKey:ACC_updateDeviceInfo];
 }
 
-
 /**
  Instantiate the handler with its key and name properties
  Initialize its attribute to the default values.
 
- @return returns the instance of the class
+ @return the instance of the Accengage handler
  */
 - (id)init{
     if (self = [super init]) {
         self.key = @"ACC";
         self.name = @"Accengage";
 
-        self.valid = NO;
-        self.initialized = NO;
         self.cargo = [Cargo sharedHelper];
         self.tracker = [Accengage class];
     }
@@ -70,14 +67,15 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
 }
 
 /**
- Call back from GTM container to execute a specific action
- after tag and parameters are received
+ Call back from GTM container to call a specific method
+ after a function tag and associated parameters are received
 
  @param tagName The tag name of the aimed method
  @param parameters Dictionary of parameters
  */
 -(void) execute:(NSString *)tagName parameters:(NSDictionary *)parameters{
     [super execute:tagName parameters:parameters];
+
     if([tagName isEqualToString:ACC_init]){
         [self init:parameters];
     }
@@ -102,7 +100,7 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
             NSLog(@"Function %@ is not registered in the Accengage handler of Cargo", tagName);
     }
     else
-        [[self.cargo logger] logUninitializedFramework];
+        [self.logger logUninitializedFramework];
 }
 
 /**
@@ -121,9 +119,8 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
  The method you need to call first. Allow you to initialize Accengage SDK
  Register the private key and the partner ID to the Accengage SDK.
 
- @param parameters :
-    - privateKey: private key Accengage gives when you register your app
-    - partnerId: partner ID Accengage gives when you register your app
+ @param privateKey: private key Accengage gives when you register your app
+ @param partnerId: partner ID Accengage gives when you register your app
  */
 -(void)init:(NSDictionary*)parameters{
     NSString* partnerId = [CARUtils castToNSString:[parameters objectForKey:@"partnerId"]];
@@ -133,13 +130,13 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
         ACCConfiguration *config = [ACCConfiguration defaultConfig];
         config.appId = partnerId;
         config.appPrivateKey = privateKey;
-        
+
         [self.tracker startWithConfig:config];
         // now the handler is initialized
         self.initialized = TRUE;
     }
     else {
-        [[self.cargo logger] logMissingParam:@"partnerId and/or privateKey" inMethod: @"Accengage/init"];
+        [self.logger logMissingParam:@"partnerId and/or privateKey" inMethod: ACC_init];
     }
 }
 
@@ -175,7 +172,7 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
         [self.tracker trackEvent:eventType withParameters:eventParams];
     }
     else {
-        [[self.cargo logger] logMissingParam:EVENT_TYPE inMethod: ACC_tagEvent];
+        [self.logger logMissingParam:EVENT_TYPE inMethod: ACC_tagEvent];
     }
 }
 
@@ -216,10 +213,10 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
             [self.tracker trackPurchase:purchaseId currency:currencyCode items:nil amount: total];
         }
         else
-            [[self.cargo logger] logMissingParam:@"transactionTotal and/or transactionProducts" inMethod: ACC_tagPurchaseEvent];
+            [self.logger logMissingParam:@"transactionTotal and/or transactionProducts" inMethod: ACC_tagPurchaseEvent];
     }
     else {
-        [[self.cargo logger] logMissingParam:@"transactionId or currencyCode" inMethod: ACC_tagPurchaseEvent];
+        [self.logger logMissingParam:@"transactionId or currencyCode" inMethod: ACC_tagPurchaseEvent];
     }
 }
 
@@ -242,7 +239,7 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
         [self.tracker trackCart:cartId currency:currencyCode item:[item toA4SItem]];
     }
     else
-        [[self.cargo logger] logMissingParam:@"cartId or currencyCode or product" inMethod: ACC_tagCartEvent];
+        [self.logger logMissingParam:@"cartId or currencyCode or product" inMethod: ACC_tagCartEvent];
 }
 
 /**
@@ -259,7 +256,7 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
     if (leadLabel && leadValue)
         [self.tracker trackLead:leadLabel value:leadValue];
     else
-        [[self.cargo logger] logMissingParam:@"leadLabel or leadValue" inMethod: ACC_tagLead];
+        [self.logger logMissingParam:@"leadLabel or leadValue" inMethod: ACC_tagLead];
 }
 
 /**

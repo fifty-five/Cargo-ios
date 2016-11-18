@@ -11,9 +11,12 @@
 #import <Tune/Tune.h>
 
 
-
+/**
+ The class which handles interactions with the Accengage SDK.
+ */
 @interface CARTuneTagHandler : CARTagHandler
 
+/** The Tune tracker */
 @property Class tuneClass;
 
 @end

@@ -64,15 +64,26 @@
     [_handler execute:@"Tune_init" parameters:dict];
     [verifyCount(_tuneClassMock, times(0)) initializeWithTuneAdvertiserId:anything() tuneConversionKey:anything()];
     XCTAssertFalse(_handler.initialized);
-    
 }
 
+-(void) testWithoutInit {
+    NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys: @"55", USER_AGE, @"Male", USER_GENDER, @"01223456789", USER_FACEBOOK_ID, nil];
 
+    [_handler execute:@"Tune_identify" parameters:dict];
+    
+    [verifyCount(_tuneClassMock, times(0)) setFacebookUserId:@"01223456789"];
+    [verifyCount(_tuneClassMock, times(0)) setGender:TuneGenderMale];
+    [verifyCount(_tuneClassMock, times(0)) setAge:55];
+    [verifyCount(_tuneClassMock, times(0)) setTwitterUserId:anything()];
+    [verifyCount(_tuneClassMock, times(0)) setGoogleUserId:anything()];
+}
 
 -(void) testTuneIdentify {
     NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys:@"234", USER_ID, @"55", USER_AGE, @"Male", USER_GENDER, @"01223456789", USER_FACEBOOK_ID, nil];
+
+    [_handler setInitialized:true];
     [_handler execute:@"Tune_identify" parameters:dict];
-    
+
     [verifyCount(_tuneClassMock, times(1)) setUserId:@"234"];
     [verifyCount(_tuneClassMock, times(1)) setFacebookUserId:@"01223456789"];
     [verifyCount(_tuneClassMock, times(1)) setGender:TuneGenderMale];
@@ -81,20 +92,23 @@
     [verifyCount(_tuneClassMock, times(0)) setGoogleUserId:anything()];
 }
 
--(void) testTuneIdentifyWithoutUserId {
+-(void) testTuneIdentifyWithoutId {
     NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys: @"55", USER_AGE, @"Male", USER_GENDER, @"01223456789", USER_FACEBOOK_ID, nil];
-    [_handler execute:@"Tune_identify" parameters:dict];
     
-    [verifyCount(_tuneClassMock, times(0)) setUserId:anything()];
-    [verifyCount(_tuneClassMock, times(0)) setFacebookUserId:anything()];
-    [verifyCount(_tuneClassMock, times(0)) setGender:(TuneGender)anything()];
-    [verifyCount(_tuneClassMock, times(0)) setAge:(int)anything()];
+    [_handler setInitialized:true];
+    [_handler execute:@"Tune_identify" parameters:dict];
+
+    [verifyCount(_tuneClassMock, times(1)) setFacebookUserId:@"01223456789"];
+    [verifyCount(_tuneClassMock, times(1)) setGender:TuneGenderMale];
+    [verifyCount(_tuneClassMock, times(1)) setAge:55];
     [verifyCount(_tuneClassMock, times(0)) setTwitterUserId:anything()];
     [verifyCount(_tuneClassMock, times(0)) setGoogleUserId:anything()];
 }
 
 -(void) testTuneIdentifyWithWeirdGender {
     NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys: @"55", USER_ID, @"skdjhf", USER_GENDER, nil];
+
+    [_handler setInitialized:true];
     [_handler execute:@"Tune_identify" parameters:dict];
     
     [verifyCount(_tuneClassMock, times(1)) setUserId:@"55"];
@@ -106,14 +120,16 @@
 -(void) testSimpleScreenName {
     NSDictionary * dict = [[NSDictionary alloc ]
                            initWithObjectsAndKeys:@"A screen",SCREEN_NAME, nil];
-    
+
+    [_handler setInitialized:true];
     [_handler execute:@"Tune_tagScreen" parameters:dict];
     [verifyCount(_tuneClassMock, times(1)) measureEvent:anything()];
 }
 
 - (void) testFailedTagScreen {
     NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys: @"Homepage", @"chapter1", @"userHomePage", @"chapter2", nil];
-    
+
+    [_handler setInitialized:true];
     [_handler execute:@"Tune_tagScreen" parameters:dict];
     
     [verifyCount(_tuneClassMock, never()) measureEvent:anything()];
@@ -123,7 +139,8 @@
 
 -(void) testSimpleTagEvent {
     NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys: @"eventName",EVENT_NAME, @"USD", @"eventCurrencyCode", [NSNumber numberWithInt:42], @"eventQuantity", nil];
-    
+
+    [_handler setInitialized:true];
     [_handler execute:@"Tune_tagEvent" parameters:dict];
     
     [verifyCount(_tuneClassMock, times(1)) measureEvent:anything()];
@@ -131,7 +148,8 @@
 
 - (void) testFailedTagEvent {
     NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys: @"USD", @"eventCurrencyCode", [NSNumber numberWithInt:42], @"eventQuantity", nil];
-    
+
+    [_handler setInitialized:true];
     [_handler execute:@"Tune_tagEvent" parameters:dict];
     
     [verifyCount(_tuneClassMock, never()) measureEvent:anything()];

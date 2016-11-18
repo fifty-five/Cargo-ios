@@ -23,12 +23,12 @@
 /* *********************************** Variables Declaration ************************************ */
 
 /** Constants used to define callbacks in the register and in the execute method */
-NSString *ACC_init = @"ACC_init";
-NSString *ACC_tagEvent = @"ACC_tagEvent";
-NSString *ACC_tagPurchaseEvent = @"ACC_tagPurchaseEvent";
-NSString *ACC_tagCartEvent = @"ACC_tagCartEvent";
-NSString *ACC_tagLead = @"ACC_tagLead";
-NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
+NSString* const ACC_init = @"ACC_init";
+NSString* const ACC_tagEvent = @"ACC_tagEvent";
+NSString* const ACC_tagPurchaseEvent = @"ACC_tagPurchaseEvent";
+NSString* const ACC_tagCartEvent = @"ACC_tagCartEvent";
+NSString* const ACC_tagLead = @"ACC_tagLead";
+NSString* const ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
 
 
 /* ********************************** Handler core methods ************************************** */
@@ -120,9 +120,8 @@ NSString *ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
  The method you need to call first. Allow you to initialize Accengage SDK
  Register the private key and the partner ID to the Accengage SDK.
 
- @param parameters :
-    - privateKey: private key Accengage gives when you register your app
-    - partnerId: partner ID Accengage gives when you register your app
+ @param privateKey: private key Accengage gives when you register your app
+ @param partnerId: partner ID Accengage gives when you register your app
  */
 -(void)init:(NSDictionary*)parameters{
     NSString* partnerId = [CARUtils castToNSString:[parameters objectForKey:@"partnerId"]];

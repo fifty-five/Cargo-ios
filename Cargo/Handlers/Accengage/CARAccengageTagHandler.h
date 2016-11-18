@@ -18,5 +18,7 @@
 
 /** The Accengage tracker */
 @property Class tracker;
+/** Cargo instance */
+@property Cargo* cargo;
 
 @end

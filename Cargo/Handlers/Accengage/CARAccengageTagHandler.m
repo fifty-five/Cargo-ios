@@ -59,9 +59,8 @@ NSString* const ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
     if (self = [super init]) {
         self.key = @"ACC";
         self.name = @"Accengage";
-        self.valid = NO;
-        self.initialized = NO;
 
+        self.cargo = [Cargo sharedHelper];
         self.tracker = [Accengage class];
     }
     return self;

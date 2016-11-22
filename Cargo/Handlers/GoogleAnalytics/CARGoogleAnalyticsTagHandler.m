@@ -91,7 +91,7 @@ NSString* TRACKING_ID = @"trackingId";
         }
     }
     else
-        [self.logger logUninitializedFramework];
+        [self.logger logUninitializedFramework:self.name];
 }
 
 /**

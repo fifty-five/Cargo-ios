@@ -83,7 +83,7 @@ NSString *FB_purchase = @"FB_purchase";
         }
     }
     else
-        [self.logger logUninitializedFramework];
+        [self.logger logUninitializedFramework:self.name];
 }
 
 /**

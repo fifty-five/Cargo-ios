@@ -100,7 +100,7 @@ NSString* const ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
             NSLog(@"Function %@ is not registered in the Accengage handler of Cargo", tagName);
     }
     else
-        [self.logger logUninitializedFramework];
+        [self.logger logUninitializedFramework:self.name];
 }
 
 /**

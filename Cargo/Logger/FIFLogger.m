@@ -125,10 +125,12 @@ void FIFLog(TAGLoggerLogLevelType intentLevel,
 /**
  *  This method logs a warning about
  *  a missing initialization of the framework
+ *
+ *  @param handlerName the name of the uninitialized handler
  */
-- (void)logUninitializedFramework {
-    FIFLog(kTAGLoggerLogLevelWarning, @"[%@] You must init framework before using it",
-           context);
+- (void)logUninitializedFramework:(NSString *)handlerName {
+    FIFLog(kTAGLoggerLogLevelWarning, @"[%@] You must init framework %@ before using it",
+           context, handlerName);
 }
 
 /**

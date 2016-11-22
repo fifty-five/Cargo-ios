@@ -25,13 +25,20 @@
 /* *********************************** Variables Declaration ************************************ */
 
 /** Constants used to define callbacks in the register and in the execute method */
-NSString *AT_init = @"AT_init";
-NSString *AT_identify = @"AT_identify";
-NSString *AT_tagScreen = @"AT_tagScreen";
-NSString *AT_tagEvent = @"AT_tagEvent";
+NSString* AT_init = @"AT_init";
+NSString* AT_setConfig = @"AT_setConfig";
+NSString* AT_identify = @"AT_identify";
+NSString* AT_tagScreen = @"AT_tagScreen";
+NSString* AT_tagEvent = @"AT_tagEvent";
 
-NSString *LOG = @"domain";
-NSString *SITE_ID = @"siteId";
+NSString* LOG = @"log";
+NSString* LOG_SSL = @"logSSL";
+NSString* SITE = @"site";
+NSString* OVERRIDE = @"override";
+NSString* BASKET = @"isBasketView";
+NSString* CHAPTER1 = @"chapter1";
+NSString* CHAPTER2 = @"chapter2";
+NSString* CHAPTER3 = @"chapter3";
 
 
 /* ********************************** Handler core methods ************************************** */
@@ -42,9 +49,10 @@ NSString *SITE_ID = @"siteId";
  these will trigger the execute method of this handler.
  */
 +(void)load{
-    CARATInternetTagHandler *handler = [[CARATInternetTagHandler alloc] init];
+    CARATInternetTagHandler* handler = [[CARATInternetTagHandler alloc] init];
 
     [Cargo registerTagHandler:handler withKey:AT_init];
+    [Cargo registerTagHandler:handler withKey:AT_setConfig];
     [Cargo registerTagHandler:handler withKey:AT_identify];
     [Cargo registerTagHandler:handler withKey:AT_tagScreen];
     [Cargo registerTagHandler:handler withKey:AT_tagEvent];
@@ -82,7 +90,10 @@ NSString *SITE_ID = @"siteId";
     }
     // check whether the SDK has been initialized before calling any method
     else if (self.initialized) {
-        if ([tagName isEqualToString:AT_tagScreen]){
+        if ([tagName isEqualToString:AT_setConfig]){
+            [self setConfig:parameters];
+        }
+        else if ([tagName isEqualToString:AT_tagScreen]){
             [self tagScreen:parameters];
         }
         else if ([tagName isEqualToString:AT_identify]){
@@ -95,7 +106,7 @@ NSString *SITE_ID = @"siteId";
             NSLog(@"Function %@ is not registered in the AT Internet handler of Cargo", tagName);
     }
     else
-        [self.logger logUninitializedFramework];
+        [self.logger logUninitializedFramework:self.name];
 }
 
 /**
@@ -118,24 +129,51 @@ NSString *SITE_ID = @"siteId";
   - domain: domain AT Internet gives when you register your app
   - siteId: site ID AT Internet gives when you register your app
  */
--(void)init:(NSDictionary*)parameters{
-    NSString* domain = [CARUtils castToNSString:[parameters objectForKey:LOG]];
-    NSString* siteId = [CARUtils castToNSString:[parameters objectForKey:SITE_ID]];
+-(void)init:(NSDictionary *)parameters{
+    NSString* log = [CARUtils castToNSString:[parameters objectForKey:LOG]];
+    NSString* logSSL = [CARUtils castToNSString:[parameters objectForKey:LOG_SSL]];
+    NSString* siteId = [CARUtils castToNSString:[parameters objectForKey:SITE]];
     // weakSelf is used because of a warning about leaks in the async setConfig method
     __unsafe_unretained typeof(self) weakSelf = self;
 
-    if(domain && siteId){
-        [self.tracker setConfig:LOG value:domain completionHandler:^(BOOL isSet) {
-            [weakSelf.logger logParamSetWithSuccess:LOG withValue:domain];
+    if(siteId && log && logSSL){
+        [self.tracker setConfig:AT_CONF_LOG value:log completionHandler:^(BOOL isSet) {
+            [weakSelf.logger logParamSetWithSuccess:LOG withValue:log];
         }];
-        [self.tracker setConfig:SITE_ID value:siteId completionHandler:^(BOOL isSet) {
-            [weakSelf.logger logParamSetWithSuccess:SITE_ID withValue:siteId];
+        [self.tracker setConfig:AT_CONF_LOGSSL value:logSSL completionHandler:^(BOOL isSet) {
+            [weakSelf.logger logParamSetWithSuccess:LOG_SSL withValue:logSSL];
+        }];
+        [self.tracker setConfig:AT_CONF_SITE value:siteId completionHandler:^(BOOL isSet) {
+            [weakSelf.logger logParamSetWithSuccess:SITE withValue:siteId];
         }];
 
         self.initialized = TRUE;
     }
     else
-        [self.logger logMissingParam:@"domain and/or siteId" inMethod:AT_init];
+        [self.logger logMissingParam:@"log and/or logSSL and/or site" inMethod:AT_init];
+}
+
+
+/**
+ The method you may call if you want to reconfigure your tracker configuration
+
+ @param parameters :
+  - override (boolean) : if you want your values set to override ALL the existant data
+                        (set to false by default)
+  - rest of parameters : your setup for the tracker
+ */
+-(void)setConfig:(NSDictionary*)parameters{
+    NSMutableDictionary* params = [parameters mutableCopy];
+    BOOL override = false;
+    __unsafe_unretained typeof(self) weakSelf = self;
+
+    if ([params objectForKey:OVERRIDE]) {
+        override = [[CARUtils castToNSNumber:[params objectForKey:OVERRIDE]] boolValue];
+        [params removeObjectForKey:OVERRIDE];
+    }
+    [self.tracker setConfig:params override: override completionHandler:^(BOOL isSet) {
+        [weakSelf.logger logParamSetWithSuccess:@"config" withValue:params];
+    }];
 }
 
 
@@ -147,24 +185,44 @@ NSString *SITE_ID = @"siteId";
 
  @param parameters :
   - screenName : the name of the screen tagged
-  - customDim1/2 : custom dimensions (optional)
-  - level2 : an int describing a second level of your screen (optional) (-1 turn this option off)
+  - chapter1/2/3 : use them to add more context (optional)
+  - level2 : an int describing a second level of your screen (optional)
+  - isBasketView (bool) : set to true if the screen view is a basket one
  */
 - (void)tagScreen:(NSDictionary*)parameters{
     NSString* screenName = [CARUtils castToNSString:[parameters objectForKey:SCREEN_NAME]];
-    int level2 = [CARUtils castToNSInteger:[parameters objectForKey:LEVEL2] withDefault:-1];
-    
+    NSString* chapter1 = [CARUtils castToNSString:[parameters objectForKey:CHAPTER1]];
+    NSString* chapter2 = [CARUtils castToNSString:[parameters objectForKey:CHAPTER2]];
+    NSString* chapter3 = [CARUtils castToNSString:[parameters objectForKey:CHAPTER3]];
+    BOOL isBasketView = false;
+
     if (screenName) {
         ATScreen *screen = [self.tracker.screens addWithName:screenName];
 
-        if ([parameters valueForKey:CUSTOM_DIM1] && [parameters valueForKey:CUSTOM_DIM2]){
-            NSString *customDim1 = [parameters valueForKey:CUSTOM_DIM1];
-            NSString *customDim2 = [parameters valueForKey:CUSTOM_DIM2];
-            
-            [self.tracker.customObjects addWithDictionary:@{CUSTOM_DIM1: customDim1, CUSTOM_DIM2: customDim2}];
+        if (chapter1) {
+            [screen setChapter1:chapter1];
+            [self.logger logParamSetWithSuccess:CHAPTER1 withValue:chapter1];
+            if (chapter2) {
+                [screen setChapter2:chapter2];
+                [self.logger logParamSetWithSuccess:CHAPTER2 withValue:chapter2];
+                if (chapter3) {
+                    [screen setChapter3:chapter3];
+                    [self.logger logParamSetWithSuccess:CHAPTER3 withValue:chapter3];
+                }
+            }
         }
-        if (level2 != -1)
-            screen.level2 = (int)[[parameters valueForKey:LEVEL2] integerValue];
+        if ([parameters objectForKey:LEVEL2]){
+            int level2 = [CARUtils castToNSInteger:[parameters objectForKey:LEVEL2] withDefault:-1];
+            [screen setLevel2:level2];
+            [self.logger logParamSetWithSuccess:LEVEL2 withValue:[NSNumber numberWithInt:level2]];
+        }
+        if ([parameters objectForKey:BASKET]) {
+            isBasketView = [[CARUtils castToNSNumber:[parameters objectForKey:BASKET]] boolValue];
+            [screen setIsBasketScreen:isBasketView];
+            [self.logger logParamSetWithSuccess:BASKET
+                                      withValue:[NSNumber numberWithBool:isBasketView]];
+        }
+
         [screen sendView];
     }
     else

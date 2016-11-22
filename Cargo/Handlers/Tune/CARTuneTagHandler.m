@@ -113,7 +113,7 @@ NSArray* ALL_EVENT_PROPERTIES;
         }
     }
     else
-        [self.logger logUninitializedFramework];
+        [self.logger logUninitializedFramework:self.name];
 }
 
 /**

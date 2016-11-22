@@ -48,6 +48,7 @@ NSString *TAG_SCREEN = @"AT_tagScreen";
 NSString *TAG_EVENT = @"AT_tagEvent";
 NSString *IDENTIFY = @"AT_identify";
 NSString *INIT = @"AT_init";
+NSString *SET_CONF = @"AT_setConfig";
 
 
 - (void)setUp
@@ -89,10 +90,12 @@ NSString *INIT = @"AT_init";
 #pragma mark - TestATInternet
 
 -(void)testAT_init{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"fifty-five.com", @"domain",@"2345",@"siteId", nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"fifty-five.com", @"logSSL",
+                           @"fifty-five.com", @"log",@"2345",@"site", nil];
     [_handler execute:INIT parameters:dict];
-    [verifyCount(_trackerMock, times(1) ) setConfig:@"siteId" value:@"2345" completionHandler:anything() ];
-    [verifyCount(_trackerMock, times(1) ) setConfig:@"domain" value:@"fifty-five.com" completionHandler:anything()];
+    [verifyCount(_trackerMock, times(1) ) setConfig:AT_CONF_SITE value:@"2345" completionHandler:anything() ];
+    [verifyCount(_trackerMock, times(1) ) setConfig:AT_CONF_LOG value:@"fifty-five.com" completionHandler:anything()];
+    [verifyCount(_trackerMock, times(1) ) setConfig:AT_CONF_LOGSSL value:@"fifty-five.com" completionHandler:anything()];
 
 }
 
@@ -118,6 +121,15 @@ NSString *INIT = @"AT_init";
     [verifyCount(_screenMock, times(0) ) sendView];
 }
 
+-(void)testSetConfig{
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"test", SCREEN_NAME, @"55", LEVEL2, nil];
+    
+    [_handler setInitialized:true];
+    [_handler execute:SET_CONF parameters:dict];
+
+    [verifyCount(_trackerMock, times(1) ) setConfig:anything() override:false completionHandler:anything()];
+}
+
 -(void)testAT_tagScreenSimpleTest{
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"screenNameTest", SCREEN_NAME, @55, LEVEL2, nil];
     
@@ -131,14 +143,16 @@ NSString *INIT = @"AT_init";
 }
 
 -(void)testAT_tagScreenCustomDimTest{
-    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"screenNameTest", SCREEN_NAME, @55, LEVEL2, @"customDimTest1", CUSTOM_DIM1, @"customDimTest2", CUSTOM_DIM2, nil];
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"screenNameTest", SCREEN_NAME, @55, LEVEL2, @"customDimTest1", @"chapter1", @"customDimTest2", @"chapter2", nil];
 
     [_handler setInitialized:true];
     [_handler execute:TAG_SCREEN parameters:dict];
     assertThat([_trackerMock screens], equalTo(_screensMock));
     assertThat([_trackerMock.screens addWithName:@"screenNameTest"], equalTo(_screenMock));
 
-    [verifyCount(_customObjsMock, times(1) ) addWithDictionary:@{CUSTOM_DIM1: @"customDimTest1", CUSTOM_DIM2: @"customDimTest2"}];
+    [verifyCount(_screenMock, times(1) ) setChapter1: @"customDimTest1"];
+    [verifyCount(_screenMock, times(1) ) setChapter2: @"customDimTest2"];
+    [verifyCount(_screenMock, times(0) ) setChapter3: anything()];
     [verifyCount(_screenMock, times(1) ) setLevel2:55];
     [verifyCount(_screenMock, times(1) ) sendView];
 }

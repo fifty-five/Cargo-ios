@@ -73,7 +73,7 @@
  *  This method logs a warning about
  *  a missing initialization of the framework
  */
-- (void)logUninitializedFramework;
+- (void)logUninitializedFramework:(NSString *)handlerName;
 
 
 

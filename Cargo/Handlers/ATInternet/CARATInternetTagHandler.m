@@ -101,10 +101,10 @@ NSString* CHAPTER3 = @"chapter3";
             [self tagEvent:parameters];
         }
         else
-            NSLog(@"Function %@ is not registered in the AT Internet handler of Cargo", tagName);
+            [self.logger logUnknownFunctionTag:tagName];
     }
     else
-        [self.logger logUninitializedFramework:self.name];
+        [self.logger logUninitializedFramework];
 }
 
 /**

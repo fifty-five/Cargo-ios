@@ -77,18 +77,11 @@ NSString *FB_purchase = @"FB_purchase";
         else if([tagName isEqualToString:FB_purchase]){
             [self purchase:parameters];
         }
+        else
+            [self.logger logUnknownFunctionTag:tagName];
     }
     else
-        [self.logger logUninitializedFramework:self.name];
-}
-
-/**
- Called in registerHandlers to validate a handler and check for its initialization.
- */
-- (void)validate
-{
-    // Nothing is required
-    self.valid = TRUE;
+        [self.logger logUninitializedFramework];
 }
 
 

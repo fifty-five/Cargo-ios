@@ -104,21 +104,11 @@ NSArray* ALL_EVENT_PROPERTIES;
         else if([tagName isEqualToString:Tune_tagEvent]){
             [self tagEvent:[parameters mutableCopy]];
         }
-        else {
-            NSLog(@"Cargo TuneHandler : Function %@ is not registered", tagName);
-        }
+        else
+            [self.logger logUnknownFunctionTag:tagName];
     }
     else
-        [self.logger logUninitializedFramework:self.name];
-}
-
-/**
- Called in registerHandlers to validate a handler and check for its initialization.
- */
-- (void)validate
-{
-    // Nothing is required
-    self.valid = TRUE;
+        [self.logger logUninitializedFramework];
 }
 
 

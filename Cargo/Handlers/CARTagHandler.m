@@ -31,10 +31,7 @@
  @param parameters the parameters sent to the method through a dictionary
  */
 - (void)execute:(NSString *)functionName parameters:(NSDictionary *)parameters {
-    [self.logger FIFLog:kTAGLoggerLogLevelInfo withMessage:
-     @"Function '%@' has been received with parameters '%@'",
-     functionName,
-     parameters];
+    [self.logger logReceivedFunction:functionName withParam:parameters];
 }
 
 /**

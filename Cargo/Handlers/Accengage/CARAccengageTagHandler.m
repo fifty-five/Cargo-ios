@@ -23,12 +23,12 @@
 /* *********************************** Variables Declaration ************************************ */
 
 /** Constants used to define callbacks in the register and in the execute method */
-NSString* const ACC_init = @"ACC_init";
-NSString* const ACC_tagEvent = @"ACC_tagEvent";
-NSString* const ACC_tagPurchaseEvent = @"ACC_tagPurchaseEvent";
-NSString* const ACC_tagCartEvent = @"ACC_tagCartEvent";
-NSString* const ACC_tagLead = @"ACC_tagLead";
-NSString* const ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
+NSString* const ACC_INIT = @"ACC_init";
+NSString* const ACC_TAG_EVENT = @"ACC_tagEvent";
+NSString* const ACC_TAG_PURCHASE = @"ACC_tagPurchase";
+NSString* const ACC_TAG_ADD_TO_CART = @"ACC_tagAddToCart";
+NSString* const ACC_TAG_LEAD = @"ACC_tagLead";
+NSString* const ACC_UPDATE_DEVICE_INFO = @"ACC_updateDeviceInfo";
 
 
 /* ********************************** Handler core methods ************************************** */
@@ -41,12 +41,12 @@ NSString* const ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
 +(void)load{
     CARAccengageTagHandler *handler = [[CARAccengageTagHandler alloc] init];
 
-    [Cargo registerTagHandler:handler withKey:ACC_init];
-    [Cargo registerTagHandler:handler withKey:ACC_tagEvent];
-    [Cargo registerTagHandler:handler withKey:ACC_tagPurchaseEvent];
-    [Cargo registerTagHandler:handler withKey:ACC_tagCartEvent];
-    [Cargo registerTagHandler:handler withKey:ACC_tagLead];
-    [Cargo registerTagHandler:handler withKey:ACC_updateDeviceInfo];
+    [Cargo registerTagHandler:handler withKey:ACC_INIT];
+    [Cargo registerTagHandler:handler withKey:ACC_TAG_EVENT];
+    [Cargo registerTagHandler:handler withKey:ACC_TAG_PURCHASE];
+    [Cargo registerTagHandler:handler withKey:ACC_TAG_ADD_TO_CART];
+    [Cargo registerTagHandler:handler withKey:ACC_TAG_LEAD];
+    [Cargo registerTagHandler:handler withKey:ACC_UPDATE_DEVICE_INFO];
 }
 
 /**
@@ -74,40 +74,31 @@ NSString* const ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
 -(void) execute:(NSString *)tagName parameters:(NSDictionary *)parameters{
     [super execute:tagName parameters:parameters];
 
-    if([tagName isEqualToString:ACC_init]){
+    if([tagName isEqualToString:ACC_INIT]){
         [self init:parameters];
     }
     // check whether the SDK has been initialized before calling any method
     else if (self.initialized) {
-        if([tagName isEqualToString:ACC_tagEvent]){
+        if([tagName isEqualToString:ACC_TAG_EVENT]){
             [self tagEvent:parameters];
         }
-        else if([tagName isEqualToString:ACC_tagPurchaseEvent]){
+        else if([tagName isEqualToString:ACC_TAG_PURCHASE]){
             [self tagEventPurchase:parameters];
         }
-        else if([tagName isEqualToString:ACC_tagCartEvent]){
+        else if([tagName isEqualToString:ACC_TAG_ADD_TO_CART]){
             [self tagCartEvent:parameters];
         }
-        else if([tagName isEqualToString:ACC_tagLead]){
+        else if([tagName isEqualToString:ACC_TAG_LEAD]){
             [self tagLead:parameters];
         }
-        else if([tagName isEqualToString:ACC_updateDeviceInfo]){
+        else if([tagName isEqualToString:ACC_UPDATE_DEVICE_INFO]){
             [self updateDeviceInfo:parameters];
         }
         else
-            NSLog(@"Function %@ is not registered in the Accengage handler of Cargo", tagName);
+            [self.logger logUnknownFunctionTag:tagName];
     }
     else
-        [self.logger logUninitializedFramework:self.name];
-}
-
-/**
- Called in registerHandlers to validate a handler and check for its initialization.
- */
-- (void)validate
-{
-    // Nothing is required
-    self.valid = TRUE;
+        [self.logger logUninitializedFramework];
 }
 
 
@@ -134,7 +125,7 @@ NSString* const ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
         self.initialized = TRUE;
     }
     else {
-        [self.logger logMissingParam:@"partnerId and/or privateKey" inMethod: ACC_init];
+        [self.logger logMissingParam:@"partnerId and/or privateKey" inMethod: ACC_INIT];
     }
 }
 
@@ -170,7 +161,7 @@ NSString* const ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
         [self.tracker trackEvent:eventType withParameters:eventParams];
     }
     else {
-        [self.logger logMissingParam:EVENT_TYPE inMethod: ACC_tagEvent];
+        [self.logger logMissingParam:EVENT_TYPE inMethod: ACC_TAG_EVENT];
     }
 }
 
@@ -211,10 +202,10 @@ NSString* const ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
             [self.tracker trackPurchase:purchaseId currency:currencyCode items:nil amount: total];
         }
         else
-            [self.logger logMissingParam:@"transactionTotal and/or transactionProducts" inMethod: ACC_tagPurchaseEvent];
+            [self.logger logMissingParam:@"transactionTotal and/or transactionProducts" inMethod: ACC_TAG_PURCHASE];
     }
     else {
-        [self.logger logMissingParam:@"transactionId or currencyCode" inMethod: ACC_tagPurchaseEvent];
+        [self.logger logMissingParam:@"transactionId or currencyCode" inMethod: ACC_TAG_PURCHASE];
     }
 }
 
@@ -237,7 +228,7 @@ NSString* const ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
         [self.tracker trackCart:cartId currency:currencyCode item:[item toA4SItem]];
     }
     else
-        [self.logger logMissingParam:@"cartId or currencyCode or product" inMethod: ACC_tagCartEvent];
+        [self.logger logMissingParam:@"cartId or currencyCode or product" inMethod: ACC_TAG_ADD_TO_CART];
 }
 
 /**
@@ -254,7 +245,7 @@ NSString* const ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
     if (leadLabel && leadValue)
         [self.tracker trackLead:leadLabel value:leadValue];
     else
-        [self.logger logMissingParam:@"leadLabel or leadValue" inMethod: ACC_tagLead];
+        [self.logger logMissingParam:@"leadLabel or leadValue" inMethod: ACC_TAG_LEAD];
 }
 
 /**

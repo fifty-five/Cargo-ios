@@ -85,18 +85,11 @@ NSString* TRACKING_ID = @"trackingId";
         else if ([tagName isEqualToString:GA_upload]){
             [self upload:parameters];
         }
+        else
+            [self.logger logUnknownFunctionTag:tagName];
     }
     else
-        [self.logger logUninitializedFramework:self.name];
-}
-
-/**
- Called in registerHandlers to validate a handler and check for its initialization.
- */
-- (void)validate
-{
-    // Nothing is required
-    self.valid = TRUE;
+        [self.logger logUninitializedFramework];
 }
 
 

@@ -72,9 +72,22 @@
  *  This method logs a warning about
  *  a missing initialization of the framework
  */
-- (void)logUninitializedFramework:(NSString *)handlerName;
+- (void)logUninitializedFramework;
 
+/**
+ *  Logs when a tag doesn't match a method
+ *
+ *  @param tagName The tag name which doesn't match
+ */
+- (void)logUnknownFunctionTag:(NSString *)tagName;
 
+/**
+ *  Called when a handler "execute" method is called. Logs the method call and its parameters
+ *
+ * @param tagName: the tag name of the callback method
+ * @param parameters: the parameters sent to the method through a dictionary
+ */
+-(void)logReceivedFunction:(NSString *)tagName withParam:(NSDictionary *)parameter;
 
 /**
  *  This method logs a setter success

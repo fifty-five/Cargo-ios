@@ -56,9 +56,7 @@ NSString* const ACC_updateDeviceInfo = @"ACC_updateDeviceInfo";
  @return the instance of the Accengage handler
  */
 - (id)init{
-    if (self = [super init]) {
-        self.key = @"ACC";
-        self.name = @"Accengage";
+    if (self = [super initWithKey:@"ACC" andName:@"Accengage"]) {
 
         self.cargo = [Cargo sharedHelper];
         self.tracker = [Accengage class];

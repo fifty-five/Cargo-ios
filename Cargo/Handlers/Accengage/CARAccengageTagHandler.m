@@ -30,6 +30,9 @@ NSString* const ACC_TAG_ADD_TO_CART = @"ACC_tagAddToCart";
 NSString* const ACC_TAG_LEAD = @"ACC_tagLead";
 NSString* const ACC_UPDATE_DEVICE_INFO = @"ACC_updateDeviceInfo";
 
+NSString* const PARTNER_ID = @"partnerId";
+NSString* const PRIVATE_KEY = @"privateKey";
+
 
 /* ********************************** Handler core methods ************************************** */
 
@@ -111,17 +114,19 @@ NSString* const ACC_UPDATE_DEVICE_INFO = @"ACC_updateDeviceInfo";
  @param privateKey: private key Accengage gives when you register your app
  @param partnerId: partner ID Accengage gives when you register your app
  */
--(void)init:(NSDictionary*)parameters{
-    NSString* partnerId = [CARUtils castToNSString:[parameters objectForKey:@"partnerId"]];
-    NSString* privateKey = [CARUtils castToNSString:[parameters objectForKey:@"privateKey"]];
+-(void)init:(NSDictionary *)parameters{
+    NSString *partnerId = [CARUtils castToNSString:[parameters objectForKey:PARTNER_ID]];
+    NSString *privateKey = [CARUtils castToNSString:[parameters objectForKey:PRIVATE_KEY]];
 
     if(partnerId && privateKey){
         ACCConfiguration *config = [ACCConfiguration defaultConfig];
         config.appId = partnerId;
         config.appPrivateKey = privateKey;
-
         [self.tracker startWithConfig:config];
+
         // now the handler is initialized
+        [self.logger logParamSetWithSuccess:PARTNER_ID withValue:partnerId];
+        [self.logger logParamSetWithSuccess:PRIVATE_KEY withValue:privateKey];
         self.initialized = TRUE;
     }
     else {
@@ -143,11 +148,12 @@ NSString* const ACC_UPDATE_DEVICE_INFO = @"ACC_updateDeviceInfo";
     - other parameters: will be changed into an array of strings build from key + value.
                         All the strings in the array will be sent.
  */
--(void)tagEvent:(NSDictionary*)parameters{
+-(void)tagEvent:(NSDictionary *)parameters{
     // change the parameters as a mutable dictionary
     NSMutableDictionary *params = [parameters mutableCopy];
     NSMutableArray *eventParams = [[NSMutableArray alloc] init];
     NSInteger eventType = [CARUtils castToNSInteger:[params objectForKey:EVENT_TYPE] withDefault:-1];
+
     // remove the entry for EVENT_TYPE in order to avoid finding it in the array of parameters
     [params removeObjectForKey:EVENT_TYPE];
     if (eventType > 1000) {
@@ -159,6 +165,8 @@ NSString* const ACC_UPDATE_DEVICE_INFO = @"ACC_updateDeviceInfo";
         }
         // send the event
         [self.tracker trackEvent:eventType withParameters:eventParams];
+        [self.logger logParamSetWithSuccess:EVENT_TYPE withValue:[NSNumber numberWithInteger:eventType]];
+        [self.logger logParamSetWithSuccess:@"parameters" withValue:eventParams];
     }
     else {
         [self.logger logMissingParam:EVENT_TYPE inMethod: ACC_TAG_EVENT];
@@ -176,9 +184,9 @@ NSString* const ACC_UPDATE_DEVICE_INFO = @"ACC_updateDeviceInfo";
     - transactionTotal : the total amount of the purchase.
     - transactionProducts : an array of AccengageItem objects, the items purchased.
  */
--(void)tagEventPurchase:(NSDictionary*)parameters{
+-(void)tagEventPurchase:(NSDictionary *)parameters{
     NSString *purchaseId = [CARUtils castToNSString:[parameters objectForKey:TRANSACTION_ID]];
-    NSString *currencyCode = [CARUtils castToNSString:[parameters objectForKey:@"currencyCode"]];
+    NSString *currencyCode = [CARUtils castToNSString:[parameters objectForKey:TRANSACTION_CURRENCY_CODE]];
 
     // check for the two mandatory variables
     if (currencyCode && purchaseId) {
@@ -191,21 +199,38 @@ NSString* const ACC_UPDATE_DEVICE_INFO = @"ACC_updateDeviceInfo";
             }
             // if TRANSACTION_TOTAL is set, send a hit with it. Otherwise, send a hit without total.
             NSNumber* total = [CARUtils castToNSNumber:[parameters objectForKey:TRANSACTION_TOTAL]];
-            if (total)
+            if (total) {
                [self.tracker trackPurchase:purchaseId currency:currencyCode items:finalArray amount: total];
-            else
+
+                [self.logger logParamSetWithSuccess:TRANSACTION_ID withValue:purchaseId];
+                [self.logger logParamSetWithSuccess:TRANSACTION_CURRENCY_CODE withValue:currencyCode];
+                [self.logger logParamSetWithSuccess:TRANSACTION_PRODUCTS withValue:itemArray];
+                [self.logger logParamSetWithSuccess:TRANSACTION_TOTAL withValue:total];
+            }
+            else {
                 [self.tracker trackPurchase:purchaseId currency:currencyCode items:finalArray amount:nil];
+
+                [self.logger logParamSetWithSuccess:TRANSACTION_ID withValue:purchaseId];
+                [self.logger logParamSetWithSuccess:TRANSACTION_CURRENCY_CODE withValue:currencyCode];
+                [self.logger logParamSetWithSuccess:TRANSACTION_PRODUCTS withValue:itemArray];
+            }
         }
         // if TRANSACTION_PRODUCTS isn't set, check for TRANSACTION_TOTAL
         else if ([parameters objectForKey:TRANSACTION_TOTAL]) {
             NSNumber* total = [CARUtils castToNSNumber:[parameters objectForKey:TRANSACTION_TOTAL]];
             [self.tracker trackPurchase:purchaseId currency:currencyCode items:nil amount: total];
+
+            [self.logger logParamSetWithSuccess:TRANSACTION_ID withValue:purchaseId];
+            [self.logger logParamSetWithSuccess:TRANSACTION_CURRENCY_CODE withValue:currencyCode];
+            [self.logger logParamSetWithSuccess:TRANSACTION_TOTAL withValue:total];
         }
         else
-            [self.logger logMissingParam:@"transactionTotal and/or transactionProducts" inMethod: ACC_TAG_PURCHASE];
+            [self.logger logMissingParam:@"transactionTotal and/or transactionProducts"
+                                inMethod: ACC_TAG_PURCHASE];
     }
     else {
-        [self.logger logMissingParam:@"transactionId or currencyCode" inMethod: ACC_TAG_PURCHASE];
+        [self.logger logMissingParam:@"transactionId and/or transactionCurrencyCode"
+                            inMethod: ACC_TAG_PURCHASE];
     }
 }
 
@@ -218,17 +243,21 @@ NSString* const ACC_UPDATE_DEVICE_INFO = @"ACC_updateDeviceInfo";
     - transactionCurrencyCode : the currency used for the transaction.
     - item (AccengageItem) : the item which is added to the cart.
  */
--(void)tagCartEvent:(NSDictionary*)parameters{
-    NSString *cartId = [CARUtils castToNSString:[parameters objectForKey:@"cartId"]];
-    NSString *currencyCode = [CARUtils castToNSString:[parameters objectForKey:@"currencyCode"]];
-    AccengageItem* item = [parameters objectForKey:@"product"];
+-(void)tagCartEvent:(NSDictionary *)parameters{
+    NSString *cartId = [CARUtils castToNSString:[parameters objectForKey:TRANSACTION_ID]];
+    NSString *currencyCode = [CARUtils castToNSString:[parameters objectForKey:TRANSACTION_CURRENCY_CODE]];
+    AccengageItem *item = [parameters objectForKey:@"item"];
 
     // if all the mandatory parameters are set, send the hit
     if (cartId && currencyCode && item) {
         [self.tracker trackCart:cartId currency:currencyCode item:[item toA4SItem]];
+        [self.logger logParamSetWithSuccess:TRANSACTION_ID withValue:cartId];
+        [self.logger logParamSetWithSuccess:TRANSACTION_CURRENCY_CODE withValue:currencyCode];
+        [self.logger logParamSetWithSuccess:@"item" withValue:item];
     }
     else
-        [self.logger logMissingParam:@"cartId or currencyCode or product" inMethod: ACC_TAG_ADD_TO_CART];
+        [self.logger logMissingParam:@"transactionId or transactionCurrencyCode or item"
+                            inMethod: ACC_TAG_ADD_TO_CART];
 }
 
 /**
@@ -240,10 +269,16 @@ NSString* const ACC_UPDATE_DEVICE_INFO = @"ACC_updateDeviceInfo";
     - leadValue : value of the lead
  */
 -(void)tagLead:(NSDictionary*)parameters{
-    NSString *leadLabel = [CARUtils castToNSString:[parameters objectForKey:@"leadLabel"]];
-    NSString *leadValue = [CARUtils castToNSString:[parameters objectForKey:@"leadValue"]];
-    if (leadLabel && leadValue)
+    NSString *LEAD_LABEL = @"leadLabel";
+    NSString *LEAD_VALUE = @"leadValue";
+    NSString *leadLabel = [CARUtils castToNSString:[parameters objectForKey:LEAD_LABEL]];
+    NSString *leadValue = [CARUtils castToNSString:[parameters objectForKey:LEAD_VALUE]];
+
+    if (leadLabel && leadValue) {
         [self.tracker trackLead:leadLabel value:leadValue];
+        [self.logger logParamSetWithSuccess:LEAD_LABEL withValue:leadLabel];
+        [self.logger logParamSetWithSuccess:LEAD_VALUE withValue:leadValue];
+    }
     else
         [self.logger logMissingParam:@"leadLabel or leadValue" inMethod: ACC_TAG_LEAD];
 }
@@ -258,8 +293,15 @@ NSString* const ACC_UPDATE_DEVICE_INFO = @"ACC_updateDeviceInfo";
 
  @param parameters a dictionary of parameters to update the profile with.
  */
--(void)updateDeviceInfo:(NSDictionary*)parameters{
-    [self.tracker updateDeviceInfo:parameters];
+-(void)updateDeviceInfo:(NSDictionary*)parameters {
+    if ([parameters count] > 0) {
+        [self.tracker updateDeviceInfo:parameters];
+    }
+    else {
+        [self.logger FIFLog:kTAGLoggerLogLevelWarning
+                withMessage:@"No parameters have been given for the method %@",
+         ACC_UPDATE_DEVICE_INFO];
+    }
 }
 
 @end

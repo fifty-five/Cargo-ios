@@ -102,7 +102,7 @@
  */
 - (void)logUncastableParam:(NSString *)paramName
                     toType:(NSString *)type {
-    [self FIFLog:kTAGLoggerLogLevelWarning withMessage:
+    [self FIFLog:kTAGLoggerLogLevelError withMessage:
      @"Parameter %@ cannot be casted to %@ ",
      paramName,
      type];
@@ -115,7 +115,7 @@
  *  @param handlerName the name of the uninitialized handler
  */
 - (void)logUninitializedFramework {
-    [self FIFLog:kTAGLoggerLogLevelWarning withMessage:
+    [self FIFLog:kTAGLoggerLogLevelInfo withMessage:
      @"You must initialize the framework before using it"];
 }
 

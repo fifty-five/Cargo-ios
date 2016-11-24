@@ -48,6 +48,7 @@
  *  @param messageFormat The message
  */
 - (void)FIFLog:(TAGLoggerLogLevelType)intentLevel withMessage:(NSString *)messageFormat, ...;
+
 /**
  *  Set the logging level
  *

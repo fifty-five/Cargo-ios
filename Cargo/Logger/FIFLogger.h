@@ -16,20 +16,19 @@
  */
 @interface FIFLogger : NSObject {
     TAGLoggerLogLevelType level;
-    NSString *format;
+    NSString *superContext;
     NSString *context;
 }
-
-
-/** The log format */
-@property (nonatomic, retain) NSString *format;
 
 
 /** The logging level */
 @property (assign, readonly) TAGLoggerLogLevelType level;
 
 
-/** The framework name */
+/** Cargo name */
+@property (nonatomic, retain) NSString *superContext;
+
+/** The name of the SDK handler */
 @property (nonatomic, retain) NSString *context;
 
 
@@ -43,19 +42,18 @@
 - (id)initLogger:(NSString *)aContext;
 
 /**
+ *  Main loggin function
+ *
+ *  @param intentLevel The level you want to log with
+ *  @param messageFormat The message
+ */
+- (void)FIFLog:(TAGLoggerLogLevelType)intentLevel withMessage:(NSString *)messageFormat, ...;
+/**
  *  Set the logging level
  *
  *  @param logLevel the logging level
  */
 - (void)setLevel:(TAGLoggerLogLevelType)logLevel;
-
-
-/**
- *  Set the logging format
- *
- *  @param logFormat the logging format
- */
-- (void)setFormat:(NSString *)logFormat;
 
 
 /**
@@ -105,7 +103,7 @@
  */
 - (void)logNotFoundValue:(NSString *)value
                   forKey:(NSString *)key
-              inValueSet:(NSArray*)possibleValues;
+              inValueSet:(NSArray *)possibleValues;
 
 
 /**

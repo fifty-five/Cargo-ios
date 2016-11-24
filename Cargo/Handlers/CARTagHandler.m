@@ -34,7 +34,6 @@
     FIFLog(kTAGLoggerLogLevelInfo, @"Function '%@' has been received with parameters '%@'",
            functionName,
            parameters);
-    
 }
 
 /**
@@ -44,7 +43,11 @@
     self.valid = true;
 }
 
-- (id)init{
+- (id)initWithKey:(NSString *)handlerKey andName:(NSString *)handlerName{
+    self.key = handlerKey;
+    self.name = handlerName;
+    self.logger = [[FIFLogger alloc] initLogger:self.name];
+    [self.logger setLevel:[[[Cargo sharedHelper] logger] level]];
     self.valid = NO;
     self.initialized = NO;
 

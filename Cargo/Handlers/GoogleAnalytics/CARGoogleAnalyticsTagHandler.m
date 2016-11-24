@@ -57,11 +57,7 @@ NSString* TRACKING_ID = @"trackingId";
  @return the instance of the Googla Analytics handler
  */
 - (id)init{
-    if (self = [super init]) {
-        self.key = @"GA";
-        self.name = @"Google Analytics";
-        self.valid = NO;
-        self.initialized = NO;
+    if (self = [super initWithKey:@"GA" andName:@"Google Analytics"]) {
 
         self.tracker = [[GAI sharedInstance] defaultTracker];
         self.instance = [GAI sharedInstance];
@@ -180,7 +176,7 @@ NSString* TRACKING_ID = @"trackingId";
 
     //Upload
     [self.instance dispatch];
-    FIFLog(kTAGLoggerLogLevelInfo, @"%@ upload success.", self.name);
+    [self.logger FIFLog:kTAGLoggerLogLevelInfo withMessage:@"%@ upload success.", self.name];
     
 }
 

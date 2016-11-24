@@ -47,11 +47,7 @@ NSString *FB_purchase = @"FB_purchase";
  */
 - (id)init
 {
-    if (self = [super init]) {
-        self.key = @"FB";
-        self.name = @"Facebook";
-        self.valid = NO;
-        self.initialized = NO;
+    if (self = [super initWithKey:@"FB" andName:@"Facebook"]) {
 
         self.fbAppEvents = [FBSDKAppEvents class];
     }

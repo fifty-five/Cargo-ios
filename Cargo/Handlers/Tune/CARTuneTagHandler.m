@@ -74,11 +74,7 @@ NSArray* ALL_EVENT_PROPERTIES;
  */
 - (id)init
 {
-    if (self = [super init]) {
-        self.key = @"Tune";
-        self.name = @"Tune";
-        self.valid = NO;
-        self.initialized = NO;
+    if (self = [super initWithKey:@"TUN" andName:@"Tune"]) {
 
         self.tuneClass = [Tune class];
     }
@@ -96,7 +92,7 @@ NSArray* ALL_EVENT_PROPERTIES;
     [super execute:tagName parameters:parameters];
 
     if([tagName isEqualToString:Tune_init]){
-        [self init:parameters];
+        [self initialize:parameters];
     // check whether the SDK has been initialized before calling any method
     } else if (self.initialized) {
         if ([tagName isEqualToString:Tune_identify]){
@@ -135,7 +131,7 @@ NSArray* ALL_EVENT_PROPERTIES;
  @param conversionKey: a key Tune gives when you register your app
  @param advertiserId: an ID Tune gives when you register your app
  */
--(void) init:(NSDictionary*)parameters{
+-(void) initialize:(NSDictionary*)parameters{
     NSString* adId = [CARUtils castToNSString:[parameters objectForKey:@"advertiserId"]];
     NSString* convKey = [CARUtils castToNSString:[parameters objectForKey:@"conversionKey"]];
 
@@ -144,7 +140,7 @@ NSArray* ALL_EVENT_PROPERTIES;
         self.initialized = TRUE;
     }
     else {
-        FIFLog(kTAGLoggerLogLevelWarning,@"Missing required parameter advertiserId and conversionKey for Tune");
+        [self.logger logMissingParam:@"advertiserId and/or conversionKey" inMethod:Tune_init];
     }
 }
 

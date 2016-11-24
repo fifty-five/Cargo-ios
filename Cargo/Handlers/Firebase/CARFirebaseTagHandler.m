@@ -49,11 +49,7 @@ NSString *const ENABLE_COLLECTION = @"enableCollection";
  */
 - (id)init
 {
-    if (self = [super init]) {
-        self.key = @"Firebase";
-        self.name = @"Firebase";
-        self.valid = NO;
-        self.initialized = NO;
+    if (self = [super initWithKey:@"Firebase" andName:@"Firebase"]) {
 
         self.fireAnalyticsClass = [FIRAnalytics class];
         self.fireConfClass = [FIRAnalyticsConfiguration class];

@@ -65,9 +65,7 @@ NSString* CHAPTER3 = @"chapter3";
  @return the instance of the AT Internet handler
  */
 - (id)init{
-    if (self = [super init]) {
-        self.key = @"AT";
-        self.name = @"AT Internet";
+    if (self = [super initWithKey:@"AT" andName:@"AT Internet"]) {
 
         self.tracker = [[ATInternet sharedInstance] defaultTracker];
         self.instance = [ATInternet sharedInstance];

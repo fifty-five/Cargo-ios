@@ -31,9 +31,10 @@
  @param parameters the parameters sent to the method through a dictionary
  */
 - (void)execute:(NSString *)functionName parameters:(NSDictionary *)parameters {
-    FIFLog(kTAGLoggerLogLevelInfo, @"Function '%@' has been received with parameters '%@'",
-           functionName,
-           parameters);
+    [self.logger FIFLog:kTAGLoggerLogLevelInfo withMessage:
+     @"Function '%@' has been received with parameters '%@'",
+     functionName,
+     parameters];
 }
 
 /**
@@ -46,8 +47,8 @@
 - (id)initWithKey:(NSString *)handlerKey andName:(NSString *)handlerName{
     self.key = handlerKey;
     self.name = handlerName;
-    self.logger = [[FIFLogger alloc] initLogger:self.name];
-    [self.logger setLevel:[[[Cargo sharedHelper] logger] level]];
+    self.logger = [[FIFLogger alloc] initLogger:[self.key stringByAppendingString:@"_handler"]];
+    [self.logger  setLevel:[[[Cargo sharedHelper] logger] level]];
     self.valid = NO;
     self.initialized = NO;
 

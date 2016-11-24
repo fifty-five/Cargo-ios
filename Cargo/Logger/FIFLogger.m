@@ -39,8 +39,27 @@
     return self;
 }
 
-- (void)FIFLog:(TAGLoggerLogLevelType)intentLevel withMessage:(NSString *)messageFormat, ... {
+#pragma mark - Setters
+/**
+ *  Set the logging level
+ *
+ *  @param logLevel the logging level
+ */
+- (void)setLevel:(TAGLoggerLogLevelType)logLevel {
+    level = logLevel;
+    if (level == kTAGLoggerLogLevelVerbose && [self.context  isEqual: @"Cargo"]) {
+        [self FIFLog:kTAGLoggerLogLevelWarning withMessage:
+         @"Verbose Mode Enabled. Do not release with this enabled"];
+    }
+}
 
+/**
+ *  Main loggin function
+ *
+ *  @param intentLevel The level you want to log with
+ *  @param messageFormat The message
+ */
+- (void)FIFLog:(TAGLoggerLogLevelType)intentLevel withMessage:(NSString *)messageFormat, ... {
     if ([self levelEnabled:intentLevel]) {
         va_list args;
         va_start(args, messageFormat);
@@ -56,21 +75,6 @@
         va_end(args);
     }
 }
-
-#pragma mark - Setters
-/**
- *  Set the logging level
- *
- *  @param logLevel the logging level
- */
-- (void)setLevel:(TAGLoggerLogLevelType)logLevel {
-    level = logLevel;
-    if (level == kTAGLoggerLogLevelVerbose && [self.context  isEqual: @"Cargo"]) {
-        [self FIFLog:kTAGLoggerLogLevelWarning withMessage:
-         @"Verbose Mode Enabled. Do not release with this enabled"];
-    }
-}
-
 
 #pragma mark - Logging
 /**
@@ -99,7 +103,7 @@
 - (void)logUncastableParam:(NSString *)paramName
                     toType:(NSString *)type {
     [self FIFLog:kTAGLoggerLogLevelWarning withMessage:
-     @"param %@ cannot be casted to %@ ",
+     @"Parameter %@ cannot be casted to %@ ",
      paramName,
      type];
 }
@@ -110,10 +114,33 @@
  *
  *  @param handlerName the name of the uninitialized handler
  */
-- (void)logUninitializedFramework:(NSString *)handlerName {
+- (void)logUninitializedFramework {
     [self FIFLog:kTAGLoggerLogLevelWarning withMessage:
-     @"You must init framework %@ before using it",
-     handlerName];
+     @"You must initialize the framework before using it"];
+}
+
+/**
+ *  Logs when a tag doesn't match a method
+ *
+ *  @param tagName The tag name which doesn't match
+ */
+- (void)logUnknownFunctionTag:(NSString *)tagName {
+    [self FIFLog:kTAGLoggerLogLevelDebug withMessage:
+     @"Unable to find a method matching the function tag %@",
+     tagName];
+}
+
+/**
+ *  Called when a handler "execute" method is called. Logs the method call and its parameters
+ *
+ * @param tagName: the tag name of the callback method
+ * @param parameters: the parameters sent to the method through a dictionary
+ */
+-(void)logReceivedFunction:(NSString *)tagName withParam:(NSDictionary *)parameters {
+    [self FIFLog:kTAGLoggerLogLevelInfo withMessage:
+     @"Function '%@' has been received with parameters '%@'",
+     tagName,
+     parameters];
 }
 
 /**

@@ -47,11 +47,7 @@ NSString *FB_purchase = @"FB_purchase";
  */
 - (id)init
 {
-    if (self = [super init]) {
-        self.key = @"FB";
-        self.name = @"Facebook";
-        self.valid = NO;
-        self.initialized = NO;
+    if (self = [super initWithKey:@"FB" andName:@"Facebook"]) {
 
         self.fbAppEvents = [FBSDKAppEvents class];
     }
@@ -81,18 +77,11 @@ NSString *FB_purchase = @"FB_purchase";
         else if([tagName isEqualToString:FB_purchase]){
             [self purchase:parameters];
         }
+        else
+            [self.logger logUnknownFunctionTag:tagName];
     }
     else
-        [self.logger logUninitializedFramework:self.name];
-}
-
-/**
- Called in registerHandlers to validate a handler and check for its initialization.
- */
-- (void)validate
-{
-    // Nothing is required
-    self.valid = TRUE;
+        [self.logger logUninitializedFramework];
 }
 
 

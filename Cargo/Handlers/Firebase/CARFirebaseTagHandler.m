@@ -49,11 +49,7 @@ NSString *const ENABLE_COLLECTION = @"enableCollection";
  */
 - (id)init
 {
-    if (self = [super init]) {
-        self.key = @"Firebase";
-        self.name = @"Firebase";
-        self.valid = NO;
-        self.initialized = NO;
+    if (self = [super initWithKey:@"Firebase" andName:@"Firebase"]) {
 
         self.fireAnalyticsClass = [FIRAnalytics class];
         self.fireConfClass = [FIRAnalyticsConfiguration class];
@@ -80,15 +76,8 @@ NSString *const ENABLE_COLLECTION = @"enableCollection";
     else if([tagName isEqualToString:Firebase_tagEvent]){
         [self tagEvent:parameters];
     }
-}
-
-/**
- Called in registerHandlers to validate a handler and check for its initialization.
- */
-- (void)validate
-{
-    // Nothing is required
-    self.valid = TRUE;
+    else
+        [self.logger logUnknownFunctionTag:tagName];
 }
 
 

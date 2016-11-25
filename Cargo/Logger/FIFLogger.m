@@ -18,33 +18,9 @@
 
 @end
 
-#pragma mark - Main logging function
-FIFLogger * refToSelf;
-void FIFLog(TAGLoggerLogLevelType intentLevel,
-            NSString *messageFormat, ...) {
-    
-    if (!refToSelf)
-        refToSelf = [[FIFLogger alloc] init];
-        
-    if ([refToSelf levelEnabled:intentLevel]) {
-        va_list args;
-        va_start(args, messageFormat);
-        
-        NSString *logMessage = [[NSString alloc]
-                                 initWithFormat:messageFormat
-                                 arguments:args];
-        NSLog(@"[%@] - %@ - %@",
-              refToSelf.context,
-              [refToSelf nameOfLevel:intentLevel],
-              logMessage);
-        va_end(args);
-    }
-}
-
-
 @implementation FIFLogger
-@synthesize format;
 @synthesize level;
+@synthesize superContext;
 @synthesize context;
 
 /**
@@ -56,15 +32,12 @@ void FIFLog(TAGLoggerLogLevelType intentLevel,
  */
 - (id)initLogger:(NSString *)aContext {
     if (self = [super init]) {
+        self.superContext = @"Cargo";
         self.context = aContext;
         [self setLevel:kTAGLoggerLogLevelVerbose];
-        [self setFormat:@"[%@] - %@ - %@"];
-        refToSelf = self;
     }
-    
     return self;
 }
-
 
 #pragma mark - Setters
 /**
@@ -74,24 +47,34 @@ void FIFLog(TAGLoggerLogLevelType intentLevel,
  */
 - (void)setLevel:(TAGLoggerLogLevelType)logLevel {
     level = logLevel;
-    if (level == kTAGLoggerLogLevelVerbose &&
-        [context isEqualToString:@"Cargo"]) {
-        FIFLog(kTAGLoggerLogLevelWarning,
-              @"Cargo Verbose Mode Enabled."
-              " Use only when debugging. Do not release with this enabled");
+    if (level == kTAGLoggerLogLevelVerbose && [self.context  isEqual: @"Cargo"]) {
+        [self FIFLog:kTAGLoggerLogLevelWarning withMessage:
+         @"Verbose Mode Enabled. Do not release with this enabled"];
     }
 }
 
 /**
- *  Set the logging format
+ *  Main loggin function
  *
- *  @param logFormat the logging format
+ *  @param intentLevel The level you want to log with
+ *  @param messageFormat The message
  */
-- (void)setFormat:(NSString *)logFormat {
-    format = [[NSString alloc] initWithString:logFormat];
+- (void)FIFLog:(TAGLoggerLogLevelType)intentLevel withMessage:(NSString *)messageFormat, ... {
+    if ([self levelEnabled:intentLevel]) {
+        va_list args;
+        va_start(args, messageFormat);
+
+        NSString *logMessage = [[NSString alloc]
+                                initWithFormat:messageFormat
+                                arguments:args];
+        NSLog(@"%@ - %@ [%@]: %@",
+              self.superContext,
+              self.context,
+              [self nameOfLevel:intentLevel],
+              logMessage);
+        va_end(args);
+    }
 }
-
-
 
 #pragma mark - Logging
 /**
@@ -103,11 +86,11 @@ void FIFLog(TAGLoggerLogLevelType intentLevel,
  */
 - (void)logMissingParam:(NSString *)paramName
                inMethod:(NSString *)methodName {
-    
-    FIFLog(kTAGLoggerLogLevelWarning, @"[%@] Parameter '%@' is required in method '%@'",
-           context,
-           paramName,
-           methodName);
+
+    [self FIFLog:kTAGLoggerLogLevelWarning withMessage:
+     @"Parameter '%@' is required in method '%@'",
+     paramName,
+     methodName];
 }
 
 /**
@@ -119,7 +102,10 @@ void FIFLog(TAGLoggerLogLevelType intentLevel,
  */
 - (void)logUncastableParam:(NSString *)paramName
                     toType:(NSString *)type {
-    FIFLog(kTAGLoggerLogLevelWarning, @"param %@ cannot be casted to %@ ", paramName, type);
+    [self FIFLog:kTAGLoggerLogLevelError withMessage:
+     @"Parameter %@ cannot be casted to %@ ",
+     paramName,
+     type];
 }
 
 /**
@@ -128,9 +114,33 @@ void FIFLog(TAGLoggerLogLevelType intentLevel,
  *
  *  @param handlerName the name of the uninitialized handler
  */
-- (void)logUninitializedFramework:(NSString *)handlerName {
-    FIFLog(kTAGLoggerLogLevelWarning, @"[%@] You must init framework %@ before using it",
-           context, handlerName);
+- (void)logUninitializedFramework {
+    [self FIFLog:kTAGLoggerLogLevelInfo withMessage:
+     @"You must initialize the framework before using it"];
+}
+
+/**
+ *  Logs when a tag doesn't match a method
+ *
+ *  @param tagName The tag name which doesn't match
+ */
+- (void)logUnknownFunctionTag:(NSString *)tagName {
+    [self FIFLog:kTAGLoggerLogLevelDebug withMessage:
+     @"Unable to find a method matching the function tag %@",
+     tagName];
+}
+
+/**
+ *  Called when a handler "execute" method is called. Logs the method call and its parameters
+ *
+ * @param tagName: the tag name of the callback method
+ * @param parameters: the parameters sent to the method through a dictionary
+ */
+-(void)logReceivedFunction:(NSString *)tagName withParam:(NSDictionary *)parameters {
+    [self FIFLog:kTAGLoggerLogLevelInfo withMessage:
+     @"Function '%@' has been received with parameters '%@'",
+     tagName,
+     parameters];
 }
 
 /**
@@ -141,10 +151,10 @@ void FIFLog(TAGLoggerLogLevelType intentLevel,
  */
 - (void)logParamSetWithSuccess:(NSString *)paramName
                      withValue:(id)value {
-    FIFLog(kTAGLoggerLogLevelInfo, @"[%@] Parameter '%@' has been set to '%@' with success",
-           context,
-           paramName,
-           value);
+    [self FIFLog:kTAGLoggerLogLevelInfo withMessage:
+     @"Parameter '%@' has been set to '%@' with success",
+     paramName,
+     value];
 }
 
 /**
@@ -154,9 +164,7 @@ void FIFLog(TAGLoggerLogLevelType intentLevel,
  *  @param paramName The unknown param
  */
 - (void)logUnknownParam:(NSString *)paramName {
-    FIFLog(kTAGLoggerLogLevelWarning, @"[%@] Parameter '%@' is unknown",
-           context,
-           paramName);
+    [self FIFLog:kTAGLoggerLogLevelWarning withMessage:@"Parameter '%@' is unknown", paramName];
 }
 
 /**
@@ -169,12 +177,11 @@ void FIFLog(TAGLoggerLogLevelType intentLevel,
 - (void)logNotFoundValue:(NSString *)value
                   forKey:(NSString *)key
               inValueSet:(NSArray *)possibleValues {
-    FIFLog(kTAGLoggerLogLevelWarning, @"[%@] Value '%@' for key '%@' is not "
-           "found among possible values %@",
-           context,
-           value,
-           key,
-           possibleValues);
+    [self FIFLog:kTAGLoggerLogLevelWarning withMessage:
+     @"Value '%@' for key '%@' is not found among possible values %@",
+     value,
+     key,
+     possibleValues];
 }
 
 /**

@@ -65,9 +65,7 @@ NSString* CHAPTER3 = @"chapter3";
  @return the instance of the AT Internet handler
  */
 - (id)init{
-    if (self = [super init]) {
-        self.key = @"AT";
-        self.name = @"AT Internet";
+    if (self = [super initWithKey:@"AT" andName:@"AT Internet"]) {
 
         self.tracker = [[ATInternet sharedInstance] defaultTracker];
         self.instance = [ATInternet sharedInstance];
@@ -103,10 +101,10 @@ NSString* CHAPTER3 = @"chapter3";
             [self tagEvent:parameters];
         }
         else
-            NSLog(@"Function %@ is not registered in the AT Internet handler of Cargo", tagName);
+            [self.logger logUnknownFunctionTag:tagName];
     }
     else
-        [self.logger logUninitializedFramework:self.name];
+        [self.logger logUninitializedFramework];
 }
 
 /**

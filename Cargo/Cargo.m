@@ -151,8 +151,17 @@ static NSMutableDictionary * registeredMacroHandlers;
 
         if(handler.valid){
             [self.container registerFunctionCallTagHandler:handler forTag:key];
+            [self.logger FIFLog:kTAGLoggerLogLevelInfo
+                    withMessage:@"Function with key %@ has been registered for %@ handler",
+             key,
+             [handler name]];
         }
-        NSLog(@"Handler with key %@ has been registered", key );
+        else {
+            [self.logger FIFLog:kTAGLoggerLogLevelError
+                    withMessage:@"%@ handler seems to be invalid. Function with key %@ hasn't been registered.",
+             [handler name],
+             key];
+        }
     }
     // macros
     for(NSString* key in registeredMacroHandlers ){

@@ -25,11 +25,11 @@
 /* *********************************** Variables Declaration ************************************ */
 
 /** Constants used to define callbacks in the register and in the execute method */
-NSString* AT_init = @"AT_init";
-NSString* AT_setConfig = @"AT_setConfig";
-NSString* AT_identify = @"AT_identify";
-NSString* AT_tagScreen = @"AT_tagScreen";
-NSString* AT_tagEvent = @"AT_tagEvent";
+NSString* AT_INIT = @"AT_init";
+NSString* AT_SET_CONFIG = @"AT_setConfig";
+NSString* AT_IDENTIFY = @"AT_identify";
+NSString* AT_TAG_SCREEN = @"AT_tagScreen";
+NSString* AT_TAG_EVENT = @"AT_tagEvent";
 
 NSString* LOG = @"log";
 NSString* LOG_SSL = @"logSSL";
@@ -51,11 +51,11 @@ NSString* CHAPTER3 = @"chapter3";
 +(void)load{
     CARATInternetTagHandler* handler = [[CARATInternetTagHandler alloc] init];
 
-    [Cargo registerTagHandler:handler withKey:AT_init];
-    [Cargo registerTagHandler:handler withKey:AT_setConfig];
-    [Cargo registerTagHandler:handler withKey:AT_identify];
-    [Cargo registerTagHandler:handler withKey:AT_tagScreen];
-    [Cargo registerTagHandler:handler withKey:AT_tagEvent];
+    [Cargo registerTagHandler:handler withKey:AT_INIT];
+    [Cargo registerTagHandler:handler withKey:AT_SET_CONFIG];
+    [Cargo registerTagHandler:handler withKey:AT_IDENTIFY];
+    [Cargo registerTagHandler:handler withKey:AT_TAG_SCREEN];
+    [Cargo registerTagHandler:handler withKey:AT_TAG_EVENT];
 }
 
 /**
@@ -83,21 +83,21 @@ NSString* CHAPTER3 = @"chapter3";
 -(void) execute:(NSString *)tagName parameters:(NSDictionary *)parameters{
     [super execute:tagName parameters:parameters];
 
-    if([tagName isEqualToString:AT_init]){
+    if([tagName isEqualToString:AT_INIT]){
         [self init:parameters];
     }
     // check whether the SDK has been initialized before calling any method
     else if (self.initialized) {
-        if ([tagName isEqualToString:AT_setConfig]){
+        if ([tagName isEqualToString:AT_SET_CONFIG]){
             [self setConfig:parameters];
         }
-        else if ([tagName isEqualToString:AT_tagScreen]){
+        else if ([tagName isEqualToString:AT_TAG_SCREEN]){
             [self tagScreen:parameters];
         }
-        else if ([tagName isEqualToString:AT_identify]){
+        else if ([tagName isEqualToString:AT_IDENTIFY]){
             [self identify:parameters];
         }
-        else if ([tagName isEqualToString:AT_tagEvent]){
+        else if ([tagName isEqualToString:AT_TAG_EVENT]){
             [self tagEvent:parameters];
         }
         else
@@ -148,7 +148,7 @@ NSString* CHAPTER3 = @"chapter3";
         self.initialized = TRUE;
     }
     else
-        [self.logger logMissingParam:@"log and/or logSSL and/or site" inMethod:AT_init];
+        [self.logger logMissingParam:@"log and/or logSSL and/or site" inMethod:AT_INIT];
 }
 
 
@@ -171,6 +171,7 @@ NSString* CHAPTER3 = @"chapter3";
     }
     [self.tracker setConfig:params override: override completionHandler:^(BOOL isSet) {
         [weakSelf.logger logParamSetWithSuccess:@"config" withValue:params];
+        [weakSelf.logger logParamSetWithSuccess:OVERRIDE withValue:(override ? @YES : @NO)];
     }];
 }
 
@@ -224,7 +225,7 @@ NSString* CHAPTER3 = @"chapter3";
         [screen sendView];
     }
     else
-        [self.logger logMissingParam:SCREEN_NAME inMethod:AT_tagScreen];
+        [self.logger logMissingParam:SCREEN_NAME inMethod:AT_TAG_SCREEN];
 }
 
 /**
@@ -241,7 +242,7 @@ NSString* CHAPTER3 = @"chapter3";
         [self.logger logParamSetWithSuccess:USER_ID withValue:userId];
     }
     else
-        [self.logger logMissingParam:USER_ID inMethod:AT_identify];
+        [self.logger logMissingParam:USER_ID inMethod:AT_IDENTIFY];
 }
 
 /**
@@ -284,15 +285,15 @@ NSString* CHAPTER3 = @"chapter3";
         [self sendEvent:gesture withType:eventType];
     }
     else
-        [self.logger logMissingParam:@"eventName and/or eventType" inMethod:AT_tagEvent];
+        [self.logger logMissingParam:@"eventName and/or eventType" inMethod:AT_TAG_EVENT];
 }
 
 
 /* ****************************************** Utility ******************************************* */
 
 /**
- Send the event, depending on which eventType was given in AT_tagEvent method
- This method is exclusively called by the tagEvent method (AT_tagEvent)
+ Send the event, depending on which eventType was given in AT_TAG_EVENT method
+ This method is exclusively called by the tagEvent method (AT_TAG_EVENT)
 
  @param event an ATGesture typed event
  @param eventType the eventType, as a NSString

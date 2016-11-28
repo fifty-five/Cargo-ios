@@ -52,7 +52,7 @@
     [given([_firebaseConfMock sharedInstance]) willReturn:_confMock];
 
     NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys:@(YES), @"enableCollection", nil];
-    [_handler execute:@"Firebase_init" parameters:dict];
+    [_handler execute:@"FIR_init" parameters:dict];
 
     [verify(_confMock) setAnalyticsCollectionEnabled:YES];
 }
@@ -61,7 +61,7 @@
     [given([_firebaseConfMock sharedInstance]) willReturn:_confMock];
 
     NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys:[NSNumber numberWithBool:NO], @"enableCollection", nil];
-    [_handler execute:@"Firebase_init" parameters:dict];
+    [_handler execute:@"FIR_init" parameters:dict];
 
     [verify(_confMock) setAnalyticsCollectionEnabled:NO];
 }
@@ -70,24 +70,24 @@
     [given([_firebaseConfMock sharedInstance]) willReturn:_confMock];
 
     NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys:@(NO), @"enableCollection", nil];
-    [_handler execute:@"Firebase_init" parameters:dict];
+    [_handler execute:@"FIR_init" parameters:dict];
 
     [verify(_confMock) setAnalyticsCollectionEnabled:NO];
 }
 
-- (void)testInitCollectionDefault{
+- (void)testInitCollectionFailed{
     [given([_firebaseConfMock sharedInstance]) willReturn:_confMock];
-
+    
     NSDictionary * dict = [[NSDictionary alloc ] init];
-    [_handler execute:@"Firebase_init" parameters:dict];
-
-    [verify(_confMock) setAnalyticsCollectionEnabled:YES];
+    [_handler execute:@"FIR_init" parameters:dict];
+    
+    [verifyCount(_confMock, times(0)) setAnalyticsCollectionEnabled:anything()];
 }
 
 
 - (void)testSimpleFirebaseIdentify{
     NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys:@"234", USER_ID, nil];
-    [_handler execute:@"Firebase_identify" parameters:dict];
+    [_handler execute:@"FIR_identify" parameters:dict];
 
     [verifyCount(_firebaseAnalyticsMock, times(1)) setUserID:@"234"];
     [verifyCount(_firebaseAnalyticsMock, times(0)) setUserPropertyString:anything() forName:anything()];
@@ -95,7 +95,7 @@
 
 - (void)testFullFirebaseIdentify{
     NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys:@"234", USER_ID, @"55", USER_AGE, @"Male", USER_GENDER, @"01223456789", USER_FACEBOOK_ID, nil];
-    [_handler execute:@"Firebase_identify" parameters:dict];
+    [_handler execute:@"FIR_identify" parameters:dict];
 
     [verifyCount(_firebaseAnalyticsMock, times(1)) setUserID:@"234"];
     [verifyCount(_firebaseAnalyticsMock, times(3)) setUserPropertyString:anything() forName:anything()];
@@ -103,7 +103,7 @@
 
 - (void)testUserPropertiesFirebaseIdentify{
     NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys: @"55", USER_AGE, @"Male", USER_GENDER, @"01223456789", USER_FACEBOOK_ID, nil];
-    [_handler execute:@"Firebase_identify" parameters:dict];
+    [_handler execute:@"FIR_identify" parameters:dict];
 
     [verifyCount(_firebaseAnalyticsMock, times(0)) setUserID:anything()];
     [verifyCount(_firebaseAnalyticsMock, times(3)) setUserPropertyString:anything() forName:anything()];
@@ -111,7 +111,7 @@
 
 - (void)testFailFirebaseIdentify{
     NSDictionary * dict = [[NSDictionary alloc ] init];
-    [_handler execute:@"Firebase_identify" parameters:dict];
+    [_handler execute:@"FIR_identify" parameters:dict];
 
     [verifyCount(_firebaseAnalyticsMock, times(0)) setUserID:anything()];
     [verifyCount(_firebaseAnalyticsMock, times(0)) setUserPropertyString:anything() forName:anything()];
@@ -121,14 +121,14 @@
 
 - (void)testSimpleTagEvent{
     NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys: @"aRandomEventName", EVENT_NAME, nil];
-    [_handler execute:@"Firebase_tagEvent" parameters:dict];
+    [_handler execute:@"FIR_tagEvent" parameters:dict];
 
     [verifyCount(_firebaseAnalyticsMock, times(1)) logEventWithName:@"aRandomEventName" parameters:nil];
 }
 
 - (void)testComplexTagEvent{
     NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys: @"aRandomEventName", EVENT_NAME, @"anEventParameter", @"anEventParamName", @"anotherEventParameter", @"anotherEventParamName", [NSNumber numberWithInteger:55], @"lastParamName", nil];
-    [_handler execute:@"Firebase_tagEvent" parameters:dict];
+    [_handler execute:@"FIR_tagEvent" parameters:dict];
 
     [verifyCount(_firebaseAnalyticsMock, times(0)) logEventWithName:@"aRandomEventName" parameters:nil];
     [verifyCount(_firebaseAnalyticsMock, times(1)) logEventWithName:@"aRandomEventName" parameters:anything()];
@@ -136,7 +136,7 @@
 
 - (void)testFailTagEvent{
     NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys: @"aRandomEventName", EVENT_TYPE, nil];
-    [_handler execute:@"Firebase_tagEvent" parameters:dict];
+    [_handler execute:@"FIR_tagEvent" parameters:dict];
 
     [verifyCount(_firebaseAnalyticsMock, times(0)) logEventWithName:anything() parameters:anything()];
 }

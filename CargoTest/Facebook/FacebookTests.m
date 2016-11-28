@@ -112,14 +112,14 @@
     [_handler setInitialized:true];
     [_handler execute:@"FB_tagEvent" parameters:dict];
 
-    [verifyCount(_fbEventsMock, times(1)) logEvent:FBSDKAppEventNameAddedToCart parameters:@{ FBSDKAppEventParameterNameCurrency    : @"USD",                                                                                                               FBSDKAppEventParameterNameContentType : @"product",                                                                                                               FBSDKAppEventParameterNameContentID   : @"HDFU-8452" }];
+    [verifyCount(_fbEventsMock, times(1)) logEvent:FBSDKAppEventNameAddedToCart parameters:@{ FBSDKAppEventParameterNameCurrency: @"USD",                                                                                                               FBSDKAppEventParameterNameContentType : @"product",                                                                                                               FBSDKAppEventParameterNameContentID   : @"HDFU-8452" }];
 }
 
 -(void) testPurchase {
     NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys: @"USD", TRANSACTION_CURRENCY_CODE, [NSNumber numberWithDouble:15.15], TRANSACTION_TOTAL, nil];
 
     [_handler setInitialized:true];
-    [_handler execute:@"FB_purchase" parameters:dict];
+    [_handler execute:@"FB_tagPurchase" parameters:dict];
 
     [verifyCount(_fbEventsMock, times(1)) logPurchase:15.15 currency:@"USD"];
 }

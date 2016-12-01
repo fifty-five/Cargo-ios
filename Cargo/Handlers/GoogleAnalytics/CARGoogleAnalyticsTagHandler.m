@@ -36,7 +36,7 @@ NSString* GA_IDENTIFY = @"GA_identify";
 NSString* GA_TAG_SCREEN = @"GA_tagScreen";
 NSString* GA_TAG_EVENT = @"GA_tagEvent";
 
-NSString *TRACK_UNCAUGHT_EXCEPTIONS = @"	GA	Google Analytics	";
+NSString *TRACK_UNCAUGHT_EXCEPTIONS = @"trackUncaughtExceptions";
 NSString *ALLOW_IDFA_COLLECTION = @"allowIdfaCollection";
 NSString *EVENT_ACTION = @"eventAction";
 NSString *EVENT_CATEGORY = @"eventCategory";

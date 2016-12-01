@@ -11,10 +11,11 @@
 @implementation CARConstants
 
 #pragma tracker
+NSString *const APPLICATION_ID = @"applicationId";
 NSString *const ENABLE_DEBUG = @"enableDebug";
 NSString *const ENABLE_OPTOUT = @"enableOptOut";
 NSString *const DISABLE_TRACKING = @"disableTracking";
-NSString *const DISPATCH_PERIOD = @"dispatchPeriod";
+NSString *const DISPATCH_INTERVAL = @"dispatchInterval";
 NSString *const LEVEL2 = @"level2";
 NSString *const CUSTOM_DIM1 = @"customDim1";
 NSString *const CUSTOM_DIM2 = @"customDim2";

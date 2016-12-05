@@ -21,7 +21,6 @@
 NSString *FIR_INIT = @"FIR_init";
 NSString *FIR_IDENTIFY = @"FIR_identify";
 NSString *FIR_TAG_EVENT = @"FIR_tagEvent";
-NSString *FIR_TAG_SCREEN = @"FIR_tagScreen";
 
 NSString *const ENABLE_COLLECTION = @"enableCollection";
 
@@ -40,7 +39,6 @@ NSString *const ENABLE_COLLECTION = @"enableCollection";
     [Cargo registerTagHandler:handler withKey:FIR_INIT];
     [Cargo registerTagHandler:handler withKey:FIR_IDENTIFY];
     [Cargo registerTagHandler:handler withKey:FIR_TAG_EVENT];
-    [Cargo registerTagHandler:handler withKey:FIR_TAG_SCREEN];
 }
 
 /**
@@ -76,9 +74,6 @@ NSString *const ENABLE_COLLECTION = @"enableCollection";
         [self identify:parameters];
     }
     else if([tagName isEqualToString:FIR_TAG_EVENT]){
-        [self tagEvent:parameters];
-    }
-    else if([tagName isEqualToString:FIR_TAG_SCREEN]){
         [self tagEvent:parameters];
     }
     else

@@ -18,10 +18,9 @@
 /* *********************************** Variables Declaration ************************************ */
 
 /** Constants used to define callbacks in the register and in the execute method */
-NSString* const Tune_init = @"Tune_init";
-NSString* const Tune_tagEvent = @"Tune_tagEvent";
-NSString* const Tune_tagScreen = @"Tune_tagScreen";
-NSString* const Tune_identify = @"Tune_identify";
+NSString* const TUN_INIT = @"TUN_init";
+NSString* const TUN_TAG_EVENT = @"TUN_tagEvent";
+NSString* const TUN_IDENTIFY = @"TUN_identify";
 
 /** All the parameters that could be set as attributes to a TuneEvent object */
 NSString* const EVENT_RATING = @"eventRating";
@@ -34,8 +33,11 @@ NSString* const EVENT_RECEIPT = @"eventReceipt";
 NSString* const EVENT_QUANTITY = @"eventQuantity";
 NSString* const EVENT_TRANSACTION_STATE = @"eventTransactionState";
 
-NSArray* EVENT_PROPERTIES;
-NSArray* ALL_EVENT_PROPERTIES;
+NSArray* EVENT_STRING_PROPERTIES;
+NSArray* EVENT_MIXED_PROPERTIES;
+
+NSString* const ADVERTISER_ID = @"advertiserId";
+NSString* const CONVERSION_KEY = @"conversionKey";
 
 
 /* ********************************** Handler core methods ************************************** */
@@ -48,20 +50,16 @@ NSArray* ALL_EVENT_PROPERTIES;
  */
 +(void)load{
     CARTuneTagHandler* handler = [[CARTuneTagHandler alloc] init];
-    [Cargo registerTagHandler:handler withKey:Tune_init];
-    [Cargo registerTagHandler:handler withKey:Tune_tagEvent];
-    [Cargo registerTagHandler:handler withKey:Tune_tagScreen];
-    [Cargo registerTagHandler:handler withKey:Tune_identify];
+    [Cargo registerTagHandler:handler withKey:TUN_INIT];
+    [Cargo registerTagHandler:handler withKey:TUN_TAG_EVENT];
+    [Cargo registerTagHandler:handler withKey:TUN_IDENTIFY];
 
-    EVENT_PROPERTIES = [NSArray arrayWithObjects:@"eventCurrencyCode", @"eventRefId",
+    EVENT_STRING_PROPERTIES = [NSArray arrayWithObjects:@"eventCurrencyCode", @"eventRefId",
                         @"eventContentId", @"eventContentType", @"eventSearchString",
                         @"eventAttribute1", @"eventAttribute2", @"eventAttribute3",
                         @"eventAttribute4", @"eventAttribute5", nil];
 
-    ALL_EVENT_PROPERTIES = [NSArray arrayWithObjects:@"eventCurrencyCode", @"eventRefId",
-                            @"eventContentId", @"eventContentType", @"eventSearchString",
-                            @"eventAttribute1", @"eventAttribute2", @"eventAttribute3",
-                            @"eventAttribute4", @"eventAttribute5", @"eventRating", @"eventDate1",
+    EVENT_MIXED_PROPERTIES = [NSArray arrayWithObjects:@"eventRating", @"eventDate1",
                             @"eventDate2", @"eventRevenue", @"eventItems", @"eventLevel",
                             @"eventReceipt", @"eventQuantity", @"eventTransactionState", nil];
 }
@@ -75,7 +73,6 @@ NSArray* ALL_EVENT_PROPERTIES;
 - (id)init
 {
     if (self = [super initWithKey:@"TUN" andName:@"Tune"]) {
-
         self.tuneClass = [Tune class];
     }
     return self;
@@ -91,17 +88,14 @@ NSArray* ALL_EVENT_PROPERTIES;
 -(void) execute:(NSString *)tagName parameters:(NSDictionary *)parameters{
     [super execute:tagName parameters:parameters];
 
-    if([tagName isEqualToString:Tune_init]){
+    if([tagName isEqualToString:TUN_INIT]){
         [self initialize:parameters];
     // check whether the SDK has been initialized before calling any method
     } else if (self.initialized) {
-        if ([tagName isEqualToString:Tune_identify]){
+        if ([tagName isEqualToString:TUN_IDENTIFY]){
             [self identify:parameters];
         }
-        else if([tagName isEqualToString:Tune_tagScreen]){
-            [self tagScreen:[parameters mutableCopy]];
-        }
-        else if([tagName isEqualToString:Tune_tagEvent]){
+        else if([tagName isEqualToString:TUN_TAG_EVENT]){
             [self tagEvent:[parameters mutableCopy]];
         }
         else
@@ -122,15 +116,17 @@ NSArray* ALL_EVENT_PROPERTIES;
  @param advertiserId: an ID Tune gives when you register your app
  */
 -(void) initialize:(NSDictionary*)parameters{
-    NSString* adId = [CARUtils castToNSString:[parameters objectForKey:@"advertiserId"]];
-    NSString* convKey = [CARUtils castToNSString:[parameters objectForKey:@"conversionKey"]];
+    NSString* adId = [CARUtils castToNSString:[parameters objectForKey:ADVERTISER_ID]];
+    NSString* convKey = [CARUtils castToNSString:[parameters objectForKey:CONVERSION_KEY]];
 
     if (adId && convKey) {
         [self.tuneClass initializeWithTuneAdvertiserId:adId tuneConversionKey:convKey];
+        [self.logger logParamSetWithSuccess:ADVERTISER_ID withValue:adId];
+        [self.logger logParamSetWithSuccess:CONVERSION_KEY withValue:convKey];
         self.initialized = TRUE;
     }
     else {
-        [self.logger logMissingParam:@"advertiserId and/or conversionKey" inMethod:Tune_init];
+        [self.logger logMissingParam:@"advertiserId and/or conversionKey" inMethod:TUN_INIT];
     }
 }
 
@@ -228,14 +224,16 @@ NSArray* ALL_EVENT_PROPERTIES;
 
     if (eventName) {
         tuneEvent = [TuneEvent eventWithName:eventName];
+        [self.logger logParamSetWithSuccess:EVENT_NAME withValue:eventName];
         [parameters removeObjectForKey:EVENT_NAME];
     }
     else if (eventId != nil) {
         tuneEvent = [TuneEvent eventWithId:[eventId intValue]];
+        [self.logger logParamSetWithSuccess:EVENT_ID withValue:eventId];
         [parameters removeObjectForKey:EVENT_ID];
     }
     else {
-        [self.logger logMissingParam:@"eventName and eventId" inMethod:Tune_tagEvent];
+        [self.logger logMissingParam:@"eventName and eventId" inMethod:TUN_TAG_EVENT];
         return ;
     }
 
@@ -244,59 +242,6 @@ NSArray* ALL_EVENT_PROPERTIES;
 
     if (tuneEvent) {
         [self.tuneClass measureEvent:tuneEvent];
-        if (eventName)
-            [self.logger logParamSetWithSuccess:eventName withValue:parameters];
-        else
-            [self.logger logParamSetWithSuccess:[eventId stringValue] withValue:parameters];
-    }
-}
-
-/**
- Method used to create and fire a screen view to the Tune Console
- The mandatory parameter is screenName.
- Actually, as no native tagScreen is given in the Tune SDK, we fire a custom event.
- We recommend to use Attribute1/2 if you need more information about the screen.
-
- @param screenName
- @param eventRating
- @param eventDate1
- @param eventDate2 : will be set just if eventDate1 is also set.
- @param eventRevenue
- @param eventItems
- @param eventLevel
- @param eventReceipt
- @param eventQuantity
- @param eventTransactionState
- @param eventCurrencyCode
- @param eventRefId
- @param eventContentId
- @param eventContentType
- @param eventSearchString
- @param eventAttribute1
- @param eventAttribute2
- @param eventAttribute3
- @param eventAttribute4
- @param eventAttribute5
- */
-- (void)tagScreen:(NSMutableDictionary *)parameters {
-    NSString* screenName = [CARUtils castToNSString:[parameters valueForKey:SCREEN_NAME]];
-    TuneEvent* tuneEvent;
-
-    if (screenName) {
-        tuneEvent = [TuneEvent eventWithName:screenName];
-        [parameters removeObjectForKey:SCREEN_NAME];
-    }
-    else {
-        [self.logger logMissingParam:SCREEN_NAME inMethod:Tune_tagScreen];
-        return ;
-    }
-
-    if ([parameters count] > 0)
-        tuneEvent = [self buildEvent: tuneEvent withParameters: parameters];
-
-    if (tuneEvent) {
-        [self.tuneClass measureEvent:tuneEvent];
-        [self.logger logParamSetWithSuccess:screenName withValue:parameters];
     }
 }
 
@@ -315,74 +260,154 @@ NSArray* ALL_EVENT_PROPERTIES;
  */
 - (TuneEvent *) buildEvent:(TuneEvent *) tuneEvent withParameters:(NSMutableDictionary *)parameters {
 
-    if ([parameters objectForKey:EVENT_RATING]) {
-        tuneEvent.rating = [CARUtils castToNSInteger:[parameters valueForKey:EVENT_RATING] withDefault:-1];
-        [parameters removeObjectForKey:EVENT_RATING];
-    }
-    if ([parameters objectForKey:EVENT_DATE1]) {
-        tuneEvent.date1 = [CARUtils castToNSDate:[parameters valueForKey:EVENT_DATE1]];
-        [parameters removeObjectForKey:EVENT_DATE1];
-
-        if ([parameters objectForKey:EVENT_DATE2]) {
-            tuneEvent.date2 = [CARUtils castToNSDate:[parameters valueForKey:EVENT_DATE2]];
-            [parameters removeObjectForKey:EVENT_DATE2];
-        }
-    }
-    if ([parameters objectForKey:EVENT_REVENUE]) {
-        tuneEvent.revenue = [CARUtils castToFloat:[parameters valueForKey:EVENT_REVENUE] withDefault:-1];
-        [parameters removeObjectForKey:EVENT_REVENUE];
-    }
-    if ([parameters objectForKey:EVENT_ITEMS]) {
-        tuneEvent.eventItems = [CARUtils castToNSArray:[parameters valueForKey:EVENT_ITEMS]];
-        [parameters removeObjectForKey:EVENT_ITEMS];
-    }
-    if ([parameters objectForKey:EVENT_LEVEL]) {
-        tuneEvent.level = [CARUtils castToNSInteger:[parameters valueForKey:EVENT_LEVEL] withDefault:-1];
-        [parameters removeObjectForKey:EVENT_LEVEL];
-    }
-    if ([parameters objectForKey:EVENT_TRANSACTION_STATE]) {
-        tuneEvent.transactionState = [CARUtils castToNSInteger:[parameters valueForKey:EVENT_TRANSACTION_STATE] withDefault:-1];
-        [parameters removeObjectForKey:EVENT_TRANSACTION_STATE];
-    }
-    if ([parameters objectForKey:EVENT_RECEIPT]) {
-        tuneEvent.receipt = [CARUtils castToNSData:[parameters valueForKey:EVENT_RECEIPT]];
-        [parameters removeObjectForKey:EVENT_RECEIPT];
-    }
-    if ([parameters objectForKey:EVENT_QUANTITY]) {
-        int qty = [CARUtils castToNSInteger:[parameters valueForKey:EVENT_QUANTITY] withDefault:-1];
-        if (qty >= 0)
-            tuneEvent.quantity = (NSUInteger)qty;
-        else
-            tuneEvent.quantity = 0;
-        [parameters removeObjectForKey:EVENT_QUANTITY];
+    tuneEvent = [self getEvent:tuneEvent WithNumberParameters:parameters];
+    tuneEvent = [self getEvent:tuneEvent WithComplexParameters:parameters];
+    for (NSString* key in EVENT_MIXED_PROPERTIES) {
+        [parameters removeObjectForKey:key];
     }
 
-    for (int i = 0 ; i < [EVENT_PROPERTIES count]; i++)
+    for (int i = 0 ; i < [EVENT_STRING_PROPERTIES count]; i++)
     {
-        if ([parameters objectForKey:EVENT_PROPERTIES[i]])
+        if ([parameters objectForKey:EVENT_STRING_PROPERTIES[i]])
         {
-            NSString* propertyName = [EVENT_PROPERTIES[i] substringFromIndex:5];
+            NSString* propertyName = [EVENT_STRING_PROPERTIES[i] substringFromIndex:5];
             NSString* firstChar = [propertyName substringToIndex:1];
             firstChar = [firstChar lowercaseString];
             propertyName = [propertyName substringFromIndex:1];
 
             propertyName = [NSString stringWithFormat:@"%@%@", firstChar, propertyName];
 
-            if (!tuneEvent) {
-                NSLog(@"Cargo TuneHandler : trying to set properties on a nil TuneEvent. Operation has been cancelled");
-                return nil;
-            }
-            NSString* value = [CARUtils castToNSString:[parameters valueForKey:EVENT_PROPERTIES[i]]];
+            NSString* value = [CARUtils castToNSString:[parameters
+                                                        valueForKey:EVENT_STRING_PROPERTIES[i]]];
             [tuneEvent setValue:value forKey:propertyName];
-
-            [parameters removeObjectForKey:EVENT_PROPERTIES[i]];
+            [self.logger logParamSetWithSuccess:EVENT_STRING_PROPERTIES[i] withValue:value];
+            [parameters removeObjectForKey:EVENT_STRING_PROPERTIES[i]];
         }
     }
 
-    for (NSString* leftKey in parameters)
+    for (NSString* leftKey in parameters) {
         [self.logger logNotFoundValue:[parameters valueForKey:leftKey]
                                forKey:leftKey
-                           inValueSet:ALL_EVENT_PROPERTIES];
+                           inValueSet:[EVENT_STRING_PROPERTIES
+                                       arrayByAddingObjectsFromArray:EVENT_MIXED_PROPERTIES]];
+    }
+    return tuneEvent;
+}
+
+
+/**
+ Adds the correct properties with number types to the TuneEvent object given as parameter
+
+ @param tuneEvent The event object you add attributes to.
+ @param parameters The dictionary of parameters given through the GTM callback
+ @return The event object with the correct attributes set to the correct values
+ */
+-(TuneEvent *)getEvent:(TuneEvent *)tuneEvent WithNumberParameters:(NSDictionary *)parameters {
+    if ([parameters objectForKey:EVENT_RATING]) {
+        int rating = [CARUtils castToNSInteger:[parameters valueForKey:EVENT_RATING] withDefault:-1];
+        if (rating != -1) {
+            tuneEvent.rating = rating;
+            [self.logger logParamSetWithSuccess:EVENT_RATING withValue:[NSNumber numberWithInt:rating]];
+        }
+        else
+            [self.logger logUncastableParam:EVENT_RATING toType:@"NSInteger"];
+    }
+    if ([parameters objectForKey:EVENT_REVENUE]) {
+        float revenue = [CARUtils castToFloat:[parameters valueForKey:EVENT_REVENUE] withDefault:-1];
+        if (revenue != -1) {
+            tuneEvent.revenue = revenue;
+            [self.logger logParamSetWithSuccess:EVENT_REVENUE withValue:[NSNumber numberWithFloat:revenue]];
+        }
+        else {
+            [self.logger logUncastableParam:EVENT_REVENUE toType:@"float"];
+        }
+    }
+    if ([parameters objectForKey:EVENT_LEVEL]) {
+        int level = [CARUtils castToNSInteger:[parameters valueForKey:EVENT_LEVEL] withDefault:-1];
+        if (level != -1) {
+            tuneEvent.level = level;
+            [self.logger logParamSetWithSuccess:EVENT_LEVEL withValue:[NSNumber numberWithInt:level]];
+        }
+        else {
+            [self.logger logUncastableParam:EVENT_LEVEL toType:@"NSInteger"];
+        }
+    }
+    if ([parameters objectForKey:EVENT_TRANSACTION_STATE]) {
+        int transactionState = [CARUtils castToNSInteger:
+                                [parameters valueForKey:EVENT_TRANSACTION_STATE] withDefault:-1];
+        if (transactionState != -1) {
+            tuneEvent.transactionState = transactionState;
+            [self.logger logParamSetWithSuccess:EVENT_TRANSACTION_STATE
+                                      withValue:[NSNumber numberWithInt:transactionState]];
+        }
+        else {
+            [self.logger logUncastableParam:EVENT_TRANSACTION_STATE toType:@"NSInteger"];
+        }
+    }
+    if ([parameters objectForKey:EVENT_QUANTITY]) {
+        int qty = [CARUtils castToNSInteger:[parameters valueForKey:EVENT_QUANTITY] withDefault:-1];
+        if (qty >= 0) {
+            tuneEvent.quantity = (NSUInteger)qty;
+            [self.logger logParamSetWithSuccess:EVENT_QUANTITY withValue:[NSNumber numberWithInt:qty]];
+        }
+        else {
+            [self.logger logUncastableParam:EVENT_QUANTITY toType:@"NSUInteger"];
+        }
+    }
+
+    return tuneEvent;
+}
+
+/**
+ Adds the correct properties with mixed types to the TuneEvent object given as parameter
+ 
+ @param tuneEvent The event object you add attributes to.
+ @param parameters The dictionary of parameters given through the GTM callback
+ @return The event object with the correct attributes set to the correct values
+ */
+-(TuneEvent *)getEvent:(TuneEvent *)tuneEvent WithComplexParameters:(NSDictionary *)parameters {
+    if ([parameters objectForKey:EVENT_DATE1]) {
+        NSDate *date1 = [CARUtils castToNSDate:[parameters valueForKey:EVENT_DATE1]];
+        if (date1) {
+            tuneEvent.date1 = date1;
+            [self.logger logParamSetWithSuccess:EVENT_DATE1 withValue:date1];
+            
+            if ([parameters objectForKey:EVENT_DATE2]) {
+                NSDate *date2 = [CARUtils castToNSDate:[parameters valueForKey:EVENT_DATE2]];
+                if (date2) {
+                    tuneEvent.date2 = date2;
+                    [self.logger logParamSetWithSuccess:EVENT_DATE2 withValue:date2];
+                }
+                else {
+                    [self.logger logUncastableParam:EVENT_DATE2 toType:@"NSDate"];
+                }
+            }
+        }
+        else {
+            [self.logger logUncastableParam:EVENT_DATE1 toType:@"NSDate"];
+        }
+    }
+    if ([parameters objectForKey:EVENT_ITEMS]) {
+        NSArray *itemArray = [CARUtils castToNSArray:[parameters valueForKey:EVENT_ITEMS]];
+        if (itemArray) {
+            tuneEvent.eventItems = itemArray;
+            [self.logger logParamSetWithSuccess:EVENT_ITEMS withValue:itemArray];
+        }
+        else {
+            [self.logger logUncastableParam:EVENT_ITEMS toType:@"NSArray"];
+        }
+    }
+    if ([parameters objectForKey:EVENT_RECEIPT]) {
+        NSData *receipt = [CARUtils castToNSData:[parameters valueForKey:EVENT_RECEIPT]];
+        if (receipt) {
+            tuneEvent.receipt = receipt;
+            [self.logger logParamSetWithSuccess:EVENT_RECEIPT withValue:receipt];
+        }
+        else {
+            [self.logger logUncastableParam:EVENT_RECEIPT toType:@"NSData"];
+        }
+    }
+
     return tuneEvent;
 }
 
@@ -392,19 +417,19 @@ NSArray* ALL_EVENT_PROPERTIES;
  @param gender the user gender, as MALE, FEMALE. Any other input will be changed to UNKNOWN
  */
 -(void) setGender:(NSString*) gender{
-    if (gender == nil) {
-        NSLog(@"Cargo TuneHandler : Gender parameter given is nil, no gender set");
-        return ;
-    }
-
     NSString *upperGender = [gender uppercaseString];
-    if ([upperGender isEqualToString:@"MALE"])
+
+    if ([upperGender isEqualToString:@"MALE"]) {
         [self.tuneClass setGender:TuneGenderMale];
-    else if ([upperGender isEqualToString:@"FEMALE"])
+        [self.logger logParamSetWithSuccess:USER_GENDER withValue:@"MALE"];
+    }
+    else if ([upperGender isEqualToString:@"FEMALE"]) {
         [self.tuneClass setGender:TuneGenderFemale];
+        [self.logger logParamSetWithSuccess:USER_GENDER withValue:@"FEMALE"];
+    }
     else {
         [self.tuneClass setGender:TuneGenderUnknown];
-        NSLog(@"Cargo TuneHandler : Gender should be MALE/FEMALE. Gender set to UNKNOWN");
+        [self.logger logParamSetWithSuccess:USER_GENDER withValue:@"UNKNOWN"];
     }
 }
 

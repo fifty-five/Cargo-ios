@@ -3,12 +3,9 @@ osx_image: xcode8
 xcode_workspace: Cargo.xcworkspace
 xcode_scheme: Cargo
 
-before_install: 
-  - gem install cocoapods --pre
-  - pod repo update --silent
+# before_install: 
+#   - gem install cocoapods --pre
+#   - pod repo update --silent
 
 script:
   - travis_retry xcodebuild test 'ONLY_ACTIVE_ARCH=NO' 'ARCHS=arm64 armv7 armv7s i386 x86_64' -workspace Cargo.xcworkspace -scheme Cargo -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4'
-
-notifications:
-  slack: cargo55:oT6MdyRm7WZzNe51cLdbsVo7

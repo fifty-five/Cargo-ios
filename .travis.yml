@@ -3,5 +3,8 @@ osx_image: xcode8
 xcode_workspace: Cargo.xcworkspace
 xcode_scheme: Cargo
 
+before_install: 
+  - gem install xcpretty
+
 script:
-  - xcodebuild test 'ONLY_ACTIVE_ARCH=NO' 'ARCHS=arm64 armv7 armv7s i386 x86_64' -workspace Cargo.xcworkspace -scheme Cargo -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4'
+  - xcodebuild test 'ONLY_ACTIVE_ARCH=NO' 'ARCHS=arm64 armv7 armv7s i386 x86_64' -workspace Cargo.xcworkspace -scheme Cargo -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4' | xcpretty && exit ${PIPESTATUS[0]}

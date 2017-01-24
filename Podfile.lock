@@ -1,5 +1,5 @@
 PODS:
-  - Accengage-iOS-SDK (6.0.0)
+  - Accengage-iOS-SDK (6.0.1)
   - ATInternet-iOS-ObjC-SDK/iOS (2.2.0):
     - ATInternet-iOS-ObjC-SDK/Res
   - ATInternet-iOS-ObjC-SDK/Res (2.2.0)
@@ -47,7 +47,7 @@ DEPENDENCIES:
   - Tune (= 4.5.0)
 
 SPEC CHECKSUMS:
-  Accengage-iOS-SDK: da4ed132edc6fbae8c96eeacd1fa5bd42bf1a01b
+  Accengage-iOS-SDK: 45ec9740e90f647e766a2321c1c650256ac15b4e
   ATInternet-iOS-ObjC-SDK: 8d6fea9247384678f2e3d4347ec8b015460b6c8f
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   FBSDKCoreKit: d2aaed5e9ab7d8d6301c533376a1fbff1cf3deb5

@@ -407,7 +407,6 @@
 		BF37DECD1BC540A80031876D /* App */ = {
 			isa = PBXGroup;
 			children = (
-				8073E3471E30DAAA005DAB7E /* GTM-5GCVL2 */,
 				80CD8C821DD233970040B567 /* App.entitlements */,
 				BF37DED11BC540A80031876D /* AppDelegate.h */,
 				BF37DED21BC540A80031876D /* AppDelegate.m */,
@@ -426,6 +425,7 @@
 		BF37DECE1BC540A80031876D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8073E3471E30DAAA005DAB7E /* GTM-5GCVL2 */,
 				BF37DECF1BC540A80031876D /* main.m */,
 			);
 			name = "Supporting Files";

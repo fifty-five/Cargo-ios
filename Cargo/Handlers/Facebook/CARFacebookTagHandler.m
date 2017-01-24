@@ -181,12 +181,13 @@ NSString *FB_TAG_PURCHASE = @"FB_tagPurchase";
  */
 -(void) purchase:(NSDictionary*) parameters{
     NSNumber* total = [CARUtils castToNSNumber:[parameters objectForKey:TRANSACTION_TOTAL]];
-    NSString* currencyCode = [CARUtils castToNSString:
-                              [parameters objectForKey:TRANSACTION_CURRENCY_CODE]];
+    NSString* currencyCode = [CARUtils castToNSString: [parameters objectForKey:TRANSACTION_CURRENCY_CODE]];
 
-    if (total != nil && currencyCode) {
+    if (total != nil && currencyCode != nil) {
         double purchaseAmount = [total doubleValue];
         [self.fbAppEvents logPurchase:purchaseAmount currency:currencyCode];
+        [self.logger logParamSetWithSuccess:TRANSACTION_TOTAL withValue:total];
+        [self.logger logParamSetWithSuccess:TRANSACTION_CURRENCY_CODE withValue:currencyCode];
     }
     else
         [self.logger logMissingParam:@"transactionTotal and/or transactionCurrencyCode"

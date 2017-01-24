@@ -122,7 +122,7 @@ NSString *EVENT_LABEL = @"eventLabel";
     NSString* applicationId = [CARUtils castToNSString:[parameters objectForKey:APPLICATION_ID]];
 
     if(applicationId){
-        [self.instance trackerWithTrackingId:applicationId];
+        self.tracker = [self.instance trackerWithTrackingId:applicationId];
         [self.logger logParamSetWithSuccess:APPLICATION_ID withValue:applicationId];
         self.initialized = TRUE;
     }

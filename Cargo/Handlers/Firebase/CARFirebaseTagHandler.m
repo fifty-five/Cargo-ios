@@ -136,7 +136,7 @@ NSString *const ENABLE_COLLECTION = @"enableCollection";
     if ([params count] > 0) {
         for(id key in params) {
             NSString *value = [CARUtils castToNSString:[params valueForKey:key]];
-            NSString *keyString = [CARUtils castToNSString:[params valueForKey:key]];
+            NSString *keyString = [CARUtils castToNSString:key];
 
             if (value) {
                 [self.fireAnalyticsClass setUserPropertyString:value forName:keyString];

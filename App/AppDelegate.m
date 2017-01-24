@@ -34,7 +34,7 @@
         [self.tagManager previewWithUrl:url];
     
     [self.tagManager.logger setLogLevel:kTAGLoggerLogLevelVerbose];
-    id<TAGContainerFuture> future = [TAGContainerOpener openContainerWithId:@"GTM-KJKKCN"
+    id<TAGContainerFuture> future = [TAGContainerOpener openContainerWithId:@"GTM-5GCVL2"
                                                                  tagManager:self.tagManager
                                                                    openType:kTAGOpenTypePreferFresh
                                                                     timeout:nil];
@@ -49,8 +49,7 @@
     [[Cargo sharedHelper] registerHandlers];
     
     TAGDataLayer *dataLayer = self.tagManager.dataLayer;
-    [dataLayer push:@{@"event": @"applicationStart",@"deviceEnv":@"qual"}];
-    [dataLayer push:@{@"event": @"tagEvent"}];
+    [dataLayer push:@{@"event": @"applicationStart"}];
     
     
     return YES;

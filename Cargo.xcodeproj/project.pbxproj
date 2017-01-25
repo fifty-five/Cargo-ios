@@ -13,6 +13,7 @@
 		804093D21DABF76F00E564A2 /* AccengageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 804093D11DABF76F00E564A2 /* AccengageTests.m */; };
 		80A88A1C1DA7A9E2005C15C9 /* CARAccengageTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A88A1B1DA7A9E2005C15C9 /* CARAccengageTagHandler.m */; };
 		80A88A1F1DA7F292005C15C9 /* AccengageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A88A1E1DA7F292005C15C9 /* AccengageItem.m */; };
+		80AEA8761E378EE8006B8674 /* CARItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 80AEA8751E378EE8006B8674 /* CARItem.m */; };
 		80C3DDBE1D3E879D00BE290A /* CARFirebaseTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C3DDBD1D3E879D00BE290A /* CARFirebaseTagHandler.m */; };
 		80C3DDCA1D3FC0E500BE290A /* TuneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C3DDC81D3FC0E500BE290A /* TuneTests.m */; };
 		80C3DDCF1D3FC13100BE290A /* FirebaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C3DDCD1D3FC13100BE290A /* FirebaseTests.m */; };
@@ -115,6 +116,8 @@
 		80A88A1B1DA7A9E2005C15C9 /* CARAccengageTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CARAccengageTagHandler.m; path = Accengage/CARAccengageTagHandler.m; sourceTree = "<group>"; };
 		80A88A1D1DA7F292005C15C9 /* AccengageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccengageItem.h; path = Accengage/AccengageItem.h; sourceTree = "<group>"; };
 		80A88A1E1DA7F292005C15C9 /* AccengageItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccengageItem.m; path = Accengage/AccengageItem.m; sourceTree = "<group>"; };
+		80AEA8741E378EE8006B8674 /* CARItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARItem.h; sourceTree = "<group>"; };
+		80AEA8751E378EE8006B8674 /* CARItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARItem.m; sourceTree = "<group>"; };
 		80C3DDBC1D3E879D00BE290A /* CARFirebaseTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARFirebaseTagHandler.h; sourceTree = "<group>"; };
 		80C3DDBD1D3E879D00BE290A /* CARFirebaseTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARFirebaseTagHandler.m; sourceTree = "<group>"; };
 		80C3DDC11D3FC08F00BE290A /* CARTuneTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARTuneTagHandler.h; sourceTree = "<group>"; };
@@ -365,6 +368,8 @@
 				BF37DE801BC51BB50031876D /* Cargo.m */,
 				BF37DE831BC51BCC0031876D /* CARUtils.h */,
 				BF37DE841BC51BCC0031876D /* CARUtils.m */,
+				80AEA8741E378EE8006B8674 /* CARItem.h */,
+				80AEA8751E378EE8006B8674 /* CARItem.m */,
 				BFAB2F6D1BECDCB900BF532A /* Models */,
 				BF37DF1E1BC57B530031876D /* Handlers */,
 				BF37DEA91BC51CC80031876D /* Logger */,
@@ -811,6 +816,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80AEA8761E378EE8006B8674 /* CARItem.m in Sources */,
 				80C3DDD11D3FC38700BE290A /* CARTuneTagHandler.m in Sources */,
 				80A88A1F1DA7F292005C15C9 /* AccengageItem.m in Sources */,
 				BF37DE851BC51BCC0031876D /* CARUtils.m in Sources */,

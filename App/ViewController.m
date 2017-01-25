@@ -10,6 +10,7 @@
 #import "Cargo.h"
 #import "TAGManager.h"
 #import "TAGDataLayer.h"
+#import "CARItem.h"
 
 @interface ViewController ()
 
@@ -33,7 +34,16 @@ TAGDataLayer *dataLayer;
 }
 
 - (IBAction)tagEventPressed{
-    [dataLayer push:@{@"event": @"tagEvent"}];
+    NSArray* itemArray = [[NSArray alloc]
+                          initWithObjects:
+                          [[CARItem alloc] initWithName:@"testItem" andUnitPrice:15.5f andQuantity:100],
+                          [[CARItem alloc] initWithName:@"testItem2" andUnitPrice:20.55f andQuantity:1],
+                          nil];
+    
+    [dataLayer push:@{@"event": @"tagEvent",
+                      @"eventItems": [CARItem toGTM:itemArray],
+                      @"eventDate1": [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]]
+                      }];
 }
 
 - (IBAction)tagScreenPressed{

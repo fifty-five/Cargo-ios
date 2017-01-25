@@ -11,6 +11,7 @@
 #import "CARTuneTagHandler.h"
 #import <Tune/Tune.h>
 #import "CARConstants.h"
+#import "CARItem.h"
 
 #define HC_SHORTHAND
 #import <OCHamcrest/OCHamcrest.h>
@@ -160,10 +161,10 @@
                            @"attr4", @"eventAttribute4",
                            @"attr5", @"eventAttribute5",
                            [NSNumber numberWithInt:100], @"eventRating",
-                           [[NSDate alloc] init], @"eventDate1",
-                           [[NSDate alloc] init], @"eventDate2",
+                           [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] stringValue], @"eventDate1",
+                           [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] stringValue], @"eventDate2",
                            [NSNumber numberWithFloat:10.5f], @"eventRevenue",
-                           [[NSArray alloc] init], @"eventItems",
+                           [CARItem toGTM:[[NSArray alloc] initWithObjects:[[CARItem alloc] initWithName:@"test" andUnitPrice:15.0f andQuantity:6], nil]], @"eventItems",
                            [NSNumber numberWithInt:10], @"eventLevel",
                            [[NSData alloc] init], @"eventReceipt",
                            [NSNumber numberWithInt:15], @"eventQuantity",

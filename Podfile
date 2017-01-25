@@ -10,7 +10,8 @@ def import_pods
 end
 
 def import_gtm
-  send :pod, 'GoogleTagManager', '~> 3.15.0'
+  send :pod, 'Firebase/Core'
+  send :pod, 'GoogleTagManager', '~> 5.0'
 end
 
 target 'Cargo' do

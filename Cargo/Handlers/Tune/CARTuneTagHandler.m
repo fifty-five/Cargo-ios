@@ -370,13 +370,13 @@ NSString* const CONVERSION_KEY = @"conversionKey";
         NSDate *date1 = [CARUtils castToNSDate:[parameters valueForKey:EVENT_DATE1]];
         if (date1) {
             tuneEvent.date1 = date1;
-            [self.logger logParamSetWithSuccess:EVENT_DATE1 withValue:date1];
+            [self.logger logParamSetWithSuccess:EVENT_DATE1 withValue:tuneEvent.date1];
             
             if ([parameters objectForKey:EVENT_DATE2]) {
                 NSDate *date2 = [CARUtils castToNSDate:[parameters valueForKey:EVENT_DATE2]];
                 if (date2) {
                     tuneEvent.date2 = date2;
-                    [self.logger logParamSetWithSuccess:EVENT_DATE2 withValue:date2];
+                    [self.logger logParamSetWithSuccess:EVENT_DATE2 withValue:tuneEvent.date2];
                 }
                 else {
                     [self.logger logUncastableParam:EVENT_DATE2 toType:@"NSDate"];
@@ -388,10 +388,11 @@ NSString* const CONVERSION_KEY = @"conversionKey";
         }
     }
     if ([parameters objectForKey:EVENT_ITEMS]) {
-        NSArray *itemArray = [CARUtils castToNSArray:[parameters valueForKey:EVENT_ITEMS]];
-        if (itemArray) {
+        NSString *itemsString = [CARUtils castToNSString:[parameters valueForKey:EVENT_ITEMS]];
+        if (itemsString) {
+            NSArray *itemArray = [self getItems:itemsString];
             tuneEvent.eventItems = itemArray;
-            [self.logger logParamSetWithSuccess:EVENT_ITEMS withValue:itemArray];
+            [self.logger logParamSetWithSuccess:EVENT_ITEMS withValue:tuneEvent.eventItems];
         }
         else {
             [self.logger logUncastableParam:EVENT_ITEMS toType:@"NSArray"];
@@ -431,6 +432,55 @@ NSString* const CONVERSION_KEY = @"conversionKey";
         [self.tuneClass setGender:TuneGenderUnknown];
         [self.logger logParamSetWithSuccess:USER_GENDER withValue:@"UNKNOWN"];
     }
+}
+
+-(NSArray *) getItems:(NSString *)itemsString {
+    NSError *jsonError;
+    NSData *jsonData = [itemsString dataUsingEncoding: NSUTF8StringEncoding];
+
+    if (jsonData) {
+        NSArray *arrayItems = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error: &jsonError];
+        if (!jsonError) {
+
+            NSMutableArray *tuneEventItems = [[NSMutableArray alloc] init];
+            for (NSDictionary* item in arrayItems) {
+                NSString *itemName = [CARUtils castToNSString:[item objectForKey:@"name"]];
+                float unitPrice = [CARUtils castToFloat:[item objectForKey:@"unitPrice"] withDefault:0.0f];
+                unsigned int quantity = [CARUtils castToNSInteger:[item objectForKey:@"quantity"] withDefault:0];
+                float revenue = [CARUtils castToFloat:[item objectForKey:@"revenue"] withDefault:0];
+
+                if (itemName && unitPrice > 0.0f && quantity && revenue > 0.0f) {
+                    TuneEventItem *temp = [TuneEventItem eventItemWithName:itemName unitPrice:unitPrice quantity:quantity revenue:revenue];
+                    if ([item objectForKey:@"attribute1"]) {
+                        temp.attribute1 = [CARUtils castToNSString:[item objectForKey:@"attribute1"]];
+                    }
+                    if ([item objectForKey:@"attribute2"]) {
+                        temp.attribute2 = [CARUtils castToNSString:[item objectForKey:@"attribute2"]];
+                    }
+                    if ([item objectForKey:@"attribute3"]) {
+                        temp.attribute3 = [CARUtils castToNSString:[item objectForKey:@"attribute3"]];
+                    }
+                    if ([item objectForKey:@"attribute4"]) {
+                        temp.attribute4 = [CARUtils castToNSString:[item objectForKey:@"attribute4"]];
+                    }
+                    if ([item objectForKey:@"attribute5"]) {
+                        temp.attribute5 = [CARUtils castToNSString:[item objectForKey:@"attribute5"]];
+                    }
+
+                    [tuneEventItems addObject:temp];
+                }
+                else {
+                    [self.logger logUncastableParam:@"eventItems" toType:@"TuneEventItems"];
+                    return nil;
+                }
+            }
+            return tuneEventItems;
+        }
+    }
+    else {
+        [self.logger logUncastableParam:@"eventItems" toType:@"TuneEventItems"];
+    }
+    return nil;
 }
 
 @end

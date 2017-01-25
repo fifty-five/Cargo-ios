@@ -11,14 +11,8 @@
 		803606791BCE9191006EDA98 /* CARFacebookTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 803606781BCE9191006EDA98 /* CARFacebookTagHandler.m */; };
 		8036067D1BCE9964006EDA98 /* FacebookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8036067C1BCE9964006EDA98 /* FacebookTests.m */; };
 		80AEA8761E378EE8006B8674 /* CARItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 80AEA8751E378EE8006B8674 /* CARItem.m */; };
-		80C3DDBE1D3E879D00BE290A /* CARFirebaseTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C3DDBD1D3E879D00BE290A /* CARFirebaseTagHandler.m */; };
 		80C3DDCA1D3FC0E500BE290A /* TuneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C3DDC81D3FC0E500BE290A /* TuneTests.m */; };
-		80C3DDCF1D3FC13100BE290A /* FirebaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C3DDCD1D3FC13100BE290A /* FirebaseTests.m */; };
 		80C3DDD11D3FC38700BE290A /* CARTuneTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C3DDC21D3FC08F00BE290A /* CARTuneTagHandler.m */; };
-		80C3DDD31D3FD3A300BE290A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 80C3DDD21D3FD3A300BE290A /* GoogleService-Info.plist */; };
-		80C3DDD41D3FD3A300BE290A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 80C3DDD21D3FD3A300BE290A /* GoogleService-Info.plist */; };
-		80C3DDD51D3FD3A300BE290A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 80C3DDD21D3FD3A300BE290A /* GoogleService-Info.plist */; };
-		80C3DDD61D3FD3A300BE290A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 80C3DDD21D3FD3A300BE290A /* GoogleService-Info.plist */; };
 		80CD8C791DD21D450040B567 /* libCargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF37DD591BC512450031876D /* libCargo.a */; };
 		80CD8C7E1DD21E7A0040B567 /* libPods-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80CD8C7D1DD21E7A0040B567 /* libPods-App.a */; };
 		80CD8C7F1DD220A00040B567 /* libCargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF37DD591BC512450031876D /* libCargo.a */; };
@@ -41,9 +35,6 @@
 		BF37DEF71BC540A80031876D /* AppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DEF61BC540A80031876D /* AppUITests.m */; };
 		BF37DF2D1BC57B530031876D /* CARMacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF221BC57B530031876D /* CARMacroHandler.m */; };
 		BF37DF2E1BC57B530031876D /* CARTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF241BC57B530031876D /* CARTagHandler.m */; };
-		BF37DF301BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF291BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m */; };
-		BF37DF311BC57B530031876D /* CARGoogleAnalyticsTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF2B1BC57B530031876D /* CARGoogleAnalyticsTagHandler.m */; };
-		BF37DF341BC57B880031876D /* GoogleAnalyticsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF321BC57B790031876D /* GoogleAnalyticsTests.m */; };
 		D2850FCE0BD4A572F7670471 /* libPods-Cargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE987690E3ADD7CFCD4A030B /* libPods-Cargo.a */; };
 /* End PBXBuildFile section */
 
@@ -110,13 +101,9 @@
 		8073E3471E30DAAA005DAB7E /* GTM-5GCVL2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTM-5GCVL2"; sourceTree = "<group>"; };
 		80AEA8741E378EE8006B8674 /* CARItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARItem.h; sourceTree = "<group>"; };
 		80AEA8751E378EE8006B8674 /* CARItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARItem.m; sourceTree = "<group>"; };
-		80C3DDBC1D3E879D00BE290A /* CARFirebaseTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARFirebaseTagHandler.h; sourceTree = "<group>"; };
-		80C3DDBD1D3E879D00BE290A /* CARFirebaseTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARFirebaseTagHandler.m; sourceTree = "<group>"; };
 		80C3DDC11D3FC08F00BE290A /* CARTuneTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARTuneTagHandler.h; sourceTree = "<group>"; };
 		80C3DDC21D3FC08F00BE290A /* CARTuneTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARTuneTagHandler.m; sourceTree = "<group>"; };
 		80C3DDC81D3FC0E500BE290A /* TuneTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuneTests.m; sourceTree = "<group>"; };
-		80C3DDCD1D3FC13100BE290A /* FirebaseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirebaseTests.m; sourceTree = "<group>"; };
-		80C3DDD21D3FD3A300BE290A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		80CD8C7B1DD21DD10040B567 /* libPods-Cargo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Cargo.a"; path = "../../Library/Developer/Xcode/DerivedData/Cargo-gnlghtbnmmtopxaloiwhcezqlyza/Build/Products/Debug-iphonesimulator/libPods-Cargo.a"; sourceTree = "<group>"; };
 		80CD8C7D1DD21E7A0040B567 /* libPods-App.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-App.a"; path = "Pods/../build/Debug-iphoneos/libPods-App.a"; sourceTree = "<group>"; };
 		80CD8C821DD233970040B567 /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
@@ -160,11 +147,6 @@
 		BF37DF221BC57B530031876D /* CARMacroHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARMacroHandler.m; sourceTree = "<group>"; };
 		BF37DF231BC57B530031876D /* CARTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARTagHandler.h; sourceTree = "<group>"; };
 		BF37DF241BC57B530031876D /* CARTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARTagHandler.m; sourceTree = "<group>"; };
-		BF37DF281BC57B530031876D /* CARGoogleAnalyticsMacroHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARGoogleAnalyticsMacroHandler.h; sourceTree = "<group>"; };
-		BF37DF291BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARGoogleAnalyticsMacroHandler.m; sourceTree = "<group>"; };
-		BF37DF2A1BC57B530031876D /* CARGoogleAnalyticsTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARGoogleAnalyticsTagHandler.h; sourceTree = "<group>"; };
-		BF37DF2B1BC57B530031876D /* CARGoogleAnalyticsTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARGoogleAnalyticsTagHandler.m; sourceTree = "<group>"; };
-		BF37DF321BC57B790031876D /* GoogleAnalyticsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleAnalyticsTests.m; sourceTree = "<group>"; };
 		EE987690E3ADD7CFCD4A030B /* libPods-Cargo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Cargo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -255,16 +237,6 @@
 			path = Facebook;
 			sourceTree = "<group>";
 		};
-		80C3DDBB1D3E80DB00BE290A /* Firebase */ = {
-			isa = PBXGroup;
-			children = (
-				80C3DDD21D3FD3A300BE290A /* GoogleService-Info.plist */,
-				80C3DDBC1D3E879D00BE290A /* CARFirebaseTagHandler.h */,
-				80C3DDBD1D3E879D00BE290A /* CARFirebaseTagHandler.m */,
-			);
-			path = Firebase;
-			sourceTree = "<group>";
-		};
 		80C3DDC01D3FC08F00BE290A /* Tune */ = {
 			isa = PBXGroup;
 			children = (
@@ -280,14 +252,6 @@
 				80C3DDC81D3FC0E500BE290A /* TuneTests.m */,
 			);
 			path = Tune;
-			sourceTree = "<group>";
-		};
-		80C3DDCC1D3FC13100BE290A /* Firebase */ = {
-			isa = PBXGroup;
-			children = (
-				80C3DDCD1D3FC13100BE290A /* FirebaseTests.m */,
-			);
-			path = Firebase;
 			sourceTree = "<group>";
 		};
 		9CE17DE51BCE91F700833399 /* ATInternet */ = {
@@ -364,21 +328,11 @@
 			children = (
 				9CE17DE71BCEA01200833399 /* AT */,
 				8036067B1BCE9964006EDA98 /* Facebook */,
-				80C3DDCC1D3FC13100BE290A /* Firebase */,
-				BF37DEBC1BC520D30031876D /* GA */,
 				80C3DDC71D3FC0E500BE290A /* Tune */,
 				BF37DEB31BC51FF90031876D /* CargoTest.m */,
 				BF37DEB51BC51FF90031876D /* Info.plist */,
 			);
 			path = CargoTest;
-			sourceTree = "<group>";
-		};
-		BF37DEBC1BC520D30031876D /* GA */ = {
-			isa = PBXGroup;
-			children = (
-				BF37DF321BC57B790031876D /* GoogleAnalyticsTests.m */,
-			);
-			path = GA;
 			sourceTree = "<group>";
 		};
 		BF37DECD1BC540A80031876D /* App */ = {
@@ -435,22 +389,9 @@
 				BF37DF241BC57B530031876D /* CARTagHandler.m */,
 				9CE17DE51BCE91F700833399 /* ATInternet */,
 				803606761BCE9191006EDA98 /* Facebook */,
-				80C3DDBB1D3E80DB00BE290A /* Firebase */,
-				BF37DF251BC57B530031876D /* GoogleAnalytics */,
 				80C3DDC01D3FC08F00BE290A /* Tune */,
 			);
 			path = Handlers;
-			sourceTree = "<group>";
-		};
-		BF37DF251BC57B530031876D /* GoogleAnalytics */ = {
-			isa = PBXGroup;
-			children = (
-				BF37DF281BC57B530031876D /* CARGoogleAnalyticsMacroHandler.h */,
-				BF37DF291BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m */,
-				BF37DF2A1BC57B530031876D /* CARGoogleAnalyticsTagHandler.h */,
-				BF37DF2B1BC57B530031876D /* CARGoogleAnalyticsTagHandler.m */,
-			);
-			path = GoogleAnalytics;
 			sourceTree = "<group>";
 		};
 		BFAB2F6D1BECDCB900BF532A /* Models */ = {
@@ -626,7 +567,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80C3DDD31D3FD3A300BE290A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -635,7 +575,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF37DEE11BC540A80031876D /* LaunchScreen.storyboard in Resources */,
-				80C3DDD41D3FD3A300BE290A /* GoogleService-Info.plist in Resources */,
 				BF37DEDE1BC540A80031876D /* Assets.xcassets in Resources */,
 				BF37DED91BC540A80031876D /* Main.storyboard in Resources */,
 			);
@@ -645,7 +584,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80C3DDD51D3FD3A300BE290A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -653,7 +591,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80C3DDD61D3FD3A300BE290A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -792,11 +729,8 @@
 				BF37DE851BC51BCC0031876D /* CARUtils.m in Sources */,
 				BF37DF2D1BC57B530031876D /* CARMacroHandler.m in Sources */,
 				BF2B699C1C10A1090083964A /* CARConstants.m in Sources */,
-				80C3DDBE1D3E879D00BE290A /* CARFirebaseTagHandler.m in Sources */,
 				BF37DF2E1BC57B530031876D /* CARTagHandler.m in Sources */,
 				9CE17DE41BCE91F200833399 /* CARATInternetTagHandler.m in Sources */,
-				BF37DF311BC57B530031876D /* CARGoogleAnalyticsTagHandler.m in Sources */,
-				BF37DF301BC57B530031876D /* CARGoogleAnalyticsMacroHandler.m in Sources */,
 				BF37DE811BC51BB50031876D /* Cargo.m in Sources */,
 				803606791BCE9191006EDA98 /* CARFacebookTagHandler.m in Sources */,
 				BF37DEAC1BC51CC80031876D /* FIFLogger.m in Sources */,
@@ -809,9 +743,7 @@
 			files = (
 				9CE17DE91BCEA05D00833399 /* ATInternetTests.m in Sources */,
 				BF37DEB41BC51FF90031876D /* CargoTest.m in Sources */,
-				80C3DDCF1D3FC13100BE290A /* FirebaseTests.m in Sources */,
 				80C3DDCA1D3FC0E500BE290A /* TuneTests.m in Sources */,
-				BF37DF341BC57B880031876D /* GoogleAnalyticsTests.m in Sources */,
 				8036067D1BCE9964006EDA98 /* FacebookTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1193,6 +1125,17 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/ATInternet-iOS-ObjC-SDK\"",
+					"\"${PODS_ROOT}/Headers/Public/Bolts\"",
+					"\"${PODS_ROOT}/Headers/Public/FBSDKCoreKit\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleTagManager\"",
+					"\"${PODS_ROOT}/Headers/Public/OCHamcrest\"",
+					"\"${PODS_ROOT}/Headers/Public/OCMockito\"",
+					"\"${PODS_ROOT}/Headers/Public/Tune\"",
+				);
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1200,13 +1143,31 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/ATInternet-iOS-ObjC-SDK\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/Bolts\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/FBSDKCoreKit\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/GoogleTagManager\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/OCHamcrest\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/OCMockito\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/Tune\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-l\"ATInternet-iOS-ObjC-SDK\"",
 					"-l\"Bolts\"",
 					"-l\"FBSDKCoreKit\"",
-					"-l\"GoogleAnalytics\"",
 					"-l\"TagManager\"",
 					"-l\"c++\"",
 					"-l\"sqlite3\"",
@@ -1229,16 +1190,6 @@
 					"\"CoreSpotlight\"",
 					"-framework",
 					"\"CoreTelephony\"",
-					"-framework",
-					"\"FirebaseAnalytics\"",
-					"-framework",
-					"\"FirebaseInstanceID\"",
-					"-framework",
-					"\"GoogleInterchangeUtilities\"",
-					"-framework",
-					"\"GoogleSymbolUtilities\"",
-					"-framework",
-					"\"GoogleUtilities\"",
 					"-framework",
 					"\"MobileCoreServices\"",
 					"-framework",
@@ -1285,6 +1236,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 79FS8B67FE;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/ATInternet-iOS-ObjC-SDK\"",
+					"\"${PODS_ROOT}/Headers/Public/Bolts\"",
+					"\"${PODS_ROOT}/Headers/Public/FBSDKCoreKit\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleTagManager\"",
+					"\"${PODS_ROOT}/Headers/Public/OCHamcrest\"",
+					"\"${PODS_ROOT}/Headers/Public/OCMockito\"",
+					"\"${PODS_ROOT}/Headers/Public/Tune\"",
+				);
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1292,13 +1254,31 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/ATInternet-iOS-ObjC-SDK\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/Bolts\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/FBSDKCoreKit\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/GoogleTagManager\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/OCHamcrest\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/OCMockito\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/Tune\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-l\"ATInternet-iOS-ObjC-SDK\"",
 					"-l\"Bolts\"",
 					"-l\"FBSDKCoreKit\"",
-					"-l\"GoogleAnalytics\"",
 					"-l\"TagManager\"",
 					"-l\"c++\"",
 					"-l\"sqlite3\"",
@@ -1321,16 +1301,6 @@
 					"\"CoreSpotlight\"",
 					"-framework",
 					"\"CoreTelephony\"",
-					"-framework",
-					"\"FirebaseAnalytics\"",
-					"-framework",
-					"\"FirebaseInstanceID\"",
-					"-framework",
-					"\"GoogleInterchangeUtilities\"",
-					"-framework",
-					"\"GoogleSymbolUtilities\"",
-					"-framework",
-					"\"GoogleUtilities\"",
 					"-framework",
 					"\"MobileCoreServices\"",
 					"-framework",

@@ -11,9 +11,12 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "CARConstants.h"
 
-
+/**
+ The class which handles interactions with the Facebook SDK.
+ */
 @interface CARFacebookTagHandler : CARTagHandler
 
+/** The facebook tracker */
 @property Class fbAppEvents;
 
 @end

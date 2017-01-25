@@ -48,6 +48,7 @@ NSString *TAG_SCREEN = @"AT_tagScreen";
 NSString *TAG_EVENT = @"AT_tagEvent";
 NSString *IDENTIFY = @"AT_identify";
 NSString *INIT = @"AT_init";
+NSString *SET_CONF = @"AT_setConfig";
 
 
 - (void)setUp
@@ -89,10 +90,12 @@ NSString *INIT = @"AT_init";
 #pragma mark - TestATInternet
 
 -(void)testAT_init{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"fifty-five.com", @"domain",@"2345",@"siteId", nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"fifty-five.com", @"logSSL",
+                           @"fifty-five.com", @"log",@"2345",@"site", nil];
     [_handler execute:INIT parameters:dict];
-    [verifyCount(_trackerMock, times(1) ) setConfig:@"siteId" value:@"2345" completionHandler:nil ];
-    [verifyCount(_trackerMock, times(1) ) setConfig:@"domain" value:@"fifty-five.com" completionHandler:nil];
+    [verifyCount(_trackerMock, times(1) ) setConfig:AT_CONF_SITE value:@"2345" completionHandler:anything() ];
+    [verifyCount(_trackerMock, times(1) ) setConfig:AT_CONF_LOG value:@"fifty-five.com" completionHandler:anything()];
+    [verifyCount(_trackerMock, times(1) ) setConfig:AT_CONF_LOGSSL value:@"fifty-five.com" completionHandler:anything()];
 
 }
 
@@ -101,14 +104,36 @@ NSString *INIT = @"AT_init";
     NSString *uuid = [[NSUUID UUID] UUIDString];
     
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:uuid, USER_ID, nil];
+    [_handler setInitialized:true];
     [_handler execute:IDENTIFY parameters:dict];
     
-    [verifyCount(_trackerMock, times(1) ) setConfig:USER_ID value:uuid completionHandler:nil];
+    [verifyCount(_trackerMock, times(1) ) setStringParam:USER_ID value:uuid];
+}
+
+-(void)testAT_withoutInit{
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"screenNameTest", SCREEN_NAME, @55, LEVEL2, nil];
+    
+    [_handler setInitialized:false];
+    [_handler execute:TAG_SCREEN parameters:dict];
+    assertThat([_trackerMock screens], equalTo(_screensMock));
+    assertThat([_trackerMock.screens addWithName:@"screenNameTest"], equalTo(_screenMock));
+    
+    [verifyCount(_screenMock, times(0) ) sendView];
+}
+
+-(void)testSetConfig{
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"test", SCREEN_NAME, @"55", LEVEL2, nil];
+    
+    [_handler setInitialized:true];
+    [_handler execute:SET_CONF parameters:dict];
+
+    [verifyCount(_trackerMock, times(1) ) setConfig:anything() override:false completionHandler:anything()];
 }
 
 -(void)testAT_tagScreenSimpleTest{
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"screenNameTest", SCREEN_NAME, @55, LEVEL2, nil];
     
+    [_handler setInitialized:true];
     [_handler execute:TAG_SCREEN parameters:dict];
     assertThat([_trackerMock screens], equalTo(_screensMock));
     assertThat([_trackerMock.screens addWithName:@"screenNameTest"], equalTo(_screenMock));
@@ -118,13 +143,16 @@ NSString *INIT = @"AT_init";
 }
 
 -(void)testAT_tagScreenCustomDimTest{
-    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"screenNameTest", SCREEN_NAME, @55, LEVEL2, @"customDimTest1", CUSTOM_DIM1, @"customDimTest2", CUSTOM_DIM2, nil];
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"screenNameTest", SCREEN_NAME, @55, LEVEL2, @"customDimTest1", @"chapter1", @"customDimTest2", @"chapter2", nil];
 
+    [_handler setInitialized:true];
     [_handler execute:TAG_SCREEN parameters:dict];
     assertThat([_trackerMock screens], equalTo(_screensMock));
     assertThat([_trackerMock.screens addWithName:@"screenNameTest"], equalTo(_screenMock));
 
-    [verifyCount(_customObjsMock, times(1) ) addWithDictionary:@{CUSTOM_DIM1: @"customDimTest1", CUSTOM_DIM2: @"customDimTest2"}];
+    [verifyCount(_screenMock, times(1) ) setChapter1: @"customDimTest1"];
+    [verifyCount(_screenMock, times(1) ) setChapter2: @"customDimTest2"];
+    [verifyCount(_screenMock, times(0) ) setChapter3: anything()];
     [verifyCount(_screenMock, times(1) ) setLevel2:55];
     [verifyCount(_screenMock, times(1) ) sendView];
 }
@@ -135,11 +163,13 @@ NSString *INIT = @"AT_init";
 -(void)testAT_tagEventTouchChapter2ShouldntSet{
     
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"testName", EVENT_NAME, @"sendTouch", EVENT_TYPE, @55, LEVEL2, @"testChapter", @"chapter2", nil];
+
+    [_handler setInitialized:true];
     [_handler execute:TAG_EVENT parameters:dict];
-    
+
     assertThat([_trackerMock gestures], equalTo(_gesturesMock));
     assertThat([_trackerMock.gestures addWithName:@"testName"], equalTo(_gestureMock));
-    
+
     [verifyCount(_gestureMock, times(0) ) setChapter1:@"testChapter1"];
     [verifyCount(_gestureMock, times(0) ) setChapter2:@"testChapter2"];
     [verifyCount(_gestureMock, times(0) ) setChapter3:@"testChapter3"];
@@ -150,6 +180,8 @@ NSString *INIT = @"AT_init";
 
 -(void)testAT_tagEventDownloadChaptersShouldSet{
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"testName", EVENT_NAME, @"sendDownload", EVENT_TYPE, @55, LEVEL2, @"testChapter2", @"chapter2", @"testChapter1", @"chapter1", @"testChapter3", @"chapter3", nil];
+    
+    [_handler setInitialized:true];
     [_handler execute:TAG_EVENT parameters:dict];
     
     assertThat([_trackerMock gestures], equalTo(_gesturesMock));
@@ -165,10 +197,11 @@ NSString *INIT = @"AT_init";
 
 -(void)testAT_tagEventShouldntWork{
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"testName", EVENT_NAME, @55, LEVEL2, nil];
-    
+
+    [_handler setInitialized:true];
     [_handler execute:TAG_EVENT parameters:dict];
     
-    [verifyCount(_gestureMock, times(1) ) setLevel2:55];
+    [verifyCount(_gestureMock, times(0) ) setLevel2:55];
     [verifyCount(_gestureMock, times(0) ) sendTouch];
     [verifyCount(_gestureMock, times(0) ) sendNavigation];
     [verifyCount(_gestureMock, times(0) ) sendDownload];
@@ -179,7 +212,8 @@ NSString *INIT = @"AT_init";
 
 -(void)testAT_tagEventShouldSendTouch{
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"testName", EVENT_NAME, @55, LEVEL2, @"sendTouch", EVENT_TYPE, nil];
-    
+
+    [_handler setInitialized:true];
     [_handler execute:TAG_EVENT parameters:dict];
     
     [verifyCount(_gestureMock, times(1) ) setLevel2:55];
@@ -192,7 +226,8 @@ NSString *INIT = @"AT_init";
 
 -(void)testAT_tagEventShouldSendNavigation{
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"testName", EVENT_NAME, @55, LEVEL2, @"sendNavigation", EVENT_TYPE, nil];
-    
+
+    [_handler setInitialized:true];
     [_handler execute:TAG_EVENT parameters:dict];
     
     [verifyCount(_gestureMock, times(1) ) setLevel2:55];
@@ -205,7 +240,8 @@ NSString *INIT = @"AT_init";
 
 -(void)testAT_tagEventShouldSendDownload{
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"testName", EVENT_NAME, @55, LEVEL2, @"sendDownload", EVENT_TYPE, nil];
-    
+
+    [_handler setInitialized:true];
     [_handler execute:TAG_EVENT parameters:dict];
     
     [verifyCount(_gestureMock, times(1) ) setLevel2:55];
@@ -218,7 +254,8 @@ NSString *INIT = @"AT_init";
 
 -(void)testAT_tagEventShouldSendExit{
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"testName", EVENT_NAME, @55, LEVEL2, @"sendExit", EVENT_TYPE, nil];
-    
+
+    [_handler setInitialized:true];
     [_handler execute:TAG_EVENT parameters:dict];
     
     [verifyCount(_gestureMock, times(1) ) setLevel2:55];
@@ -231,7 +268,8 @@ NSString *INIT = @"AT_init";
 
 -(void)testAT_tagEventShouldSendSearch{
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"testName", EVENT_NAME, @55, LEVEL2, @"sendSearch", EVENT_TYPE, nil];
-    
+
+    [_handler setInitialized:true];
     [_handler execute:TAG_EVENT parameters:dict];
     
     [verifyCount(_gestureMock, times(1) ) setLevel2:55];

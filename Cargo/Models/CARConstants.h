@@ -11,8 +11,9 @@
 @interface CARConstants : NSObject
 
 #pragma tracker
+extern NSString *const APPLICATION_ID;
 extern NSString *const ENABLE_DEBUG;
-extern NSString *const DISPATCH_PERIOD;
+extern NSString *const DISPATCH_INTERVAL;
 extern NSString *const ENABLE_OPTOUT;
 extern NSString *const DISABLE_TRACKING;
 extern NSString *const LEVEL2;
@@ -42,6 +43,7 @@ extern NSString *const USER_TWITTER_ID;
 #pragma transaction
 extern NSString *const TRANSACTION_ID;
 extern NSString *const TRANSACTION_TOTAL;
+extern NSString *const TRANSACTION_CURRENCY_CODE;
 extern NSString *const TRANSACTION_PRODUCTS;
 extern NSString *const TRANSACTION_PRODUCT_NAME;
 extern NSString *const TRANSACTION_PRODUCT_SKU;

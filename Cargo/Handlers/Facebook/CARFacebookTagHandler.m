@@ -9,140 +9,189 @@
 #import "CARFacebookTagHandler.h"
 
 
-
+/**
+ The class which handles interactions with the Facebook SDK.
+ */
 @implementation CARFacebookTagHandler
 
+/* *********************************** Variables Declaration ************************************ */
 
-// The runtime sends the load message very soon after the class object
-// is loaded in the process's address space. (http://stackoverflow.com/a/13326633)
-//
-// Instanciate the handler, and register its callback methods to GTM through a Cargo method
+/** Constants used to define callbacks in the register and in the execute method */
+NSString *FB_INIT = @"FB_init";
+NSString *FB_ACTIVATE_APP = @"FB_activateApp";
+NSString *FB_TAG_EVENT = @"FB_tagEvent";
+NSString *FB_TAG_PURCHASE = @"FB_tagPurchase";
+
+
+/* ********************************** Handler core methods ************************************** */
+
+/**
+ Called on runtime to instantiate the handler.
+ Register the callbacks to the container. After a [dataLayer push:@{}],
+ these will trigger the execute method of this handler.
+ */
 +(void)load{
     CARFacebookTagHandler *handler = [[CARFacebookTagHandler alloc] init];
-    [Cargo registerTagHandler:handler withKey:@"FB_init"];
-    [Cargo registerTagHandler:handler withKey:@"FB_activateApp"];
-    [Cargo registerTagHandler:handler withKey:@"FB_tagEvent"];
-    [Cargo registerTagHandler:handler withKey:@"FB_purchase"];
+
+    [Cargo registerTagHandler:handler withKey:FB_INIT];
+    [Cargo registerTagHandler:handler withKey:FB_ACTIVATE_APP];
+    [Cargo registerTagHandler:handler withKey:FB_TAG_EVENT];
+    [Cargo registerTagHandler:handler withKey:FB_TAG_PURCHASE];
 }
 
-
-// This one will be called after a tag has been sent
-//
-// @param tagName       The method you aime to call (this should be define in GTM interface)
-// @param parameters    A dictionary key-object used as a way to give parameters to the class method aimed here
--(void) execute:(NSString *)tagName parameters:(NSDictionary *)parameters{
-    [super execute:tagName parameters:parameters];
-    if([tagName isEqualToString:@"FB_init"]){
-        [self init:parameters];
-    }
-    else if([tagName isEqualToString:@"FB_activateApp"]){
-        [self activateApp];
-    }
-    else if([tagName isEqualToString:@"FB_tagEvent"]){
-        [self tagEvent:parameters];
-    }
-    else if([tagName isEqualToString:@"FB_purchase"]){
-        [self purchase:parameters];
-    }
-
-}
-
-
-// Called in +load method, setup what is needed for Cargo and the facebook SDK
+/**
+ Instantiate the handler with its key and name properties
+ Initialize its attribute to the default values.
+ 
+ @return the instance of the Facebook handler
+ */
 - (id)init
 {
-    if (self = [super init]) {
-        self.key = @"FB";
-        self.name = @"Facebook";
-        self.valid = NO;
-        self.initialized = NO;
+    if (self = [super initWithKey:@"FB" andName:@"Facebook"]) {
         self.fbAppEvents = [FBSDKAppEvents class];
     }
     return self;
 }
 
+/**
+ Call back from GTM container to call a specific method
+ after a function tag and associated parameters are received
+ 
+ @param tagName The tag name of the aimed method
+ @param parameters Dictionary of parameters
+ */
+-(void) execute:(NSString *)tagName parameters:(NSDictionary *)parameters{
+    [super execute:tagName parameters:parameters];
 
-- (void)validate
-{
-    // Nothing is required
-    self.valid = TRUE;
+    if([tagName isEqualToString:FB_INIT]){
+        [self init:parameters];
+    }
+    else if (self.initialized) {
+        if([tagName isEqualToString:FB_ACTIVATE_APP]){
+            [self activateApp];
+        }
+        else if([tagName isEqualToString:FB_TAG_EVENT]){
+            [self tagEvent:parameters];
+        }
+        else if([tagName isEqualToString:FB_TAG_PURCHASE]){
+            [self purchase:parameters];
+        }
+        else
+            [self.logger logUnknownFunctionTag:tagName];
+    }
+    else
+        [self.logger logUninitializedFramework];
 }
 
 
+/* ************************************ SDK initialization ************************************** */
 
-// Initialize Facebook with required parameters
+/**
+ The method you need to call first. Allow you to initialize Facebook SDK
+ Register the application ID to the Facebook SDK.
+ 
+ @param parameters :
+ - applicationId: an app ID Facebook gives when you register your app
+ */
 -(void) init:(NSDictionary*) parameters{
-
-    // get the application id Facebook gave you when you created your facebook app from parameters
-    NSString *applicationId = [parameters objectForKey:@"applicationId"];
+    NSString* APP_ID = @"applicationId";
+    NSString* applicationId = [CARUtils castToNSString:[parameters objectForKey:APP_ID]];
     
     // setup the app id to the fb SDK
     if (applicationId){
         [self.fbAppEvents setLoggingOverrideAppID:applicationId];
-        FIFLog(kTAGLoggerLogLevelInfo, @" Facebook appId set to %@ ", applicationId);
-
+        [self.logger logParamSetWithSuccess:APP_ID withValue:applicationId];
+        self.initialized = TRUE;
+        [self activateApp];
     }
-    
-    self.initialized = TRUE;
-    [self activateApp];
+    else
+        [self.logger logMissingParam:APP_ID inMethod:FB_INIT];
 }
 
 
-// let the fb sdk know that your app has been launched in order to measure sessions
-// Call it in your app delegate's applicationDidBecomeActive method once the handler has been initialized
+/* ****************************************** Tracking ****************************************** */
+
+/**
+ Let the Facebook SDK know that your app has been launched in order to measure sessions
+ Call it in app delegate's applicationDidBecomeActive method once the handler has been initialized
+ */
 -(void) activateApp{
     [self.fbAppEvents activateApp];
+    [self.logger FIFLog:kTAGLoggerLogLevelInfo withMessage:@"Application activation hit sent."];
 }
 
+/**
+ Send an event to facebook SDK. eventName parameter is required.
+ Each events can be logged with a valueToSum and a set of parameters (up to 25 parameters).
+ When reported, all of the valueToSum properties will be summed together. It is an arbitrary number
+ that can represent any value (e.g., a price or a quantity).
+ Note that both the valueToSum and parameters arguments are optional.
 
-// Send an event to facebook SDK. Calls differents methods depending on which parameters have been given
-// Each events can be logged with a valueToSum and a set of parameters (up to 25 parameters).
-// When reported, all of the valueToSum properties will be summed together. It is an arbitrary number
-// that can represent any value (e.g., a price or a quantity).
-// Note that both the valueToSum and parameters arguments are optional.
+ @param parameters :
+ - eventName: the name of the event, which is mandatory
+ - valueToSum: the value to sum
+ - parameters: other parameters you would like to link to the event
+ */
 -(void) tagEvent:(NSDictionary*) parameters{
-    if (![parameters objectForKey:EVENT_NAME]){
-        NSLog(@"Cargo FacebookHandler : in tagEvent() missing mandatory parameter EVENT_NAME. The event hasn't been sent");
-        return ;
-    }
-    NSMutableDictionary *params = [parameters mutableCopy];
-    NSString *eventName = [CARUtils castToNSString:[params objectForKey:EVENT_NAME]];
-    [params removeObjectForKey:EVENT_NAME];
+    NSString* VALUE_TO_SUM = @"valueToSum";
+    NSString* eventName = [CARUtils castToNSString:[parameters objectForKey:EVENT_NAME]];
+    NSNumber* valueToSum = [CARUtils castToNSNumber:[parameters objectForKey:VALUE_TO_SUM]];
 
-    if ([params objectForKey:@"valueToSum"]){
-        double valueToSum = [[CARUtils castToNSNumber:[params objectForKey:@"valueToSum"]] doubleValue];
-        [params removeObjectForKey:@"valueToSum"];
-
-        if (params.count > 0){
-            [self.fbAppEvents logEvent:eventName valueToSum:valueToSum parameters:params];
+    if (eventName) {
+        NSMutableDictionary *params = [parameters mutableCopy];
+        [params removeObjectForKey:EVENT_NAME];
+        
+        if (valueToSum != nil){
+            [params removeObjectForKey:VALUE_TO_SUM];
+            double value = [valueToSum doubleValue];
+            
+            if (params.count > 0){
+                [self.fbAppEvents logEvent:eventName valueToSum:value parameters:params];
+                [self.logger logParamSetWithSuccess:EVENT_NAME withValue:eventName];
+                [self.logger logParamSetWithSuccess:VALUE_TO_SUM withValue:valueToSum];
+                [self.logger logParamSetWithSuccess:@"params" withValue:params];
+                return ;
+            }
+            [self.fbAppEvents logEvent:eventName valueToSum:value];
+            [self.logger logParamSetWithSuccess:EVENT_NAME withValue:eventName];
+            [self.logger logParamSetWithSuccess:VALUE_TO_SUM withValue:valueToSum];
             return ;
         }
-        [self.fbAppEvents logEvent:eventName valueToSum:valueToSum];
-        return ;
+        else if (params.count > 0) {
+            [self.fbAppEvents logEvent:eventName parameters:params];
+            [self.logger logParamSetWithSuccess:EVENT_NAME withValue:eventName];
+            [self.logger logParamSetWithSuccess:@"params" withValue:params];
+        }
+        else {
+            [self.fbAppEvents logEvent:eventName];
+            [self.logger logParamSetWithSuccess:EVENT_NAME withValue:eventName];
+        }
     }
-    if (params.count > 0) {
-        [self.fbAppEvents logEvent:eventName parameters:params];
-        return ;
-    }
-    [self.fbAppEvents logEvent:eventName];
+    else
+        [self.logger logMissingParam:EVENT_NAME inMethod:FB_TAG_EVENT];
 }
 
+/**
+ Logs a purchase in your app. with purchaseAmount the money spent, and currencyCode the currency code.
+ The currency specification is expected to be an ISO 4217 currency code (EUR, USD, ...)
 
-// Logs a purchase in your app. with purchaseAmount the money spent, and currencyCode the currency code.
-// The currency specification is expected to be an ISO 4217 currency code.
+ @param parameters :
+  - transactionTotal: the amount of the purchase, which is mandatory
+  - transactionCurrencyCode: the currency of the purchase, which is mandatory
+ */
 -(void) purchase:(NSDictionary*) parameters{
-    if (![parameters objectForKey:@"purchaseAmount"] || ![parameters objectForKey:@"currencyCode"]){
-        NSLog(@"Cargo FacebookHandler : in purchase() missing at least one of the parameters. The purchase hasn't been registered");
-        return ;
+    NSNumber* total = [CARUtils castToNSNumber:[parameters objectForKey:TRANSACTION_TOTAL]];
+    NSString* currencyCode = [CARUtils castToNSString: [parameters objectForKey:TRANSACTION_CURRENCY_CODE]];
+
+    if (total != nil && currencyCode != nil) {
+        double purchaseAmount = [total doubleValue];
+        [self.fbAppEvents logPurchase:purchaseAmount currency:currencyCode];
+        [self.logger logParamSetWithSuccess:TRANSACTION_TOTAL withValue:total];
+        [self.logger logParamSetWithSuccess:TRANSACTION_CURRENCY_CODE withValue:currencyCode];
     }
-    double purchaseAmount = [[CARUtils castToNSNumber:[parameters objectForKey:@"purchaseAmount"]] doubleValue];
-    NSString* currencyCode = [CARUtils castToNSString:[parameters objectForKey:@"currencyCode"]];
-    [self.fbAppEvents logPurchase:purchaseAmount currency:currencyCode];
-}
-
-
-- (BOOL)isInitialized{
-    return self.initialized;
+    else
+        [self.logger logMissingParam:@"transactionTotal and/or transactionCurrencyCode"
+                            inMethod:FB_TAG_PURCHASE];
 }
 
 @end

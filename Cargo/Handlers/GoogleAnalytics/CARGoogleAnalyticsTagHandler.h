@@ -18,7 +18,9 @@
  */
 @interface CARGoogleAnalyticsTagHandler : CARTagHandler
 
+/** The Google Analytics instance */
 @property GAI* instance;
+/** The Google Analytics tracker */
 @property id<GAITracker> tracker;
 
 @end

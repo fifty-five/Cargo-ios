@@ -11,8 +11,9 @@
 @interface CARConstants : NSObject
 
 #pragma tracker
+extern NSString *const APPLICATION_ID;
 extern NSString *const ENABLE_DEBUG;
-extern NSString *const DISPATCH_PERIOD;
+extern NSString *const DISPATCH_INTERVAL;
 extern NSString *const ENABLE_OPTOUT;
 extern NSString *const DISABLE_TRACKING;
 extern NSString *const LEVEL2;

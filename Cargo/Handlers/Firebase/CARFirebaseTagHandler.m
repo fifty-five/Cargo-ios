@@ -18,9 +18,9 @@
 /* *********************************** Variables Declaration ************************************ */
 
 /** Constants used to define callbacks in the register and in the execute method */
-NSString *Firebase_init = @"Firebase_init";
-NSString *Firebase_identify = @"Firebase_identify";
-NSString *Firebase_tagEvent = @"Firebase_tagEvent";
+NSString *FIR_INIT = @"FIR_init";
+NSString *FIR_IDENTIFY = @"FIR_identify";
+NSString *FIR_TAG_EVENT = @"FIR_tagEvent";
 
 NSString *const ENABLE_COLLECTION = @"enableCollection";
 
@@ -36,9 +36,9 @@ NSString *const ENABLE_COLLECTION = @"enableCollection";
     CARFirebaseTagHandler *handler = [[CARFirebaseTagHandler alloc] init];
     [FIRApp configure];
     
-    [Cargo registerTagHandler:handler withKey:Firebase_init];
-    [Cargo registerTagHandler:handler withKey:Firebase_identify];
-    [Cargo registerTagHandler:handler withKey:Firebase_tagEvent];
+    [Cargo registerTagHandler:handler withKey:FIR_INIT];
+    [Cargo registerTagHandler:handler withKey:FIR_IDENTIFY];
+    [Cargo registerTagHandler:handler withKey:FIR_TAG_EVENT];
 }
 
 /**
@@ -49,11 +49,7 @@ NSString *const ENABLE_COLLECTION = @"enableCollection";
  */
 - (id)init
 {
-    if (self = [super init]) {
-        self.key = @"Firebase";
-        self.name = @"Firebase";
-        self.valid = NO;
-        self.initialized = NO;
+    if (self = [super initWithKey:@"FIR" andName:@"Firebase"]) {
 
         self.fireAnalyticsClass = [FIRAnalytics class];
         self.fireConfClass = [FIRAnalyticsConfiguration class];
@@ -71,24 +67,17 @@ NSString *const ENABLE_COLLECTION = @"enableCollection";
 -(void) execute:(NSString *)tagName parameters:(NSDictionary *)parameters{
     [super execute:tagName parameters:parameters];
 
-    if([tagName isEqualToString:Firebase_init]){
+    if([tagName isEqualToString:FIR_INIT]){
         [self init:parameters];
     }
-    else if([tagName isEqualToString:Firebase_identify]){
+    else if([tagName isEqualToString:FIR_IDENTIFY]){
         [self identify:parameters];
     }
-    else if([tagName isEqualToString:Firebase_tagEvent]){
+    else if([tagName isEqualToString:FIR_TAG_EVENT]){
         [self tagEvent:parameters];
     }
-}
-
-/**
- Called in registerHandlers to validate a handler and check for its initialization.
- */
-- (void)validate
-{
-    // Nothing is required
-    self.valid = TRUE;
+    else
+        [self.logger logUnknownFunctionTag:tagName];
 }
 
 
@@ -103,10 +92,25 @@ NSString *const ENABLE_COLLECTION = @"enableCollection";
  @param parameters :
   - enableCollection : a boolean set to false to disable the data collection
  */
--(void) init:(NSDictionary*) parameters{
-    id value = [parameters valueForKey:ENABLE_COLLECTION];
-    Boolean enabled = value ? [value boolValue] : YES;
-    [[self.fireConfClass sharedInstance] setAnalyticsCollectionEnabled:enabled];
+-(void) init:(NSDictionary *)parameters{
+    if ([parameters valueForKey:ENABLE_COLLECTION]) {
+        id value = [parameters valueForKey:ENABLE_COLLECTION];
+
+        Boolean enabled = value ? [value boolValue] : YES;
+        [[self.fireConfClass sharedInstance] setAnalyticsCollectionEnabled:enabled];
+        [self.logger logParamSetWithSuccess:ENABLE_COLLECTION
+                                  withValue:[NSNumber numberWithBool:enabled]];
+        if (!enabled) {
+            [self.logger FIFLog:kTAGLoggerLogLevelWarning
+                    withMessage:@"The analytics collection has been disabled, \
+             you won't be able to send anything to the Firebase console. \
+             Call on the %@ method with the %@ parameter set to true \
+             to enable the collection again.", FIR_INIT, ENABLE_COLLECTION];
+        }
+    }
+    else {
+        [self.logger logMissingParam:ENABLE_COLLECTION inMethod:FIR_INIT];
+    }
 }
 
 
@@ -120,18 +124,19 @@ NSString *const ENABLE_COLLECTION = @"enableCollection";
   - userId : an unique ID for this specific user
   - other parameters : as a dictionary, the key is used as a category, the value as is.
  */
--(void) identify:(NSDictionary*) parameters{
-    NSMutableDictionary* params = [parameters mutableCopy];
-    NSString* userId = [CARUtils castToNSString:[parameters objectForKey:USER_ID]];
+-(void) identify:(NSDictionary *)parameters{
+    NSMutableDictionary *params = [parameters mutableCopy];
+    NSString *userId = [CARUtils castToNSString:[params objectForKey:USER_ID]];
 
     if (userId) {
         [self.fireAnalyticsClass setUserID:userId];
+        [self.logger logParamSetWithSuccess:USER_ID withValue:userId];
         [params removeObjectForKey:USER_ID];
     }
     if ([params count] > 0) {
         for(id key in params) {
             NSString *value = [CARUtils castToNSString:[params valueForKey:key]];
-            NSString *keyString = [CARUtils castToNSString:[params valueForKey:key]];
+            NSString *keyString = [CARUtils castToNSString:key];
 
             if (value) {
                 [self.fireAnalyticsClass setUserPropertyString:value forName:keyString];
@@ -156,21 +161,25 @@ NSString *const ENABLE_COLLECTION = @"enableCollection";
   - eventName : the name of the event
   - other parameters : as a dictionary, used as event parameters .
  */
--(void) tagEvent:(NSDictionary*) parameters{
-    NSString* eventName = [CARUtils castToNSString:[parameters valueForKey:EVENT_NAME]];
+-(void) tagEvent:(NSDictionary *)parameters{
+    NSString *eventName = [CARUtils castToNSString:[parameters valueForKey:EVENT_NAME]];
 
     if (eventName) {
-        NSMutableDictionary* params = [parameters mutableCopy];
+        NSMutableDictionary *params = [parameters mutableCopy];
         [params removeObjectForKey:EVENT_NAME];
 
         if (params.count > 0) {
             [self.fireAnalyticsClass logEventWithName:eventName parameters:params];
+            [self.logger logParamSetWithSuccess:EVENT_NAME withValue:eventName];
+            [self.logger logParamSetWithSuccess:@"params" withValue:params];
             return ;
         }
         [self.fireAnalyticsClass logEventWithName:eventName parameters:nil];
+        [self.logger logParamSetWithSuccess:EVENT_NAME withValue:eventName];
+        [self.logger logParamSetWithSuccess:@"params" withValue:@"nil"];
     }
     else
-        [self.logger logMissingParam:EVENT_NAME inMethod:Firebase_tagEvent];
+        [self.logger logMissingParam:EVENT_NAME inMethod:FIR_TAG_EVENT];
 }
 
 @end

@@ -39,6 +39,7 @@
  */
 - (void)validate;
 
+- (id)initWithKey:(NSString *)handlerKey andName:(NSString *)handlerName;
 
 
 @end

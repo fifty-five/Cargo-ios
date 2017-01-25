@@ -10,6 +10,10 @@
 
 @interface ViewController : UIViewController
 
+- (IBAction)tagEventPressed;
+- (IBAction)tagScreenPressed;
+- (IBAction)tagPurchasePressed;
+- (IBAction)tagUserPressed;
 
 @end
 

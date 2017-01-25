@@ -17,10 +17,10 @@
 /* *********************************** Variables Declaration ************************************ */
 
 /** Constants used to define callbacks in the register and in the execute method */
-NSString *FB_init = @"FB_init";
-NSString *FB_activateApp = @"FB_activateApp";
-NSString *FB_tagEvent = @"FB_tagEvent";
-NSString *FB_purchase = @"FB_purchase";
+NSString *FB_INIT = @"FB_init";
+NSString *FB_ACTIVATE_APP = @"FB_activateApp";
+NSString *FB_TAG_EVENT = @"FB_tagEvent";
+NSString *FB_TAG_PURCHASE = @"FB_tagPurchase";
 
 
 /* ********************************** Handler core methods ************************************** */
@@ -33,10 +33,10 @@ NSString *FB_purchase = @"FB_purchase";
 +(void)load{
     CARFacebookTagHandler *handler = [[CARFacebookTagHandler alloc] init];
 
-    [Cargo registerTagHandler:handler withKey:FB_init];
-    [Cargo registerTagHandler:handler withKey:FB_activateApp];
-    [Cargo registerTagHandler:handler withKey:FB_tagEvent];
-    [Cargo registerTagHandler:handler withKey:FB_purchase];
+    [Cargo registerTagHandler:handler withKey:FB_INIT];
+    [Cargo registerTagHandler:handler withKey:FB_ACTIVATE_APP];
+    [Cargo registerTagHandler:handler withKey:FB_TAG_EVENT];
+    [Cargo registerTagHandler:handler withKey:FB_TAG_PURCHASE];
 }
 
 /**
@@ -47,12 +47,7 @@ NSString *FB_purchase = @"FB_purchase";
  */
 - (id)init
 {
-    if (self = [super init]) {
-        self.key = @"FB";
-        self.name = @"Facebook";
-        self.valid = NO;
-        self.initialized = NO;
-
+    if (self = [super initWithKey:@"FB" andName:@"Facebook"]) {
         self.fbAppEvents = [FBSDKAppEvents class];
     }
     return self;
@@ -68,31 +63,24 @@ NSString *FB_purchase = @"FB_purchase";
 -(void) execute:(NSString *)tagName parameters:(NSDictionary *)parameters{
     [super execute:tagName parameters:parameters];
 
-    if([tagName isEqualToString:FB_init]){
+    if([tagName isEqualToString:FB_INIT]){
         [self init:parameters];
     }
     else if (self.initialized) {
-        if([tagName isEqualToString:FB_activateApp]){
+        if([tagName isEqualToString:FB_ACTIVATE_APP]){
             [self activateApp];
         }
-        else if([tagName isEqualToString:FB_tagEvent]){
+        else if([tagName isEqualToString:FB_TAG_EVENT]){
             [self tagEvent:parameters];
         }
-        else if([tagName isEqualToString:FB_purchase]){
+        else if([tagName isEqualToString:FB_TAG_PURCHASE]){
             [self purchase:parameters];
         }
+        else
+            [self.logger logUnknownFunctionTag:tagName];
     }
     else
         [self.logger logUninitializedFramework];
-}
-
-/**
- Called in registerHandlers to validate a handler and check for its initialization.
- */
-- (void)validate
-{
-    // Nothing is required
-    self.valid = TRUE;
 }
 
 
@@ -117,7 +105,7 @@ NSString *FB_purchase = @"FB_purchase";
         [self activateApp];
     }
     else
-        [self.logger logMissingParam:APP_ID inMethod:FB_init];
+        [self.logger logMissingParam:APP_ID inMethod:FB_INIT];
 }
 
 
@@ -129,6 +117,7 @@ NSString *FB_purchase = @"FB_purchase";
  */
 -(void) activateApp{
     [self.fbAppEvents activateApp];
+    [self.logger FIFLog:kTAGLoggerLogLevelInfo withMessage:@"Application activation hit sent."];
 }
 
 /**
@@ -137,7 +126,7 @@ NSString *FB_purchase = @"FB_purchase";
  When reported, all of the valueToSum properties will be summed together. It is an arbitrary number
  that can represent any value (e.g., a price or a quantity).
  Note that both the valueToSum and parameters arguments are optional.
- 
+
  @param parameters :
  - eventName: the name of the event, which is mandatory
  - valueToSum: the value to sum
@@ -158,18 +147,28 @@ NSString *FB_purchase = @"FB_purchase";
             
             if (params.count > 0){
                 [self.fbAppEvents logEvent:eventName valueToSum:value parameters:params];
+                [self.logger logParamSetWithSuccess:EVENT_NAME withValue:eventName];
+                [self.logger logParamSetWithSuccess:VALUE_TO_SUM withValue:valueToSum];
+                [self.logger logParamSetWithSuccess:@"params" withValue:params];
                 return ;
             }
             [self.fbAppEvents logEvent:eventName valueToSum:value];
+            [self.logger logParamSetWithSuccess:EVENT_NAME withValue:eventName];
+            [self.logger logParamSetWithSuccess:VALUE_TO_SUM withValue:valueToSum];
+            return ;
         }
         else if (params.count > 0) {
             [self.fbAppEvents logEvent:eventName parameters:params];
+            [self.logger logParamSetWithSuccess:EVENT_NAME withValue:eventName];
+            [self.logger logParamSetWithSuccess:@"params" withValue:params];
         }
-        else
+        else {
             [self.fbAppEvents logEvent:eventName];
+            [self.logger logParamSetWithSuccess:EVENT_NAME withValue:eventName];
+        }
     }
     else
-        [self.logger logMissingParam:EVENT_NAME inMethod:FB_tagEvent];
+        [self.logger logMissingParam:EVENT_NAME inMethod:FB_TAG_EVENT];
 }
 
 /**
@@ -182,26 +181,17 @@ NSString *FB_purchase = @"FB_purchase";
  */
 -(void) purchase:(NSDictionary*) parameters{
     NSNumber* total = [CARUtils castToNSNumber:[parameters objectForKey:TRANSACTION_TOTAL]];
-    NSString* currencyCode = [CARUtils castToNSString:
-                              [parameters objectForKey:TRANSACTION_CURRENCY_CODE]];
+    NSString* currencyCode = [CARUtils castToNSString: [parameters objectForKey:TRANSACTION_CURRENCY_CODE]];
 
-    if (total && currencyCode) {
+    if (total != nil && currencyCode != nil) {
         double purchaseAmount = [total doubleValue];
         [self.fbAppEvents logPurchase:purchaseAmount currency:currencyCode];
+        [self.logger logParamSetWithSuccess:TRANSACTION_TOTAL withValue:total];
+        [self.logger logParamSetWithSuccess:TRANSACTION_CURRENCY_CODE withValue:currencyCode];
     }
     else
         [self.logger logMissingParam:@"transactionTotal and/or transactionCurrencyCode"
-                            inMethod:FB_purchase];
-}
-
-
-/**
- Check wheter the SDK has been initialized
-
- @return true for an initialized SDK, false otherwise
- */
-- (BOOL)isInitialized{
-    return self.initialized;
+                            inMethod:FB_TAG_PURCHASE];
 }
 
 @end

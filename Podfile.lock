@@ -1,5 +1,4 @@
 PODS:
-  - Accengage-iOS-SDK (6.0.0)
   - ATInternet-iOS-ObjC-SDK/iOS (2.2.0):
     - ATInternet-iOS-ObjC-SDK/Res
   - ATInternet-iOS-ObjC-SDK/Res (2.2.0)
@@ -37,7 +36,6 @@ PODS:
   - Tune (4.5.0)
 
 DEPENDENCIES:
-  - Accengage-iOS-SDK (~> 6.0.0)
   - ATInternet-iOS-ObjC-SDK/iOS (= 2.2.0)
   - FBSDKCoreKit (= 4.10.1)
   - Firebase (= 3.3.0)
@@ -47,7 +45,6 @@ DEPENDENCIES:
   - Tune (= 4.5.0)
 
 SPEC CHECKSUMS:
-  Accengage-iOS-SDK: da4ed132edc6fbae8c96eeacd1fa5bd42bf1a01b
   ATInternet-iOS-ObjC-SDK: 8d6fea9247384678f2e3d4347ec8b015460b6c8f
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   FBSDKCoreKit: d2aaed5e9ab7d8d6301c533376a1fbff1cf3deb5
@@ -63,6 +60,6 @@ SPEC CHECKSUMS:
   OCMockito: 62ddc6afff6a883f2864d51224b1dfdc0e9a7df7
   Tune: e1f0d196e70360e514708ad5eee9fc9180b7b4f9
 
-PODFILE CHECKSUM: aac04fe9cdb8926a69b56c0808c784d6df2392a5
+PODFILE CHECKSUM: 0e2518a24ada20b5136d51ba30f419103e1d3449
 
 COCOAPODS: 1.2.0.beta.1

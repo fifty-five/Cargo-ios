@@ -11,8 +11,6 @@
 		803606791BCE9191006EDA98 /* CARFacebookTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 803606781BCE9191006EDA98 /* CARFacebookTagHandler.m */; };
 		8036067D1BCE9964006EDA98 /* FacebookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8036067C1BCE9964006EDA98 /* FacebookTests.m */; };
 		804093D21DABF76F00E564A2 /* AccengageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 804093D11DABF76F00E564A2 /* AccengageTests.m */; };
-		80A88A1C1DA7A9E2005C15C9 /* CARAccengageTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A88A1B1DA7A9E2005C15C9 /* CARAccengageTagHandler.m */; };
-		80A88A1F1DA7F292005C15C9 /* AccengageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A88A1E1DA7F292005C15C9 /* AccengageItem.m */; };
 		80AEA8761E378EE8006B8674 /* CARItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 80AEA8751E378EE8006B8674 /* CARItem.m */; };
 		80C3DDBE1D3E879D00BE290A /* CARFirebaseTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C3DDBD1D3E879D00BE290A /* CARFirebaseTagHandler.m */; };
 		80C3DDCA1D3FC0E500BE290A /* TuneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C3DDC81D3FC0E500BE290A /* TuneTests.m */; };
@@ -112,10 +110,6 @@
 		8036067C1BCE9964006EDA98 /* FacebookTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookTests.m; sourceTree = "<group>"; };
 		804093D11DABF76F00E564A2 /* AccengageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccengageTests.m; path = Accengage/AccengageTests.m; sourceTree = "<group>"; };
 		8073E3471E30DAAA005DAB7E /* GTM-5GCVL2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTM-5GCVL2"; sourceTree = "<group>"; };
-		80A88A1A1DA7A9E2005C15C9 /* CARAccengageTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CARAccengageTagHandler.h; path = Accengage/CARAccengageTagHandler.h; sourceTree = "<group>"; };
-		80A88A1B1DA7A9E2005C15C9 /* CARAccengageTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CARAccengageTagHandler.m; path = Accengage/CARAccengageTagHandler.m; sourceTree = "<group>"; };
-		80A88A1D1DA7F292005C15C9 /* AccengageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccengageItem.h; path = Accengage/AccengageItem.h; sourceTree = "<group>"; };
-		80A88A1E1DA7F292005C15C9 /* AccengageItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccengageItem.m; path = Accengage/AccengageItem.m; sourceTree = "<group>"; };
 		80AEA8741E378EE8006B8674 /* CARItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARItem.h; sourceTree = "<group>"; };
 		80AEA8751E378EE8006B8674 /* CARItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARItem.m; sourceTree = "<group>"; };
 		80C3DDBC1D3E879D00BE290A /* CARFirebaseTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARFirebaseTagHandler.h; sourceTree = "<group>"; };
@@ -267,17 +261,6 @@
 			isa = PBXGroup;
 			children = (
 				804093D11DABF76F00E564A2 /* AccengageTests.m */,
-			);
-			name = Accengage;
-			sourceTree = "<group>";
-		};
-		80A88A191DA7A99C005C15C9 /* Accengage */ = {
-			isa = PBXGroup;
-			children = (
-				80A88A1A1DA7A9E2005C15C9 /* CARAccengageTagHandler.h */,
-				80A88A1B1DA7A9E2005C15C9 /* CARAccengageTagHandler.m */,
-				80A88A1D1DA7F292005C15C9 /* AccengageItem.h */,
-				80A88A1E1DA7F292005C15C9 /* AccengageItem.m */,
 			);
 			name = Accengage;
 			sourceTree = "<group>";
@@ -461,7 +444,6 @@
 				BF37DF221BC57B530031876D /* CARMacroHandler.m */,
 				BF37DF231BC57B530031876D /* CARTagHandler.h */,
 				BF37DF241BC57B530031876D /* CARTagHandler.m */,
-				80A88A191DA7A99C005C15C9 /* Accengage */,
 				9CE17DE51BCE91F700833399 /* ATInternet */,
 				803606761BCE9191006EDA98 /* Facebook */,
 				80C3DDBB1D3E80DB00BE290A /* Firebase */,
@@ -818,7 +800,6 @@
 			files = (
 				80AEA8761E378EE8006B8674 /* CARItem.m in Sources */,
 				80C3DDD11D3FC38700BE290A /* CARTuneTagHandler.m in Sources */,
-				80A88A1F1DA7F292005C15C9 /* AccengageItem.m in Sources */,
 				BF37DE851BC51BCC0031876D /* CARUtils.m in Sources */,
 				BF37DF2D1BC57B530031876D /* CARMacroHandler.m in Sources */,
 				BF2B699C1C10A1090083964A /* CARConstants.m in Sources */,
@@ -830,7 +811,6 @@
 				BF37DE811BC51BB50031876D /* Cargo.m in Sources */,
 				803606791BCE9191006EDA98 /* CARFacebookTagHandler.m in Sources */,
 				BF37DEAC1BC51CC80031876D /* FIFLogger.m in Sources */,
-				80A88A1C1DA7A9E2005C15C9 /* CARAccengageTagHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

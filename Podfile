@@ -3,9 +3,6 @@ require File.expand_path("../scripts/build.rb", __FILE__)
 # Uncomment this line to define a global platform for your project
 platform :ios, '8.0'
 
-source 'https://github.com/Accengage/CocoaPodsSpecs.git'
-source 'https://github.com/CocoaPods/Specs.git'
-
 def import_pods
   Build.all_pods.each do |p|
     send :pod, p.name, p.version

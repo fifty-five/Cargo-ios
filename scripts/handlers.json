@@ -44,15 +44,6 @@
           "version" : "3.3.0"
         }
       ]
-    },
-    {
-      "name":"Accengage",
-      "dependencies":[
-        {
-          "name": "Accengage-iOS-SDK",
-          "version" : "~> 6.0.0"
-        }
-      ]
     }
   ]
 }

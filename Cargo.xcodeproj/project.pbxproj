@@ -10,7 +10,6 @@
 		542DBF9F9C29466AD4AC235D /* libPods-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F391E165F72C99D45877426 /* libPods-App.a */; };
 		803606791BCE9191006EDA98 /* CARFacebookTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 803606781BCE9191006EDA98 /* CARFacebookTagHandler.m */; };
 		8036067D1BCE9964006EDA98 /* FacebookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8036067C1BCE9964006EDA98 /* FacebookTests.m */; };
-		804093D21DABF76F00E564A2 /* AccengageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 804093D11DABF76F00E564A2 /* AccengageTests.m */; };
 		80AEA8761E378EE8006B8674 /* CARItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 80AEA8751E378EE8006B8674 /* CARItem.m */; };
 		80C3DDBE1D3E879D00BE290A /* CARFirebaseTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C3DDBD1D3E879D00BE290A /* CARFirebaseTagHandler.m */; };
 		80C3DDCA1D3FC0E500BE290A /* TuneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C3DDC81D3FC0E500BE290A /* TuneTests.m */; };
@@ -108,7 +107,6 @@
 		803606771BCE9191006EDA98 /* CARFacebookTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARFacebookTagHandler.h; sourceTree = "<group>"; };
 		803606781BCE9191006EDA98 /* CARFacebookTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARFacebookTagHandler.m; sourceTree = "<group>"; };
 		8036067C1BCE9964006EDA98 /* FacebookTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookTests.m; sourceTree = "<group>"; };
-		804093D11DABF76F00E564A2 /* AccengageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccengageTests.m; path = Accengage/AccengageTests.m; sourceTree = "<group>"; };
 		8073E3471E30DAAA005DAB7E /* GTM-5GCVL2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTM-5GCVL2"; sourceTree = "<group>"; };
 		80AEA8741E378EE8006B8674 /* CARItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARItem.h; sourceTree = "<group>"; };
 		80AEA8751E378EE8006B8674 /* CARItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARItem.m; sourceTree = "<group>"; };
@@ -257,14 +255,6 @@
 			path = Facebook;
 			sourceTree = "<group>";
 		};
-		804093D01DABF70200E564A2 /* Accengage */ = {
-			isa = PBXGroup;
-			children = (
-				804093D11DABF76F00E564A2 /* AccengageTests.m */,
-			);
-			name = Accengage;
-			sourceTree = "<group>";
-		};
 		80C3DDBB1D3E80DB00BE290A /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
@@ -372,7 +362,6 @@
 		BF37DEB21BC51FF90031876D /* CargoTest */ = {
 			isa = PBXGroup;
 			children = (
-				804093D01DABF70200E564A2 /* Accengage */,
 				9CE17DE71BCEA01200833399 /* AT */,
 				8036067B1BCE9964006EDA98 /* Facebook */,
 				80C3DDCC1D3FC13100BE290A /* Firebase */,
@@ -823,7 +812,6 @@
 				80C3DDCF1D3FC13100BE290A /* FirebaseTests.m in Sources */,
 				80C3DDCA1D3FC0E500BE290A /* TuneTests.m in Sources */,
 				BF37DF341BC57B880031876D /* GoogleAnalyticsTests.m in Sources */,
-				804093D21DABF76F00E564A2 /* AccengageTests.m in Sources */,
 				8036067D1BCE9964006EDA98 /* FacebookTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1036,8 +1024,6 @@
 					"-l\"sqlite3\"",
 					"-l\"z\"",
 					"-framework",
-					"\"Accengage\"",
-					"-framework",
 					"\"AdSupport\"",
 					"-framework",
 					"\"AddressBook\"",
@@ -1129,8 +1115,6 @@
 					"-l\"sqlite3\"",
 					"-l\"z\"",
 					"-framework",
-					"\"Accengage\"",
-					"-framework",
 					"\"AdSupport\"",
 					"-framework",
 					"\"AddressBook\"",
@@ -1219,7 +1203,6 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-ObjC,",
 					"-l\"ATInternet-iOS-ObjC-SDK\"",
 					"-l\"Bolts\"",
 					"-l\"FBSDKCoreKit\"",
@@ -1228,8 +1211,6 @@
 					"-l\"c++\"",
 					"-l\"sqlite3\"",
 					"-l\"z\"",
-					"-framework",
-					"\"Accengage\"",
 					"-framework",
 					"\"AdSupport\"",
 					"-framework",
@@ -1290,8 +1271,6 @@
 					"\"Social\"",
 					"-weak_framework",
 					"\"UIKit\"",
-					"-weak_framework",
-					"\"UserNotifications\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fiftyfive.App;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1316,7 +1295,6 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-ObjC,",
 					"-l\"ATInternet-iOS-ObjC-SDK\"",
 					"-l\"Bolts\"",
 					"-l\"FBSDKCoreKit\"",
@@ -1325,8 +1303,6 @@
 					"-l\"c++\"",
 					"-l\"sqlite3\"",
 					"-l\"z\"",
-					"-framework",
-					"\"Accengage\"",
 					"-framework",
 					"\"AdSupport\"",
 					"-framework",
@@ -1387,8 +1363,6 @@
 					"\"Social\"",
 					"-weak_framework",
 					"\"UIKit\"",
-					"-weak_framework",
-					"\"UserNotifications\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fiftyfive.App;
 				PRODUCT_NAME = "$(TARGET_NAME)";

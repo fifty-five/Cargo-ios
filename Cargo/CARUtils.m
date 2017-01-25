@@ -190,15 +190,13 @@
 + (NSDate *)castToNSDate:(id)value {
     if ([value isEqual:[NSNull null]] || value == nil)
         return nil;
-    
-    if ([value isKindOfClass:[NSDate class]])
+
+    if ([value isKindOfClass:[NSDate class]]) {
         return (NSDate *)value;
-    
-    if ([value isKindOfClass:[NSString class]]) {
-        NSDateFormatter *df = [[NSDateFormatter alloc] init];
-        [df setDateFormat:@"yyyy-MM-dd HH:mm:ss a"];
-        return (NSDate *) [df dateFromString: value];
     }
+
+    if ([value isKindOfClass:[NSString class]])
+        return [NSDate dateWithTimeIntervalSince1970: [value doubleValue]];
     
     return nil;
 }

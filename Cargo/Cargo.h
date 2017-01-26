@@ -9,14 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import "FIFLogger.h"
-
-#import "TAGContainer.h"
-
-#import "Handlers.h"
-
-
-@class TAGManager;
-@class TAGContainer;
+#import "CARTagHandler.h"
 
 
 /**
@@ -28,12 +21,6 @@
 /** Default logger */
 @property (nonatomic, strong) FIFLogger *logger;
 
-/** GTM tag manager */
-@property (nonatomic, strong) TAGManager *tagManager;
-
-/** GTM container */
-@property (nonatomic, strong) TAGContainer *container;
-
 /** App launchOptions */
 @property (nonatomic, strong) NSDictionary *launchOptions;
 
@@ -41,11 +28,6 @@
 @property (nonatomic, assign) BOOL launchOptionsFlag;
 
 
-+ (void) registerTagHandler:(id<TAGFunctionCallTagHandler>)handler withKey:(NSString*) key;
-+ (void) registerMacroHandler:(id<TAGFunctionCallMacroHandler>)handler forMacro:(NSString*) macro;
-
-
--(void) registerHandlers;
 -(BOOL) isLaunchOptionsSet;
 
 
@@ -65,8 +47,10 @@
  *  @param tagManager A google tag manager instance.
  *  @param container  The tag container.
  */
-- (void)initTagHandlerWithManager:(TAGManager *)tagManager
-                        container:(TAGContainer *)container;
+- (void)initTagHandlerWithLogLevel:(LogLevel)logLevel;
 
+- (void)registerHandler:(CARTagHandler*)handler forKey:(NSString*)key;
+
+- (void)executeMethod:(NSString*)handlerMethod forHandlerKey:(NSString*)handler withParameters:(NSDictionary*)params;
 
 @end

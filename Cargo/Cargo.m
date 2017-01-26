@@ -7,12 +7,6 @@
 //
 
 #import "Cargo.h"
-#import "CARTagHandler.h"
-#import "CARMacroHandler.h"
-
-//GTM
-#import "TAGManager.h"
-#import "TAGDataLayer.h"
 
 
 @implementation Cargo
@@ -24,9 +18,7 @@
 static Cargo * _sharedHelper;
 
 /** A dictionary which registers a handler for a specific tag function call */
-static NSMutableDictionary * registeredTagHandlers;
-/** A dictionary which registers a handler for a specific macro call */
-static NSMutableDictionary * registeredMacroHandlers;
+static NSMutableDictionary *registeredHandlers;
 
 
 /* *************************************** Initializer ****************************************** */
@@ -76,14 +68,28 @@ static NSMutableDictionary * registeredMacroHandlers;
  @param tagManager The tag manager instance
  @param container The GTM container instance
  */
-- (void)initTagHandlerWithManager:(TAGManager *)tagManager
-                        container:(TAGContainer *)container {
-    //GTM
-    self.tagManager = tagManager;
-    self.container = container;
+- (void)initTagHandlerWithLogLevel:(LogLevel)logLevel {
 
     //Logger level setting
-    [self.logger setLevel:[self.tagManager.logger logLevel]];
+    [self.logger setLevel:logLevel];
+}
+
+- (void)registerHandler:(CARTagHandler*)handler forKey:(NSString*)key {
+    if (!registeredHandlers) {
+        registeredHandlers = [[NSMutableDictionary alloc] init];
+    }
+
+    [registeredHandlers setObject:handler forKey:key];
+}
+
+- (void)executeMethod:(NSString*)handlerMethod forHandlerKey:(NSString*)handlerKey withParameters:(NSDictionary*)params{
+    CARTagHandler* handler = [registeredHandlers valueForKey:handlerKey];
+    if (!handler) {
+        [self.logger logNotFoundValue:@"handler name" forKey:handlerKey inValueSet:[registeredHandlers allKeys]];
+    }
+    else {
+        [handler execute:handlerMethod parameters:params];
+    }
 }
 
 /**
@@ -104,71 +110,6 @@ static NSMutableDictionary * registeredMacroHandlers;
  */
 -(BOOL) isLaunchOptionsSet{
     return self.launchOptionsFlag;
-}
-
-/**
- Class method called by the handler in its load method to register their GTM functions callbacks
- in the registeredTagHandlers dictionary, which is initialized if it wasn't already
- A specific function key is linked to a specific handler.
-
- @param handler the instance of the handler
- @param key the name of the function which will be used in GTM interface
- */
-+ (void) registerTagHandler:(CARTagHandler*)handler withKey:(NSString*) key {
-    if(registeredTagHandlers == NULL){
-        registeredTagHandlers = [[NSMutableDictionary alloc] init];
-    }
-
-    [registeredTagHandlers setValue:handler forKey:key];
-}
-
-/**
- Class method called by the handler in its load method to register their GTM macros
- in the registeredMacroHandlers dictionary, which is initialized if it wasn't already
- A specific macro key is linked to a specific handler.
-
- @param handler the instance of the handler
- @param macro the name of the macro which will be used in GTM interface
- */+ (void) registerMacroHandler:(CARMacroHandler*)handler forMacro:(NSString*) macro {
-     if(registeredMacroHandlers == NULL){
-         registeredMacroHandlers = [[NSMutableDictionary alloc] init];
-     }
-
-     [registeredMacroHandlers setValue:handler forKey:macro];
- }
-
-/**
- For each key stored in the registeredTagHandlers Dictionary, calls on the key,
- check if the handler was correctly initialized, then registers its GTM callback methods
- to the container for this particular handler.
- Does the same with the GTM callback macros
- */
--(void) registerHandlers{
-    // functions
-    for (NSString* key in registeredTagHandlers) {
-        CARTagHandler *handler = registeredTagHandlers[key];
-        [handler validate];
-
-        if(handler.valid){
-            [self.container registerFunctionCallTagHandler:handler forTag:key];
-            [self.logger FIFLog:kTAGLoggerLogLevelInfo
-                    withMessage:@"Function with key %@ has been registered for %@ handler",
-             key,
-             [handler name]];
-        }
-        else {
-            [self.logger FIFLog:kTAGLoggerLogLevelError
-                    withMessage:@"%@ handler seems to be invalid. Function with key %@ hasn't been registered.",
-             [handler name],
-             key];
-        }
-    }
-    // macros
-    for(NSString* key in registeredMacroHandlers ){
-        CARMacroHandler *macroHandler = registeredMacroHandlers[key];
-        [self.container registerFunctionCallMacroHandler:macroHandler forMacro:key];
-        NSLog(@"Macro %@ has been registered", key);
-    }
 }
 
 @end

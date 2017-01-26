@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <GoogleTagManager/TAGCustomFunction.h>
 
-@interface Tags : NSObject
+@interface Tags : NSObject<TAGCustomFunction>
+
+- (NSObject*)executeWithParameters:(NSDictionary*)parameters;
 
 @end

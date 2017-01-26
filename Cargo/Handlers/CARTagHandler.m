@@ -7,8 +7,7 @@
 //
 
 #import "CARTagHandler.h"
-#import "FIFLogger.h"
-#import "CARUtils.h"
+#import "Cargo.h"
 
 
 @implementation CARTagHandler
@@ -46,6 +45,7 @@
     self.name = handlerName;
     self.logger = [[FIFLogger alloc] initLogger:[self.key stringByAppendingString:@"_handler"]];
     [self.logger  setLevel:[[[Cargo sharedHelper] logger] level]];
+    [[Cargo sharedHelper] registerHandler:self forKey:self.key];
     self.valid = NO;
     self.initialized = NO;
 

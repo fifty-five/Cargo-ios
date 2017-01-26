@@ -32,11 +32,6 @@ NSString *FB_TAG_PURCHASE = @"FB_tagPurchase";
  */
 +(void)load{
     CARFacebookTagHandler *handler = [[CARFacebookTagHandler alloc] init];
-
-    [Cargo registerTagHandler:handler withKey:FB_INIT];
-    [Cargo registerTagHandler:handler withKey:FB_ACTIVATE_APP];
-    [Cargo registerTagHandler:handler withKey:FB_TAG_EVENT];
-    [Cargo registerTagHandler:handler withKey:FB_TAG_PURCHASE];
 }
 
 /**
@@ -117,7 +112,7 @@ NSString *FB_TAG_PURCHASE = @"FB_tagPurchase";
  */
 -(void) activateApp{
     [self.fbAppEvents activateApp];
-    [self.logger FIFLog:kTAGLoggerLogLevelInfo withMessage:@"Application activation hit sent."];
+    [self.logger FIFLog:info withMessage:@"Application activation hit sent."];
 }
 
 /**

@@ -50,9 +50,6 @@ NSString* const CONVERSION_KEY = @"conversionKey";
  */
 +(void)load{
     CARTuneTagHandler* handler = [[CARTuneTagHandler alloc] init];
-    [Cargo registerTagHandler:handler withKey:TUN_INIT];
-    [Cargo registerTagHandler:handler withKey:TUN_TAG_EVENT];
-    [Cargo registerTagHandler:handler withKey:TUN_IDENTIFY];
 
     EVENT_STRING_PROPERTIES = [NSArray arrayWithObjects:@"eventCurrencyCode", @"eventRefId",
                         @"eventContentId", @"eventContentType", @"eventSearchString",

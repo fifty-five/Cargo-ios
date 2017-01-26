@@ -7,10 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TAGContainer.h"
-#import "Cargo.h"
-#import "TAGLogger.h"
 #import "CARUtils.h"
+#import "FIFLogger.h"
 
 /**
  *  This class registers and handle all GTM event calls. This class decides which framework 
@@ -18,7 +16,7 @@
     It also defines basic attributes shared between handlers.
  */
 @class FIFLogger;
-@interface CARTagHandler : NSObject <TAGFunctionCallTagHandler>
+@interface CARTagHandler : NSObject
 
 /** Context logger */
 @property (nonatomic, retain) FIFLogger *logger;
@@ -40,6 +38,8 @@
 - (void)validate;
 
 - (id)initWithKey:(NSString *)handlerKey andName:(NSString *)handlerName;
+
+- (void)execute:(NSString *)functionName parameters:(NSDictionary *)parameters;
 
 
 @end

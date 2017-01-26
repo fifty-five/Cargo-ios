@@ -10,12 +10,15 @@
 		542DBF9F9C29466AD4AC235D /* libPods-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F391E165F72C99D45877426 /* libPods-App.a */; };
 		803606791BCE9191006EDA98 /* CARFacebookTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 803606781BCE9191006EDA98 /* CARFacebookTagHandler.m */; };
 		8036067D1BCE9964006EDA98 /* FacebookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8036067C1BCE9964006EDA98 /* FacebookTests.m */; };
+		805979F41E3A09D900D940FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 805979F31E3A09D900D940FF /* GoogleService-Info.plist */; };
 		80AEA8761E378EE8006B8674 /* CARItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 80AEA8751E378EE8006B8674 /* CARItem.m */; };
 		80C3DDCA1D3FC0E500BE290A /* TuneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C3DDC81D3FC0E500BE290A /* TuneTests.m */; };
 		80C3DDD11D3FC38700BE290A /* CARTuneTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C3DDC21D3FC08F00BE290A /* CARTuneTagHandler.m */; };
 		80CD8C791DD21D450040B567 /* libCargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF37DD591BC512450031876D /* libCargo.a */; };
 		80CD8C7E1DD21E7A0040B567 /* libPods-App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80CD8C7D1DD21E7A0040B567 /* libPods-App.a */; };
 		80CD8C7F1DD220A00040B567 /* libCargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF37DD591BC512450031876D /* libCargo.a */; };
+		80F3CD9A1E38F6B200C35544 /* container in Resources */ = {isa = PBXBuildFile; fileRef = 80F3CD991E38F6B200C35544 /* container */; };
+		80F3CDA01E390DF200C35544 /* Tags.m in Sources */ = {isa = PBXBuildFile; fileRef = 80F3CD9F1E390DF200C35544 /* Tags.m */; };
 		9CE17DE41BCE91F200833399 /* CARATInternetTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE17DE31BCE91F200833399 /* CARATInternetTagHandler.m */; };
 		9CE17DE91BCEA05D00833399 /* ATInternetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE17DE81BCEA05D00833399 /* ATInternetTests.m */; };
 		BB061DA1018ECA4AE6F5FEC3 /* libPods-CargoTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FFCEB8FB268A48BAA911C1 /* libPods-CargoTest.a */; };
@@ -33,7 +36,6 @@
 		BF37DEE11BC540A80031876D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF37DEDF1BC540A80031876D /* LaunchScreen.storyboard */; };
 		BF37DEEC1BC540A80031876D /* AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DEEB1BC540A80031876D /* AppTests.m */; };
 		BF37DEF71BC540A80031876D /* AppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DEF61BC540A80031876D /* AppUITests.m */; };
-		BF37DF2D1BC57B530031876D /* CARMacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF221BC57B530031876D /* CARMacroHandler.m */; };
 		BF37DF2E1BC57B530031876D /* CARTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DF241BC57B530031876D /* CARTagHandler.m */; };
 		D2850FCE0BD4A572F7670471 /* libPods-Cargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE987690E3ADD7CFCD4A030B /* libPods-Cargo.a */; };
 /* End PBXBuildFile section */
@@ -98,7 +100,7 @@
 		803606771BCE9191006EDA98 /* CARFacebookTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARFacebookTagHandler.h; sourceTree = "<group>"; };
 		803606781BCE9191006EDA98 /* CARFacebookTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARFacebookTagHandler.m; sourceTree = "<group>"; };
 		8036067C1BCE9964006EDA98 /* FacebookTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookTests.m; sourceTree = "<group>"; };
-		8073E3471E30DAAA005DAB7E /* GTM-5GCVL2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTM-5GCVL2"; sourceTree = "<group>"; };
+		805979F31E3A09D900D940FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		80AEA8741E378EE8006B8674 /* CARItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARItem.h; sourceTree = "<group>"; };
 		80AEA8751E378EE8006B8674 /* CARItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARItem.m; sourceTree = "<group>"; };
 		80C3DDC11D3FC08F00BE290A /* CARTuneTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARTuneTagHandler.h; sourceTree = "<group>"; };
@@ -107,6 +109,9 @@
 		80CD8C7B1DD21DD10040B567 /* libPods-Cargo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Cargo.a"; path = "../../Library/Developer/Xcode/DerivedData/Cargo-gnlghtbnmmtopxaloiwhcezqlyza/Build/Products/Debug-iphonesimulator/libPods-Cargo.a"; sourceTree = "<group>"; };
 		80CD8C7D1DD21E7A0040B567 /* libPods-App.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-App.a"; path = "Pods/../build/Debug-iphoneos/libPods-App.a"; sourceTree = "<group>"; };
 		80CD8C821DD233970040B567 /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
+		80F3CD991E38F6B200C35544 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
+		80F3CD9E1E390DF200C35544 /* Tags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tags.h; sourceTree = "<group>"; };
+		80F3CD9F1E390DF200C35544 /* Tags.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tags.m; sourceTree = "<group>"; };
 		8F391E165F72C99D45877426 /* libPods-App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		987A30D35233E43599FF5F6E /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
 		9CE17DE21BCE91E200833399 /* CARATInternetTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CARATInternetTagHandler.h; path = ATInternet/CARATInternetTagHandler.h; sourceTree = "<group>"; };
@@ -125,7 +130,6 @@
 		BF37DEB11BC51FF90031876D /* CargoTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CargoTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF37DEB31BC51FF90031876D /* CargoTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CargoTest.m; sourceTree = "<group>"; };
 		BF37DEB51BC51FF90031876D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BF37DEC71BC540180031876D /* Handlers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Handlers.h; sourceTree = "<group>"; };
 		BF37DECC1BC540A80031876D /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF37DECF1BC540A80031876D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BF37DED11BC540A80031876D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -143,8 +147,6 @@
 		BF37DEF21BC540A80031876D /* AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF37DEF61BC540A80031876D /* AppUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppUITests.m; sourceTree = "<group>"; };
 		BF37DEF81BC540A80031876D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BF37DF211BC57B530031876D /* CARMacroHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARMacroHandler.h; sourceTree = "<group>"; };
-		BF37DF221BC57B530031876D /* CARMacroHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARMacroHandler.m; sourceTree = "<group>"; };
 		BF37DF231BC57B530031876D /* CARTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARTagHandler.h; sourceTree = "<group>"; };
 		BF37DF241BC57B530031876D /* CARTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARTagHandler.m; sourceTree = "<group>"; };
 		EE987690E3ADD7CFCD4A030B /* libPods-Cargo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Cargo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -300,13 +302,14 @@
 		BF37DD5B1BC512450031876D /* Cargo */ = {
 			isa = PBXGroup;
 			children = (
-				BF37DEC71BC540180031876D /* Handlers.h */,
 				BF37DE7F1BC51BB40031876D /* Cargo.h */,
 				BF37DE801BC51BB50031876D /* Cargo.m */,
 				BF37DE831BC51BCC0031876D /* CARUtils.h */,
 				BF37DE841BC51BCC0031876D /* CARUtils.m */,
 				80AEA8741E378EE8006B8674 /* CARItem.h */,
 				80AEA8751E378EE8006B8674 /* CARItem.m */,
+				80F3CD9E1E390DF200C35544 /* Tags.h */,
+				80F3CD9F1E390DF200C35544 /* Tags.m */,
 				BFAB2F6D1BECDCB900BF532A /* Models */,
 				BF37DF1E1BC57B530031876D /* Handlers */,
 				BF37DEA91BC51CC80031876D /* Logger */,
@@ -338,6 +341,7 @@
 		BF37DECD1BC540A80031876D /* App */ = {
 			isa = PBXGroup;
 			children = (
+				805979F31E3A09D900D940FF /* GoogleService-Info.plist */,
 				80CD8C821DD233970040B567 /* App.entitlements */,
 				BF37DED11BC540A80031876D /* AppDelegate.h */,
 				BF37DED21BC540A80031876D /* AppDelegate.m */,
@@ -356,7 +360,7 @@
 		BF37DECE1BC540A80031876D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				8073E3471E30DAAA005DAB7E /* GTM-5GCVL2 */,
+				80F3CD991E38F6B200C35544 /* container */,
 				BF37DECF1BC540A80031876D /* main.m */,
 			);
 			name = "Supporting Files";
@@ -383,8 +387,6 @@
 		BF37DF1E1BC57B530031876D /* Handlers */ = {
 			isa = PBXGroup;
 			children = (
-				BF37DF211BC57B530031876D /* CARMacroHandler.h */,
-				BF37DF221BC57B530031876D /* CARMacroHandler.m */,
 				BF37DF231BC57B530031876D /* CARTagHandler.h */,
 				BF37DF241BC57B530031876D /* CARTagHandler.m */,
 				9CE17DE51BCE91F700833399 /* ATInternet */,
@@ -576,6 +578,8 @@
 			files = (
 				BF37DEE11BC540A80031876D /* LaunchScreen.storyboard in Resources */,
 				BF37DEDE1BC540A80031876D /* Assets.xcassets in Resources */,
+				805979F41E3A09D900D940FF /* GoogleService-Info.plist in Resources */,
+				80F3CD9A1E38F6B200C35544 /* container in Resources */,
 				BF37DED91BC540A80031876D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -724,10 +728,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80F3CDA01E390DF200C35544 /* Tags.m in Sources */,
 				80AEA8761E378EE8006B8674 /* CARItem.m in Sources */,
 				80C3DDD11D3FC38700BE290A /* CARTuneTagHandler.m in Sources */,
 				BF37DE851BC51BCC0031876D /* CARUtils.m in Sources */,
-				BF37DF2D1BC57B530031876D /* CARMacroHandler.m in Sources */,
 				BF2B699C1C10A1090083964A /* CARConstants.m in Sources */,
 				BF37DF2E1BC57B530031876D /* CARTagHandler.m in Sources */,
 				9CE17DE41BCE91F200833399 /* CARATInternetTagHandler.m in Sources */,
@@ -862,7 +866,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TEST = 1;
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
@@ -916,6 +920,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2F47332079D627DC8FE6FD36 /* Pods-Cargo.debug.xcconfig */;
 			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/ATInternet-iOS-ObjC-SDK\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Bolts\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/FBSDKCoreKit\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/TagManager\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/GoogleToolboxForMac\"",
+					"$(inherited)",
+					"\"${PODS_ROOT}/GoogleAnalytics/Libraries\"",
+				);
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -926,6 +940,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5CE07BF52852C81A075A0DD5 /* Pods-Cargo.release.xcconfig */;
 			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/ATInternet-iOS-ObjC-SDK\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Bolts\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/FBSDKCoreKit\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/TagManager\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/GoogleToolboxForMac\"",
+					"$(inherited)",
+					"\"${PODS_ROOT}/GoogleAnalytics/Libraries\"",
+				);
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1168,7 +1192,6 @@
 					"-l\"ATInternet-iOS-ObjC-SDK\"",
 					"-l\"Bolts\"",
 					"-l\"FBSDKCoreKit\"",
-					"-l\"TagManager\"",
 					"-l\"c++\"",
 					"-l\"sqlite3\"",
 					"-l\"z\"",
@@ -1279,7 +1302,6 @@
 					"-l\"ATInternet-iOS-ObjC-SDK\"",
 					"-l\"Bolts\"",
 					"-l\"FBSDKCoreKit\"",
-					"-l\"TagManager\"",
 					"-l\"c++\"",
 					"-l\"sqlite3\"",
 					"-l\"z\"",

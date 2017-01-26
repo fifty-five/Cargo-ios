@@ -9,8 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
-@class TAGManager;
-@class TAGContainer;
+@import Firebase;
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
@@ -23,9 +22,6 @@
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
-
-@property (nonatomic, strong) TAGManager *tagManager;
-@property (nonatomic, strong) TAGContainer *container;
 
 
 @end

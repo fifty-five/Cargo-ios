@@ -13,8 +13,8 @@
  *  A class that provides a logger for the FIFTagHandler framework
  */
 @interface FIFLogger ()
-- (BOOL)levelEnabled:(TAGLoggerLogLevelType)intentLevel;
-- (NSString *)nameOfLevel:(TAGLoggerLogLevelType)loggingLevel;
+- (BOOL)levelEnabled:(LogLevel)intentLevel;
+- (NSString *)nameOfLevel:(LogLevel)loggingLevel;
 
 @end
 
@@ -34,7 +34,7 @@
     if (self = [super init]) {
         self.superContext = @"Cargo";
         self.context = aContext;
-        [self setLevel:kTAGLoggerLogLevelVerbose];
+        [self setLevel:verbose];
     }
     return self;
 }
@@ -45,10 +45,10 @@
  *
  *  @param logLevel the logging level
  */
-- (void)setLevel:(TAGLoggerLogLevelType)logLevel {
+- (void)setLevel:(LogLevel)logLevel {
     level = logLevel;
-    if (level == kTAGLoggerLogLevelVerbose && [self.context  isEqual: @"Cargo"]) {
-        [self FIFLog:kTAGLoggerLogLevelWarning withMessage:
+    if (level == verbose && [self.context  isEqual: @"Cargo"]) {
+        [self FIFLog:warning withMessage:
          @"Verbose Mode Enabled. Do not release with this enabled"];
     }
 }
@@ -59,7 +59,7 @@
  *  @param intentLevel The level you want to log with
  *  @param messageFormat The message
  */
-- (void)FIFLog:(TAGLoggerLogLevelType)intentLevel withMessage:(NSString *)messageFormat, ... {
+- (void)FIFLog:(LogLevel)intentLevel withMessage:(NSString *)messageFormat, ... {
     if ([self levelEnabled:intentLevel]) {
         va_list args;
         va_start(args, messageFormat);
@@ -87,7 +87,7 @@
 - (void)logMissingParam:(NSString *)paramName
                inMethod:(NSString *)methodName {
 
-    [self FIFLog:kTAGLoggerLogLevelWarning withMessage:
+    [self FIFLog:warning withMessage:
      @"Parameter '%@' is required in method '%@'",
      paramName,
      methodName];
@@ -102,7 +102,7 @@
  */
 - (void)logUncastableParam:(NSString *)paramName
                     toType:(NSString *)type {
-    [self FIFLog:kTAGLoggerLogLevelError withMessage:
+    [self FIFLog:error withMessage:
      @"Parameter %@ cannot be casted to %@ ",
      paramName,
      type];
@@ -115,7 +115,7 @@
  *  @param handlerName the name of the uninitialized handler
  */
 - (void)logUninitializedFramework {
-    [self FIFLog:kTAGLoggerLogLevelInfo withMessage:
+    [self FIFLog:info withMessage:
      @"You must initialize the framework before using it"];
 }
 
@@ -125,7 +125,7 @@
  *  @param tagName The tag name which doesn't match
  */
 - (void)logUnknownFunctionTag:(NSString *)tagName {
-    [self FIFLog:kTAGLoggerLogLevelDebug withMessage:
+    [self FIFLog:debug withMessage:
      @"Unable to find a method matching the function tag %@",
      tagName];
 }
@@ -137,7 +137,7 @@
  * @param parameters: the parameters sent to the method through a dictionary
  */
 -(void)logReceivedFunction:(NSString *)tagName withParam:(NSDictionary *)parameters {
-    [self FIFLog:kTAGLoggerLogLevelInfo withMessage:
+    [self FIFLog:info withMessage:
      @"Function '%@' has been received with parameters '%@'",
      tagName,
      parameters];
@@ -151,7 +151,7 @@
  */
 - (void)logParamSetWithSuccess:(NSString *)paramName
                      withValue:(id)value {
-    [self FIFLog:kTAGLoggerLogLevelInfo withMessage:
+    [self FIFLog:info withMessage:
      @"Parameter '%@' has been set to '%@' with success",
      paramName,
      value];
@@ -164,7 +164,7 @@
  *  @param paramName The unknown param
  */
 - (void)logUnknownParam:(NSString *)paramName {
-    [self FIFLog:kTAGLoggerLogLevelWarning withMessage:@"Parameter '%@' is unknown", paramName];
+    [self FIFLog:warning withMessage:@"Parameter '%@' is unknown", paramName];
 }
 
 /**
@@ -177,7 +177,7 @@
 - (void)logNotFoundValue:(NSString *)value
                   forKey:(NSString *)key
               inValueSet:(NSArray *)possibleValues {
-    [self FIFLog:kTAGLoggerLogLevelWarning withMessage:
+    [self FIFLog:warning withMessage:
      @"Value '%@' for key '%@' is not found among possible values %@",
      value,
      key,
@@ -192,8 +192,8 @@
  @return A boolean value telling whether the message can (true) or cannot (false) be logged.
  */
 #pragma mark - Utils
-- (BOOL)levelEnabled:(TAGLoggerLogLevelType)intentLevel {
-    return ((level != kTAGLoggerLogLevelNone) && (intentLevel >= level));
+- (BOOL)levelEnabled:(LogLevel)intentLevel {
+    return ((level != none) && (intentLevel >= level));
 }
 
 /**
@@ -202,25 +202,25 @@
  @param loggingLevel the log level
  @return the String defining the log level
  */
-- (NSString *)nameOfLevel:(TAGLoggerLogLevelType)loggingLevel {
+- (NSString *)nameOfLevel:(LogLevel)loggingLevel {
     NSString *result = @"UNKN";
     switch (loggingLevel) {
-        case kTAGLoggerLogLevelVerbose:
+        case verbose:
             result = @"VERB";
             break;
-        case kTAGLoggerLogLevelDebug:
+        case debug:
             result = @"DEBU";
             break;
-        case kTAGLoggerLogLevelInfo:
+        case info:
             result = @"INFO";
             break;
-        case kTAGLoggerLogLevelWarning:
+        case warning:
             result = @"WARN";
             break;
-        case kTAGLoggerLogLevelError:
+        case error:
             result = @"ERRO";
             break;
-        case kTAGLoggerLogLevelNone:
+        case none:
             result = @"NONE";
             break;
     }

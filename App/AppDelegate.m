@@ -26,6 +26,7 @@
     [[Cargo sharedHelper] setLaunchOptions:launchOptions];
     
     [FIRAnalytics logEventWithName:@"applicationStart" parameters:nil];
+    [FIRAnalytics logEventWithName:@"FB_activateApp" parameters:nil];
     
     return YES;
 }

@@ -34,7 +34,7 @@
     if (self = [super init]) {
         self.superContext = @"Cargo";
         self.context = aContext;
-        [self setLevel:verbose];
+        [self setLevel:none];
     }
     return self;
 }

@@ -58,30 +58,28 @@ static NSMutableDictionary *registeredHandlers;
 
 /* *********************************** Methods declaration ************************************** */
 
-#pragma mark - GTM
 /**
- Setup the tagManager and the GTM container as properties of Cargo
- Setup the log level of the Cargo logger from the level of the tagManager logger
- This method has to be called right after retrieving the container and the Cargo instance 
- for the first time, and before any other Cargo method.
-
- @param tagManager The tag manager instance
- @param container The GTM container instance
+ Method called by the handlers on their load method, stores the handler which called this method 
+ in a NSDictionary with the handler key parameter as the key.
+ 
+ @param handler the reference of the handler to store
  */
-- (void)initTagHandlerWithLogLevel:(LogLevel)logLevel {
-
-    //Logger level setting
-    [self.logger setLevel:logLevel];
-}
-
-- (void)registerHandler:(CARTagHandler*)handler forKey:(NSString*)key {
+- (void)registerHandler:(CARTagHandler*)handler {
     if (!registeredHandlers) {
         registeredHandlers = [[NSMutableDictionary alloc] init];
     }
 
-    [registeredHandlers setObject:handler forKey:key];
+    [registeredHandlers setObject:handler forKey:handler.key];
 }
 
+/**
+ Called from the Tags class which is made to handle callbacks from GTM.
+ Calls on this method allow the correct function tag to be redirected to the correct handler.
+ 
+ @param handlerMethod name of the method aimed by the callback, originally a parameter in the NSDict.
+ @param handlerKey the key of the handler aimed by the callback, created from the handlerMethod, eg. 'FB_init'
+ @param params a NSDictionary of the parameters sent to the method.
+ */
 - (void)executeMethod:(NSString*)handlerMethod forHandlerKey:(NSString*)handlerKey withParameters:(NSDictionary*)params{
     CARTagHandler* handler = [registeredHandlers valueForKey:handlerKey];
     if (!handler) {

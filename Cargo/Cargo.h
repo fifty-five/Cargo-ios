@@ -38,19 +38,22 @@
  */
 + (Cargo *) sharedHelper;
 
-
-#pragma mark - GoogleTagManager
 /**
- *  Use initTagHandlerWithManager:container: to configure and initilize
- *  FIFTagHandler with Google Tag Manager.
- *
- *  @param tagManager A google tag manager instance.
- *  @param container  The tag container.
+ Method called by the handlers on their load method, stores the handler which called this method
+ in a NSDictionary with the handler key parameter as the key.
+ 
+ @param handler the reference of the handler to store
  */
-- (void)initTagHandlerWithLogLevel:(LogLevel)logLevel;
+- (void)registerHandler:(CARTagHandler*)handler;
 
-- (void)registerHandler:(CARTagHandler*)handler forKey:(NSString*)key;
-
+/**
+ Called from the Tags class which is made to handle callbacks from GTM.
+ Calls on this method allow the correct function tag to be redirected to the correct handler.
+ 
+ @param handlerMethod name of the method aimed by the callback, originally a parameter in the NSDict.
+ @param handlerKey the key of the handler aimed by the callback, created from the handlerMethod, eg. 'FB_init'
+ @param params a NSDictionary of the parameters sent to the method.
+ */
 - (void)executeMethod:(NSString*)handlerMethod forHandlerKey:(NSString*)handler withParameters:(NSDictionary*)params;
 
 @end

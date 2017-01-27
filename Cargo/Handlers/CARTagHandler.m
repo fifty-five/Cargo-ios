@@ -50,13 +50,16 @@
 - (id)initWithKey:(NSString *)handlerKey andName:(NSString *)handlerName{
     self.key = handlerKey;
     self.name = handlerName;
-    self.logger = [[FIFLogger alloc] initLogger:[self.key stringByAppendingString:@"_handler"]];
-    [self.logger  setLevel:[[[Cargo sharedHelper] logger] level]];
     [[Cargo sharedHelper] registerHandler:self];
+    self.logger = [[FIFLogger alloc] initLogger:[self.key stringByAppendingString:@"_handler"]];
     self.valid = NO;
     self.initialized = NO;
 
     return self;
+}
+
+- (void)setLogLevel {
+    [self.logger  setLevel:[[[Cargo sharedHelper] logger] level]];
 }
 
 

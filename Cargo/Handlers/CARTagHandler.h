@@ -41,5 +41,6 @@
 
 - (void)execute:(NSString *)functionName parameters:(NSDictionary *)parameters;
 
+- (void)setLogLevel;
 
 @end

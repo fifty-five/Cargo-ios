@@ -72,6 +72,15 @@ static NSMutableDictionary *registeredHandlers;
     [registeredHandlers setObject:handler forKey:handler.key];
 }
 
+- (void)setLogLevel:(LogLevel)logLevel {
+    [self.logger setLevel:logLevel];
+
+    for (NSString *key in registeredHandlers) {
+        CARTagHandler *handler = [registeredHandlers valueForKey:key];
+        [handler setLogLevel];
+    }
+}
+
 /**
  Called from the Tags class which is made to handle callbacks from GTM.
  Calls on this method allow the correct function tag to be redirected to the correct handler.

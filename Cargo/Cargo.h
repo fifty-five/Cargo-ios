@@ -46,6 +46,8 @@
  */
 - (void)registerHandler:(CARTagHandler*)handler;
 
+- (void)setLogLevel:(LogLevel)logLevel;
+
 /**
  Called from the Tags class which is made to handle callbacks from GTM.
  Calls on this method allow the correct function tag to be redirected to the correct handler.

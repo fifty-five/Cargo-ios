@@ -97,7 +97,6 @@ NSString *FB_TAG_PURCHASE = @"FB_tagPurchase";
         [self.fbAppEvents setLoggingOverrideAppID:applicationId];
         [self.logger logParamSetWithSuccess:APP_ID withValue:applicationId];
         self.initialized = TRUE;
-        [self activateApp];
     }
     else
         [self.logger logMissingParam:APP_ID inMethod:FB_INIT];

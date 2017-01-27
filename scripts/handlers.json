@@ -14,7 +14,7 @@
       "dependencies":[
         {
           "name": "FBSDKCoreKit",
-          "version" : "4.10.1"
+          "version" : "4.19.0"
         }
       ]
     },

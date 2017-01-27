@@ -7,7 +7,6 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "TAGManager.h"
 #import "CARTuneTagHandler.h"
 #import <Tune/Tune.h>
 #import "CARConstants.h"

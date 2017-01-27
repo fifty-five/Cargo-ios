@@ -64,8 +64,6 @@
     NSDictionary * dict = [[NSDictionary alloc ] initWithObjectsAndKeys:@"1234",@"applicationId", nil];
     [_handler execute:@"FB_init" parameters:dict];
     [verifyCount(_fbEventsMock, times(1)) setLoggingOverrideAppID:@"1234"];
-    [verifyCount(_fbEventsMock, times(1)) activateApp];
-
     XCTAssertTrue(_handler.initialized);
 
 }

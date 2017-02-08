@@ -16,6 +16,14 @@
 
 @implementation ViewController
 
+@synthesize userNameText;
+@synthesize userMailText;
+
+@synthesize xboxText;
+@synthesize playText;
+@synthesize nintendoText;
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
@@ -36,7 +44,8 @@
 }
 
 - (IBAction)tagPurchasePressed{
-    [FIRAnalytics logEventWithName:@"tagPurchase" parameters:nil];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [FIRAnalytics logEventWithName:@"tagPurchase" parameters:parameters];
 
 }
 

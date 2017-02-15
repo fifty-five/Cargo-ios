@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import "FIFLogger.h"
 #import "CARTagHandler.h"
+#import "CargoItem.h"
 
 
 /**
@@ -26,6 +27,8 @@
 
 /** Flag to know is launchOptions has been set */
 @property (nonatomic, assign) BOOL launchOptionsFlag;
+
+@property NSMutableArray *itemsArray;
 
 
 -(BOOL) isLaunchOptionsSet;
@@ -57,5 +60,11 @@
  @param params a NSDictionary of the parameters sent to the method.
  */
 - (void)executeMethod:(NSString*)handlerMethod forHandlerKey:(NSString*)handler withParameters:(NSDictionary*)params;
+
+- (void)addHandlerWithEventItems;
+- (void)attachItemToEvent:(CargoItem *)item;
+- (void)itemsArrayGotUsed;
+- (NSMutableArray *)itemsArray;
+- (void)itemsArray:(NSMutableArray *)newItemsArray;
 
 @end

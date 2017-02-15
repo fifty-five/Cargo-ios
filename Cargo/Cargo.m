@@ -20,12 +20,15 @@ static Cargo * _sharedHelper;
 /** A dictionary which registers a handler for a specific tag function call */
 static NSMutableDictionary *registeredHandlers;
 
+NSInteger handlersWithItems = 0;
+NSInteger arrayValidForHandlers = 0;
+
 
 /* *************************************** Initializer ****************************************** */
 
 #pragma mark - SharedInstance
 /**
- Class method which allow the user to retrieve the cargo instance
+ Class met(nonatomic) hod which allow the user to retrieve the cargo instance
  On its first call, creates and returns a fresh cargo instance
  On other calls, returns the instance stocked in _sharedHelper variable
 
@@ -59,8 +62,8 @@ static NSMutableDictionary *registeredHandlers;
 /* *********************************** Methods declaration ************************************** */
 
 /**
- Method called by the handlers on their load method, stores the handler which called this method 
- in a NSDictionary with the handler key parameter as the key.
+ Method called by the handlers on their load method, stores the handler which called this 
+ method in a NSDictionary with the handler key parameter as the key.
  
  @param handler the reference of the handler to store
  */
@@ -72,9 +75,15 @@ static NSMutableDictionary *registeredHandlers;
     [registeredHandlers setObject:handler forKey:handler.key];
 }
 
+/**
+ Changes the level of logs for Cargo and all its handlers
+ 
+ @param logLevel the log level to set Cargo and its handlers with.
+ */
 - (void)setLogLevel:(LogLevel)logLevel {
     [self.logger setLevel:logLevel];
 
+    // calls on all the registered handlers 'seLogLevel' method
     for (NSString *key in registeredHandlers) {
         CARTagHandler *handler = [registeredHandlers valueForKey:key];
         [handler setLogLevel];
@@ -96,6 +105,70 @@ static NSMutableDictionary *registeredHandlers;
     }
     else {
         [handler execute:handlerMethod parameters:params];
+    }
+}
+
+/**
+ Add an item to the array of items which will be linked with to the next items relative event.
+ The array of item is a property of Cargo and has a nil value at the beginning or when an 
+ item-relative event has been sent, but the alloc and init are handled in this method.
+ A nil object given as parameter will be ignored.
+ 
+ @param item The CargoItem object to add to the list which will be sent with the item-relative event.
+ */
+- (void)attachItemToEvent:(CargoItem *)item {
+    if (item == nil) {
+        return ;
+    }
+    if (self.itemsArray == nil) {
+        self.itemsArray = [NSMutableArray alloc];
+        arrayValidForHandlers = handlersWithItems;
+    }
+    [self.itemsArray addObject:item];
+}
+
+/**
+ A method to call each time the list has been used in a handler.
+ It will decrease the value of the arrayValidForHandlers variable.
+ When it reach the 0 value, the list is deleted.
+ */
+- (void)itemsArrayGotUsed {
+    arrayValidForHandlers--;
+    if (arrayValidForHandlers <= 0) {
+        self.itemsArray = nil;
+    }
+}
+
+/**
+ A method to call in the handler init method to register a handler which reports event with Items
+ */
+- (void)addHandlerWithEventItems {
+    handlersWithItems++;
+}
+
+/**
+ A getter for the NSMutableArray of items which will be sent to the next "item relative" event.
+ May be used to modify some objects before setting a new Array with the 'setItemsArray' method.
+ 
+ @return an NSMutableArray of CargoItem objects.
+ */
+- (NSMutableArray *)itemsArray {
+    return self.itemsArray;
+}
+
+/**
+ Sets the array of items which will be sent to the next "item relative" event with a new value.
+ 
+ @param newItemsArray A new array of CargoItem objects, which value can be null.
+ */
+- (void)setItemsArray:(NSMutableArray *)newItemsArray {
+    if ([newItemsArray count]) {
+        arrayValidForHandlers = handlersWithItems;
+        self.itemsArray = newItemsArray;
+    }
+    else {
+        arrayValidForHandlers = 0;
+        self.itemsArray = nil;
     }
 }
 

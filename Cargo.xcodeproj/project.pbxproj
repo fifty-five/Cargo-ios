@@ -11,7 +11,7 @@
 		803606791BCE9191006EDA98 /* CARFacebookTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 803606781BCE9191006EDA98 /* CARFacebookTagHandler.m */; };
 		8036067D1BCE9964006EDA98 /* FacebookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8036067C1BCE9964006EDA98 /* FacebookTests.m */; };
 		805979F41E3A09D900D940FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 805979F31E3A09D900D940FF /* GoogleService-Info.plist */; };
-		80AEA8761E378EE8006B8674 /* CARItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 80AEA8751E378EE8006B8674 /* CARItem.m */; };
+		80AEA8761E378EE8006B8674 /* CargoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 80AEA8751E378EE8006B8674 /* CargoItem.m */; };
 		80C3DDCA1D3FC0E500BE290A /* TuneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C3DDC81D3FC0E500BE290A /* TuneTests.m */; };
 		80C3DDD11D3FC38700BE290A /* CARTuneTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 80C3DDC21D3FC08F00BE290A /* CARTuneTagHandler.m */; };
 		80CD8C791DD21D450040B567 /* libCargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF37DD591BC512450031876D /* libCargo.a */; };
@@ -101,8 +101,8 @@
 		803606781BCE9191006EDA98 /* CARFacebookTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARFacebookTagHandler.m; sourceTree = "<group>"; };
 		8036067C1BCE9964006EDA98 /* FacebookTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookTests.m; sourceTree = "<group>"; };
 		805979F31E3A09D900D940FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		80AEA8741E378EE8006B8674 /* CARItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARItem.h; sourceTree = "<group>"; };
-		80AEA8751E378EE8006B8674 /* CARItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARItem.m; sourceTree = "<group>"; };
+		80AEA8741E378EE8006B8674 /* CargoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CargoItem.h; sourceTree = "<group>"; };
+		80AEA8751E378EE8006B8674 /* CargoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CargoItem.m; sourceTree = "<group>"; };
 		80C3DDC11D3FC08F00BE290A /* CARTuneTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARTuneTagHandler.h; sourceTree = "<group>"; };
 		80C3DDC21D3FC08F00BE290A /* CARTuneTagHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CARTuneTagHandler.m; sourceTree = "<group>"; };
 		80C3DDC81D3FC0E500BE290A /* TuneTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuneTests.m; sourceTree = "<group>"; };
@@ -306,8 +306,8 @@
 				BF37DE801BC51BB50031876D /* Cargo.m */,
 				BF37DE831BC51BCC0031876D /* CARUtils.h */,
 				BF37DE841BC51BCC0031876D /* CARUtils.m */,
-				80AEA8741E378EE8006B8674 /* CARItem.h */,
-				80AEA8751E378EE8006B8674 /* CARItem.m */,
+				80AEA8741E378EE8006B8674 /* CargoItem.h */,
+				80AEA8751E378EE8006B8674 /* CargoItem.m */,
 				80F3CD9E1E390DF200C35544 /* Tags.h */,
 				80F3CD9F1E390DF200C35544 /* Tags.m */,
 				BFAB2F6D1BECDCB900BF532A /* Models */,
@@ -729,7 +729,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				80F3CDA01E390DF200C35544 /* Tags.m in Sources */,
-				80AEA8761E378EE8006B8674 /* CARItem.m in Sources */,
+				80AEA8761E378EE8006B8674 /* CargoItem.m in Sources */,
 				80C3DDD11D3FC38700BE290A /* CARTuneTagHandler.m in Sources */,
 				BF37DE851BC51BCC0031876D /* CARUtils.m in Sources */,
 				BF2B699C1C10A1090083964A /* CARConstants.m in Sources */,

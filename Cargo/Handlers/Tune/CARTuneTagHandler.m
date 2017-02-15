@@ -8,6 +8,7 @@
 
 #import "CARTuneTagHandler.h"
 #import "CARUtils.h"
+#import "Cargo.h"
 #import "CARConstants.h"
 
 /**
@@ -70,7 +71,9 @@ NSString* const CONVERSION_KEY = @"conversionKey";
 - (id)init
 {
     if (self = [super initWithKey:@"TUN" andName:@"Tune"]) {
+        [[Cargo sharedHelper] addHandlerWithEventItems];
         self.tuneClass = [Tune class];
+        
     }
     return self;
 }

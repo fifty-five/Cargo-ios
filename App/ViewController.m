@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "Cargo.h"
-#import "CARItem.h"
+#import "CargoItem.h"
 
 @interface ViewController ()
 
@@ -45,6 +45,25 @@
 
 - (IBAction)tagPurchasePressed{
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    float revenue = 0;
+    [parameters setObject:@"EUR" forKey:@"currencyCode"];
+    if (xboxText.text.doubleValue) {
+        CargoItem *item = [[CargoItem alloc] initWithName:@"xBox One" andUnitPrice:149.99 andQuantity:(unsigned int)xboxText.text.doubleValue];
+        [[Cargo sharedHelper] attachItemToEvent:item];
+        revenue += (item.revenue);
+    }
+    if (playText.text.doubleValue) {
+        CargoItem *item = [[CargoItem alloc] initWithName:@"Playstation 4" andUnitPrice:260 andQuantity:(unsigned int)playText.text.doubleValue];
+        [[Cargo sharedHelper] attachItemToEvent:item];
+        revenue += (item.revenue);
+    }
+    if (nintendoText.text.doubleValue) {
+        CargoItem *item = [[CargoItem alloc] initWithName:@"Nintendo Switch" andUnitPrice:350.50 andQuantity:(unsigned int)nintendoText.text.doubleValue];
+        [[Cargo sharedHelper] attachItemToEvent:item];
+        revenue += (item.revenue);
+    }
+    [parameters setObject:[NSNumber numberWithFloat:revenue] forKey:@"totalRevenue"];
+    [parameters setObject:[[Cargo sharedHelper] itemsArray] forKey:@"eventItems"];
     [FIRAnalytics logEventWithName:@"tagPurchase" parameters:parameters];
 
 }

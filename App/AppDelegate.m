@@ -22,7 +22,7 @@
     [FIRApp configure];
 
     //FIFTagHandler
-    [[Cargo sharedHelper]setLogLevel:verbose];
+    [[Cargo sharedHelper] setLogLevel:verbose];
     [[Cargo sharedHelper] setLaunchOptions:launchOptions];
     
     [FIRAnalytics logEventWithName:@"applicationStart" parameters:nil];

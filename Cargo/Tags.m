@@ -21,6 +21,7 @@ NSString* HANDLER_METHOD = @"handlerMethod";
     NSString* handler = [[handlerMethod componentsSeparatedByString:@"_"] objectAtIndex:0];
     [params removeObjectForKey:HANDLER_METHOD];
     [[Cargo sharedHelper] executeMethod:handlerMethod forHandlerKey:handler withParameters:params];
+    [[Cargo sharedHelper] notifyTagFired];
     return nil;
 }
 

@@ -71,7 +71,6 @@ NSString* const CONVERSION_KEY = @"conversionKey";
 - (id)init
 {
     if (self = [super initWithKey:@"TUN" andName:@"Tune"]) {
-        [[Cargo sharedHelper] addHandlerWithEventItems];
         self.tuneClass = [Tune class];
         
     }
@@ -388,9 +387,10 @@ NSString* const CONVERSION_KEY = @"conversionKey";
         }
     }
     if ([parameters objectForKey:EVENT_ITEMS]) {
-        NSString *itemsString = [CARUtils castToNSString:[parameters valueForKey:EVENT_ITEMS]];
-        if (itemsString) {
-            NSArray *itemArray = [self getItems:itemsString];
+        NSNumber *boolItemsAsNbr = [CARUtils castToNSNumber:[parameters valueForKey:EVENT_ITEMS]];
+        bool isThereItemsWithEvent = [boolItemsAsNbr boolValue];
+        if (isThereItemsWithEvent) {
+            NSArray *itemArray = [self getItems];
             tuneEvent.eventItems = itemArray;
             [self.logger logParamSetWithSuccess:EVENT_ITEMS withValue:tuneEvent.eventItems];
         }
@@ -434,53 +434,31 @@ NSString* const CONVERSION_KEY = @"conversionKey";
     }
 }
 
--(NSArray *) getItems:(NSString *)itemsString {
-    NSError *jsonError;
-    NSData *jsonData = [itemsString dataUsingEncoding: NSUTF8StringEncoding];
-
-    if (jsonData) {
-        NSArray *arrayItems = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error: &jsonError];
-        if (!jsonError) {
-
-            NSMutableArray *tuneEventItems = [[NSMutableArray alloc] init];
-            for (NSDictionary* item in arrayItems) {
-                NSString *itemName = [CARUtils castToNSString:[item objectForKey:@"name"]];
-                float unitPrice = [CARUtils castToFloat:[item objectForKey:@"unitPrice"] withDefault:0.0f];
-                unsigned int quantity = [CARUtils castToNSInteger:[item objectForKey:@"quantity"] withDefault:0];
-                float revenue = [CARUtils castToFloat:[item objectForKey:@"revenue"] withDefault:0];
-
-                if (itemName && unitPrice > 0.0f && quantity && revenue > 0.0f) {
-                    TuneEventItem *temp = [TuneEventItem eventItemWithName:itemName unitPrice:unitPrice quantity:quantity revenue:revenue];
-                    if ([item objectForKey:@"attribute1"]) {
-                        temp.attribute1 = [CARUtils castToNSString:[item objectForKey:@"attribute1"]];
-                    }
-                    if ([item objectForKey:@"attribute2"]) {
-                        temp.attribute2 = [CARUtils castToNSString:[item objectForKey:@"attribute2"]];
-                    }
-                    if ([item objectForKey:@"attribute3"]) {
-                        temp.attribute3 = [CARUtils castToNSString:[item objectForKey:@"attribute3"]];
-                    }
-                    if ([item objectForKey:@"attribute4"]) {
-                        temp.attribute4 = [CARUtils castToNSString:[item objectForKey:@"attribute4"]];
-                    }
-                    if ([item objectForKey:@"attribute5"]) {
-                        temp.attribute5 = [CARUtils castToNSString:[item objectForKey:@"attribute5"]];
-                    }
-
-                    [tuneEventItems addObject:temp];
-                }
-                else {
-                    [self.logger logUncastableParam:@"eventItems" toType:@"TuneEventItems"];
-                    return nil;
-                }
-            }
-            return tuneEventItems;
+-(NSArray *) getItems {
+    NSMutableArray *tuneEventItems = [[NSMutableArray alloc] init];
+    for (CargoItem* item in [[Cargo sharedHelper] itemsArray]) {
+        TuneEventItem *temp = [TuneEventItem eventItemWithName:item.name
+                                                     unitPrice:item.unitPrice
+                                                      quantity:item.quantity
+                                                       revenue:item.revenue];
+        if (item.attribute1 != nil) {
+            temp.attribute1 = item.attribute1;
         }
+        if (item.attribute2 != nil) {
+            temp.attribute2 = item.attribute2;
+        }
+        if (item.attribute3 != nil) {
+            temp.attribute3 = item.attribute3;
+        }
+        if (item.attribute4 != nil) {
+            temp.attribute4 = item.attribute4;
+        }
+        if (item.attribute5 != nil) {
+            temp.attribute5 = item.attribute5;
+        }
+        [tuneEventItems addObject:temp];
     }
-    else {
-        [self.logger logUncastableParam:@"eventItems" toType:@"TuneEventItems"];
-    }
-    return nil;
+    return tuneEventItems;
 }
 
 @end

@@ -61,10 +61,9 @@
  */
 - (void)executeMethod:(NSString*)handlerMethod forHandlerKey:(NSString*)handler withParameters:(NSDictionary*)params;
 
-- (void)addHandlerWithEventItems;
 - (void)attachItemToEvent:(CargoItem *)item;
-- (void)itemsArrayGotUsed;
 - (NSMutableArray *)itemsArray;
-- (void)itemsArray:(NSMutableArray *)newItemsArray;
+- (void)setNewItemsArray:(NSMutableArray *)newItemsArray;
+- (void)notifyTagFired;
 
 @end

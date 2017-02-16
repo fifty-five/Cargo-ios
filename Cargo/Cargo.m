@@ -20,8 +20,7 @@ static Cargo * _sharedHelper;
 /** A dictionary which registers a handler for a specific tag function call */
 static NSMutableDictionary *registeredHandlers;
 
-NSInteger handlersWithItems = 0;
-NSInteger arrayValidForHandlers = 0;
+bool tagFiredSinceLastChange = false;
 
 
 /* *************************************** Initializer ****************************************** */
@@ -108,6 +107,9 @@ NSInteger arrayValidForHandlers = 0;
     }
 }
 
+
+/* ************************************* ItemArray methods ************************************** */
+
 /**
  Add an item to the array of items which will be linked with to the next items relative event.
  The array of item is a property of Cargo and has a nil value at the beginning or when an 
@@ -120,30 +122,11 @@ NSInteger arrayValidForHandlers = 0;
     if (item == nil) {
         return ;
     }
+    [self emptyListIfTagHasBeenFired];
     if (self.itemsArray == nil) {
-        self.itemsArray = [NSMutableArray alloc];
-        arrayValidForHandlers = handlersWithItems;
+        self.itemsArray = [[NSMutableArray alloc] init];
     }
     [self.itemsArray addObject:item];
-}
-
-/**
- A method to call each time the list has been used in a handler.
- It will decrease the value of the arrayValidForHandlers variable.
- When it reach the 0 value, the list is deleted.
- */
-- (void)itemsArrayGotUsed {
-    arrayValidForHandlers--;
-    if (arrayValidForHandlers <= 0) {
-        self.itemsArray = nil;
-    }
-}
-
-/**
- A method to call in the handler init method to register a handler which reports event with Items
- */
-- (void)addHandlerWithEventItems {
-    handlersWithItems++;
 }
 
 /**
@@ -152,7 +135,7 @@ NSInteger arrayValidForHandlers = 0;
  
  @return an NSMutableArray of CargoItem objects.
  */
-- (NSMutableArray *)itemsArray {
+- (NSMutableArray *)getItemsArray {
     return self.itemsArray;
 }
 
@@ -161,16 +144,29 @@ NSInteger arrayValidForHandlers = 0;
  
  @param newItemsArray A new array of CargoItem objects, which value can be null.
  */
-- (void)setItemsArray:(NSMutableArray *)newItemsArray {
+- (void)setNewItemsArray:(NSMutableArray *)newItemsArray {
+    [self emptyListIfTagHasBeenFired];
     if ([newItemsArray count]) {
-        arrayValidForHandlers = handlersWithItems;
         self.itemsArray = newItemsArray;
     }
     else {
-        arrayValidForHandlers = 0;
         self.itemsArray = nil;
     }
 }
+
+-(void)emptyListIfTagHasBeenFired {
+    if (tagFiredSinceLastChange) {
+        tagFiredSinceLastChange = false;
+        self.itemsArray = nil;
+    }
+}
+
+- (void)notifyTagFired {
+    tagFiredSinceLastChange = true;
+}
+
+
+/* *************************************** Other methods **************************************** */
 
 /**
  Called in order to set the launchOptions dictionary in AppDelegate. LaunchOptions is used in some

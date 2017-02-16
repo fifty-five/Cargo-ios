@@ -46,7 +46,7 @@
 - (IBAction)tagPurchasePressed{
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     float revenue = 0;
-    [parameters setObject:@"EUR" forKey:@"currencyCode"];
+
     if (xboxText.text.doubleValue) {
         CargoItem *item = [[CargoItem alloc] initWithName:@"xBox One" andUnitPrice:149.99 andQuantity:(unsigned int)xboxText.text.doubleValue];
         [[Cargo sharedHelper] attachItemToEvent:item];
@@ -62,8 +62,9 @@
         [[Cargo sharedHelper] attachItemToEvent:item];
         revenue += (item.revenue);
     }
+    [parameters setObject:@"USD" forKey:@"currencyCode"];
     [parameters setObject:[NSNumber numberWithFloat:revenue] forKey:@"totalRevenue"];
-    [parameters setObject:[[Cargo sharedHelper] itemsArray] forKey:@"eventItems"];
+    [parameters setObject:[NSNumber numberWithBool:true] forKey:@"eventItems"];
     [FIRAnalytics logEventWithName:@"tagPurchase" parameters:parameters];
 
 }

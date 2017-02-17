@@ -50,7 +50,8 @@ NSString* const CONVERSION_KEY = @"conversionKey";
  Also fill the array of possible Tune event parameters.
  */
 +(void)load{
-    CARTuneTagHandler* handler = [[CARTuneTagHandler alloc] init];
+    CARTuneTagHandler* handler = nil;
+    handler = [[CARTuneTagHandler alloc] init];
 
     EVENT_STRING_PROPERTIES = [NSArray arrayWithObjects:@"eventCurrencyCode", @"eventRefId",
                         @"eventContentId", @"eventContentType", @"eventSearchString",

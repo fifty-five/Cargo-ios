@@ -49,7 +49,8 @@ NSString* CHAPTER3 = @"chapter3";
  these will trigger the execute method of this handler.
  */
 +(void)load{
-    CARATInternetTagHandler* handler = [[CARATInternetTagHandler alloc] init];
+    CARATInternetTagHandler* handler = nil;
+    handler = [[CARATInternetTagHandler alloc] init];
 }
 
 /**

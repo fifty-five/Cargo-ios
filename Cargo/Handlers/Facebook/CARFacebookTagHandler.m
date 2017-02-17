@@ -31,7 +31,8 @@ NSString *FB_TAG_PURCHASE = @"FB_tagPurchase";
  these will trigger the execute method of this handler.
  */
 +(void)load{
-    CARFacebookTagHandler *handler = [[CARFacebookTagHandler alloc] init];
+    CARFacebookTagHandler *handler = nil;
+    handler = [[CARFacebookTagHandler alloc] init];
 }
 
 /**

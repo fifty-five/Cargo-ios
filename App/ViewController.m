@@ -72,7 +72,10 @@
 }
 
 - (IBAction)tagUserPressed{
-    [FIRAnalytics logEventWithName:@"tagUser" parameters:nil];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setObject:userNameText.text forKey:@"userName"];
+    [parameters setObject:userMailText.text forKey:@"userEmail"];
+    [FIRAnalytics logEventWithName:@"tagUser" parameters:parameters];
 }
 
 - (IBAction)clickOnView:(id)sender {
@@ -83,7 +86,8 @@
     [scrollView setContentOffset:scrollPoint animated:YES];
 }
 
--(void) textFieldDidEndEditing:(UITextField *)textField { [scrollView setContentOffset:CGPointZero animated:YES];
+-(void) textFieldDidEndEditing:(UITextField *)textField {
+    [scrollView setContentOffset:CGPointZero animated:YES];
 }
 
 -(void) dismissKeyboard {

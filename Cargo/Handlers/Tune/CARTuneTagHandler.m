@@ -313,13 +313,13 @@ NSString* const CONVERSION_KEY = @"conversionKey";
             [self.logger logUncastableParam:EVENT_RATING toType:@"NSInteger"];
     }
     if ([parameters objectForKey:EVENT_REVENUE]) {
-        float revenue = [CARUtils castToFloat:[parameters valueForKey:EVENT_REVENUE] withDefault:-1];
-        if (revenue != -1) {
-            tuneEvent.revenue = revenue;
-            [self.logger logParamSetWithSuccess:EVENT_REVENUE withValue:[NSNumber numberWithFloat:revenue]];
+        NSNumber* revenue = [CARUtils castToNSNumber:[parameters valueForKey:EVENT_REVENUE]];
+        if (revenue != nil) {
+            tuneEvent.revenue = [revenue doubleValue];
+            [self.logger logParamSetWithSuccess:EVENT_REVENUE withValue:[NSNumber numberWithFloat:tuneEvent.revenue]];
         }
         else {
-            [self.logger logUncastableParam:EVENT_REVENUE toType:@"float"];
+            [self.logger logUncastableParam:EVENT_REVENUE toType:@"NSNumber"];
         }
     }
     if ([parameters objectForKey:EVENT_LEVEL]) {

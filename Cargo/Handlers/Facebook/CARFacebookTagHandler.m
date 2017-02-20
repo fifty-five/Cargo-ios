@@ -181,7 +181,7 @@ NSString *FB_TAG_PURCHASE = @"FB_tagPurchase";
     if (total != nil && currencyCode != nil) {
         double purchaseAmount = [total doubleValue];
         [self.fbAppEvents logPurchase:purchaseAmount currency:currencyCode];
-        [self.logger logParamSetWithSuccess:TRANSACTION_TOTAL withValue:total];
+        [self.logger logParamSetWithSuccess:TRANSACTION_TOTAL withValue:[NSNumber numberWithFloat:purchaseAmount]];
         [self.logger logParamSetWithSuccess:TRANSACTION_CURRENCY_CODE withValue:currencyCode];
     }
     else

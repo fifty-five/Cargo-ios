@@ -16,6 +16,8 @@
 
 @implementation ViewController
 
+@synthesize scrollView;
+
 @synthesize userNameText;
 @synthesize userMailText;
 
@@ -71,6 +73,25 @@
 
 - (IBAction)tagUserPressed{
     [FIRAnalytics logEventWithName:@"tagUser" parameters:nil];
+}
+
+- (IBAction)clickOnView:(id)sender {
+    [self dismissKeyboard];
+}
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField { CGPoint scrollPoint = CGPointMake(0, textField.frame.origin.y/2);
+    [scrollView setContentOffset:scrollPoint animated:YES];
+}
+
+-(void) textFieldDidEndEditing:(UITextField *)textField { [scrollView setContentOffset:CGPointZero animated:YES];
+}
+
+-(void) dismissKeyboard {
+    [userNameText resignFirstResponder];
+    [userMailText resignFirstResponder];
+    [playText resignFirstResponder];
+    [nintendoText resignFirstResponder];
+    [xboxText resignFirstResponder];
 }
 
 @end

@@ -20,6 +20,7 @@ static Cargo * _sharedHelper;
 /** A dictionary which registers a handler for a specific tag function call */
 static NSMutableDictionary *registeredHandlers;
 
+/** A boolean describing whether a tag has been received since the last access to the array */
 bool tagFiredSinceLastChange = false;
 
 
@@ -154,6 +155,10 @@ bool tagFiredSinceLastChange = false;
     }
 }
 
+/**
+ Check whether a tag has been received since the last access to the array of items.
+ When a tag has been received, the array is emptied. Otherwise, nothing happens.
+ */
 -(void)emptyListIfTagHasBeenFired {
     if (tagFiredSinceLastChange) {
         tagFiredSinceLastChange = false;
@@ -161,6 +166,9 @@ bool tagFiredSinceLastChange = false;
     }
 }
 
+/**
+ A method called whenever a tag is received in the Tags class.
+ */
 - (void)notifyTagFired {
     tagFiredSinceLastChange = true;
 }

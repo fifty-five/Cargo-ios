@@ -7,11 +7,11 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "TAGManager.h"
 #import "CARTuneTagHandler.h"
 #import <Tune/Tune.h>
 #import "CARConstants.h"
-#import "CARItem.h"
+#import "CargoItem.h"
+#import "Cargo.h"
 
 #define HC_SHORTHAND
 #import <OCHamcrest/OCHamcrest.h>
@@ -164,15 +164,16 @@
                            [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] stringValue], @"eventDate1",
                            [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] stringValue], @"eventDate2",
                            [NSNumber numberWithFloat:10.5f], @"eventRevenue",
-                           [CARItem toGTM:[[NSArray alloc] initWithObjects:[[CARItem alloc] initWithName:@"test" andUnitPrice:15.0f andQuantity:6], nil]], @"eventItems",
+                           [[NSNumber alloc] initWithBool:true], @"eventItems",
                            [NSNumber numberWithInt:10], @"eventLevel",
                            [[NSData alloc] init], @"eventReceipt",
                            [NSNumber numberWithInt:15], @"eventQuantity",
                            [NSNumber numberWithInt:1], @"eventTransactionState", nil];
     
+    [[Cargo sharedHelper] attachItemToEvent:[[CargoItem alloc] initWithName:@"testItem" andUnitPrice:15.90 andQuantity:2]];
     [_handler setInitialized:true];
     [_handler execute:@"TUN_tagEvent" parameters:dict];
-
+    
     [verifyCount(_loggerMock, (times(20))) logParamSetWithSuccess:anything() withValue:anything()];
     [verifyCount(_loggerMock, (times(0))) logUncastableParam:anything() toType:anything()];
     [verifyCount(_tuneClassMock, times(1)) measureEvent:anything()];

@@ -7,13 +7,6 @@
 //
 
 #import "AppDelegate.h"
-
-//GTM
-#import "TAGContainer.h"
-#import "TAGContainerOpener.h"
-#import "TAGManager.h"
-#import "TAGDataLayer.h"
-
 #import "Cargo.h"
 
 
@@ -25,32 +18,15 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    
-    
-    self.tagManager = [TAGManager instance];
-    NSURL *url = [launchOptions valueForKey:UIApplicationLaunchOptionsURLKey];
-    if (url != nil)
-        [self.tagManager previewWithUrl:url];
-    
-    [self.tagManager.logger setLogLevel:kTAGLoggerLogLevelVerbose];
-    id<TAGContainerFuture> future = [TAGContainerOpener openContainerWithId:@"GTM-5GCVL2"
-                                                                 tagManager:self.tagManager
-                                                                   openType:kTAGOpenTypePreferFresh
-                                                                    timeout:nil];
-    
-    self.container = [future get];
-    [self.container refresh];
-    
+
+    [FIRApp configure];
+
     //FIFTagHandler
-    [[Cargo sharedHelper] initTagHandlerWithManager:self.tagManager
-                                                  container:self.container];
+    [[Cargo sharedHelper] setLogLevel:verbose];
     [[Cargo sharedHelper] setLaunchOptions:launchOptions];
-    [[Cargo sharedHelper] registerHandlers];
     
-    TAGDataLayer *dataLayer = self.tagManager.dataLayer;
-    [dataLayer push:@{@"event": @"applicationStart"}];
-    
+    [FIRAnalytics logEventWithName:@"applicationStart" parameters:nil];
+    [FIRAnalytics logEventWithName:@"FB_activateApp" parameters:nil];
     
     return YES;
 }

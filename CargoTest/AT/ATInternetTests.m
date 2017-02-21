@@ -12,8 +12,6 @@
 //FIFTagHandler
 #import "Cargo.h"
 #import "CARConstants.h"
-
-
 #import "CARATInternetTagHandler.h"
 
 

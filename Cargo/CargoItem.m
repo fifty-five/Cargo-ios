@@ -6,9 +6,9 @@
 //  Copyright © 2017 55 SAS. All rights reserved.
 //
 
-#import "CARItem.h"
+#import "CargoItem.h"
 
-@implementation CARItem
+@implementation CargoItem
 
 /**
  Creates a CargoItem, which will be changed into an Item object for a specific SDK
@@ -58,7 +58,7 @@
  @return a NSString describing the object with its attributes.
  */
 - (NSString *)description {
-    NSMutableString* s = [NSMutableString stringWithFormat:@"{\"id\": \"%@\", \"unitPrice\": \"%f\", \"quantity\": \"%u\",\"revenue\": \"%f\"", self.name, self.unitPrice, self.quantity, self.revenue];
+    NSMutableString* s = [NSMutableString stringWithFormat:@"{CargoItem: \"name\": \"%@\", \"unitPrice\": \"%f\", \"quantity\": \"%u\",\"revenue\": \"%f\"", self.name, self.unitPrice, self.quantity, self.revenue];
     if ((self.attribute1) != nil) {
         NSString* temp = [NSString stringWithFormat:@",\"attribute1\": \"%@\"", self.attribute1];
         s = [NSMutableString stringWithFormat:@"%@%@", s, temp];
@@ -81,46 +81,6 @@
     }
     s = [NSMutableString stringWithFormat:@"%@%@", s, @"}"];
     return s;
-}
-
-+ (NSString *)toGTM:(NSArray *)items {
-    NSMutableArray* array = [[NSMutableArray alloc] init];
-    for (CARItem* item in items) {
-        [array addObject: [item dictionary]];
-    }
-    
-    NSError *writeError = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:array options:NSJSONWritingPrettyPrinted error:&writeError];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-
-    return jsonString;
-}
-
-- (NSDictionary *)dictionary {
-    NSMutableDictionary* dict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                 self.name, @"name",
-                                 [NSNumber numberWithFloat: self.unitPrice], @"unitPrice",
-                                 [NSNumber numberWithUnsignedInteger: self.quantity], @"quantity",
-                                 [NSNumber numberWithFloat: self.revenue], @"revenue",
-                                 nil];
-
-    if (self.attribute1 != nil) {
-        [dict setObject:self.attribute1 forKey:@"attribute1"];
-    }
-    if (self.attribute2 != nil) {
-        [dict setObject:self.attribute2 forKey:@"attribute2"];
-    }
-    if (self.attribute3 != nil) {
-        [dict setObject:self.attribute3 forKey:@"attribute3"];
-    }
-    if (self.attribute4 != nil) {
-        [dict setObject:self.attribute4 forKey:@"attribute4"];
-    }
-    if (self.attribute5 != nil) {
-        [dict setObject:self.attribute5 forKey:@"attribute5"];
-    }
-
-    return dict;
 }
 
 @end

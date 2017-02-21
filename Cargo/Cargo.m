@@ -7,12 +7,6 @@
 //
 
 #import "Cargo.h"
-#import "CARTagHandler.h"
-#import "CARMacroHandler.h"
-
-//GTM
-#import "TAGManager.h"
-#import "TAGDataLayer.h"
 
 
 @implementation Cargo
@@ -24,16 +18,16 @@
 static Cargo * _sharedHelper;
 
 /** A dictionary which registers a handler for a specific tag function call */
-static NSMutableDictionary * registeredTagHandlers;
-/** A dictionary which registers a handler for a specific macro call */
-static NSMutableDictionary * registeredMacroHandlers;
+static NSMutableDictionary *registeredHandlers;
+
+bool tagFiredSinceLastChange = false;
 
 
 /* *************************************** Initializer ****************************************** */
 
 #pragma mark - SharedInstance
 /**
- Class method which allow the user to retrieve the cargo instance
+ Class met(nonatomic) hod which allow the user to retrieve the cargo instance
  On its first call, creates and returns a fresh cargo instance
  On other calls, returns the instance stocked in _sharedHelper variable
 
@@ -66,25 +60,113 @@ static NSMutableDictionary * registeredMacroHandlers;
 
 /* *********************************** Methods declaration ************************************** */
 
-#pragma mark - GTM
 /**
- Setup the tagManager and the GTM container as properties of Cargo
- Setup the log level of the Cargo logger from the level of the tagManager logger
- This method has to be called right after retrieving the container and the Cargo instance 
- for the first time, and before any other Cargo method.
-
- @param tagManager The tag manager instance
- @param container The GTM container instance
+ Method called by the handlers on their load method, stores the handler which called this 
+ method in a NSDictionary with the handler key parameter as the key.
+ 
+ @param handler the reference of the handler to store
  */
-- (void)initTagHandlerWithManager:(TAGManager *)tagManager
-                        container:(TAGContainer *)container {
-    //GTM
-    self.tagManager = tagManager;
-    self.container = container;
+- (void)registerHandler:(CARTagHandler*)handler {
+    if (!registeredHandlers) {
+        registeredHandlers = [[NSMutableDictionary alloc] init];
+    }
 
-    //Logger level setting
-    [self.logger setLevel:[self.tagManager.logger logLevel]];
+    [registeredHandlers setObject:handler forKey:handler.key];
 }
+
+/**
+ Changes the level of logs for Cargo and all its handlers
+ 
+ @param logLevel the log level to set Cargo and its handlers with.
+ */
+- (void)setLogLevel:(LogLevel)logLevel {
+    [self.logger setLevel:logLevel];
+
+    // calls on all the registered handlers 'seLogLevel' method
+    for (NSString *key in registeredHandlers) {
+        CARTagHandler *handler = [registeredHandlers valueForKey:key];
+        [handler setLogLevel];
+    }
+}
+
+/**
+ Called from the Tags class which is made to handle callbacks from GTM.
+ Calls on this method allow the correct function tag to be redirected to the correct handler.
+ 
+ @param handlerMethod name of the method aimed by the callback, originally a parameter in the NSDict.
+ @param handlerKey the key of the handler aimed by the callback, created from the handlerMethod, eg. 'FB_init'
+ @param params a NSDictionary of the parameters sent to the method.
+ */
+- (void)executeMethod:(NSString*)handlerMethod forHandlerKey:(NSString*)handlerKey withParameters:(NSDictionary*)params{
+    CARTagHandler* handler = [registeredHandlers valueForKey:handlerKey];
+    if (!handler) {
+        [self.logger logNotFoundValue:@"handler name" forKey:handlerKey inValueSet:[registeredHandlers allKeys]];
+    }
+    else {
+        [handler execute:handlerMethod parameters:params];
+    }
+}
+
+
+/* ************************************* ItemArray methods ************************************** */
+
+/**
+ Add an item to the array of items which will be linked with to the next items relative event.
+ The array of item is a property of Cargo and has a nil value at the beginning or when an 
+ item-relative event has been sent, but the alloc and init are handled in this method.
+ A nil object given as parameter will be ignored.
+ 
+ @param item The CargoItem object to add to the list which will be sent with the item-relative event.
+ */
+- (void)attachItemToEvent:(CargoItem *)item {
+    if (item == nil) {
+        return ;
+    }
+    [self emptyListIfTagHasBeenFired];
+    if (self.itemsArray == nil) {
+        self.itemsArray = [[NSMutableArray alloc] init];
+    }
+    [self.itemsArray addObject:item];
+}
+
+/**
+ A getter for the NSMutableArray of items which will be sent to the next "item relative" event.
+ May be used to modify some objects before setting a new Array with the 'setItemsArray' method.
+ 
+ @return an NSMutableArray of CargoItem objects.
+ */
+- (NSMutableArray *)getItemsArray {
+    return self.itemsArray;
+}
+
+/**
+ Sets the array of items which will be sent to the next "item relative" event with a new value.
+ 
+ @param newItemsArray A new array of CargoItem objects, which value can be null.
+ */
+- (void)setNewItemsArray:(NSMutableArray *)newItemsArray {
+    [self emptyListIfTagHasBeenFired];
+    if ([newItemsArray count]) {
+        self.itemsArray = newItemsArray;
+    }
+    else {
+        self.itemsArray = nil;
+    }
+}
+
+-(void)emptyListIfTagHasBeenFired {
+    if (tagFiredSinceLastChange) {
+        tagFiredSinceLastChange = false;
+        self.itemsArray = nil;
+    }
+}
+
+- (void)notifyTagFired {
+    tagFiredSinceLastChange = true;
+}
+
+
+/* *************************************** Other methods **************************************** */
 
 /**
  Called in order to set the launchOptions dictionary in AppDelegate. LaunchOptions is used in some
@@ -104,71 +186,6 @@ static NSMutableDictionary * registeredMacroHandlers;
  */
 -(BOOL) isLaunchOptionsSet{
     return self.launchOptionsFlag;
-}
-
-/**
- Class method called by the handler in its load method to register their GTM functions callbacks
- in the registeredTagHandlers dictionary, which is initialized if it wasn't already
- A specific function key is linked to a specific handler.
-
- @param handler the instance of the handler
- @param key the name of the function which will be used in GTM interface
- */
-+ (void) registerTagHandler:(CARTagHandler*)handler withKey:(NSString*) key {
-    if(registeredTagHandlers == NULL){
-        registeredTagHandlers = [[NSMutableDictionary alloc] init];
-    }
-
-    [registeredTagHandlers setValue:handler forKey:key];
-}
-
-/**
- Class method called by the handler in its load method to register their GTM macros
- in the registeredMacroHandlers dictionary, which is initialized if it wasn't already
- A specific macro key is linked to a specific handler.
-
- @param handler the instance of the handler
- @param macro the name of the macro which will be used in GTM interface
- */+ (void) registerMacroHandler:(CARMacroHandler*)handler forMacro:(NSString*) macro {
-     if(registeredMacroHandlers == NULL){
-         registeredMacroHandlers = [[NSMutableDictionary alloc] init];
-     }
-
-     [registeredMacroHandlers setValue:handler forKey:macro];
- }
-
-/**
- For each key stored in the registeredTagHandlers Dictionary, calls on the key,
- check if the handler was correctly initialized, then registers its GTM callback methods
- to the container for this particular handler.
- Does the same with the GTM callback macros
- */
--(void) registerHandlers{
-    // functions
-    for (NSString* key in registeredTagHandlers) {
-        CARTagHandler *handler = registeredTagHandlers[key];
-        [handler validate];
-
-        if(handler.valid){
-            [self.container registerFunctionCallTagHandler:handler forTag:key];
-            [self.logger FIFLog:kTAGLoggerLogLevelInfo
-                    withMessage:@"Function with key %@ has been registered for %@ handler",
-             key,
-             [handler name]];
-        }
-        else {
-            [self.logger FIFLog:kTAGLoggerLogLevelError
-                    withMessage:@"%@ handler seems to be invalid. Function with key %@ hasn't been registered.",
-             [handler name],
-             key];
-        }
-    }
-    // macros
-    for(NSString* key in registeredMacroHandlers ){
-        CARMacroHandler *macroHandler = registeredMacroHandlers[key];
-        [self.container registerFunctionCallMacroHandler:macroHandler forMacro:key];
-        NSLog(@"Macro %@ has been registered", key);
-    }
 }
 
 @end

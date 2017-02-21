@@ -31,12 +31,8 @@ NSString *FB_TAG_PURCHASE = @"FB_tagPurchase";
  these will trigger the execute method of this handler.
  */
 +(void)load{
-    CARFacebookTagHandler *handler = [[CARFacebookTagHandler alloc] init];
-
-    [Cargo registerTagHandler:handler withKey:FB_INIT];
-    [Cargo registerTagHandler:handler withKey:FB_ACTIVATE_APP];
-    [Cargo registerTagHandler:handler withKey:FB_TAG_EVENT];
-    [Cargo registerTagHandler:handler withKey:FB_TAG_PURCHASE];
+    CARFacebookTagHandler *handler = nil;
+    handler = [[CARFacebookTagHandler alloc] init];
 }
 
 /**
@@ -102,7 +98,6 @@ NSString *FB_TAG_PURCHASE = @"FB_tagPurchase";
         [self.fbAppEvents setLoggingOverrideAppID:applicationId];
         [self.logger logParamSetWithSuccess:APP_ID withValue:applicationId];
         self.initialized = TRUE;
-        [self activateApp];
     }
     else
         [self.logger logMissingParam:APP_ID inMethod:FB_INIT];
@@ -117,7 +112,7 @@ NSString *FB_TAG_PURCHASE = @"FB_tagPurchase";
  */
 -(void) activateApp{
     [self.fbAppEvents activateApp];
-    [self.logger FIFLog:kTAGLoggerLogLevelInfo withMessage:@"Application activation hit sent."];
+    [self.logger FIFLog:info withMessage:@"Application activation hit sent."];
 }
 
 /**
@@ -186,7 +181,7 @@ NSString *FB_TAG_PURCHASE = @"FB_tagPurchase";
     if (total != nil && currencyCode != nil) {
         double purchaseAmount = [total doubleValue];
         [self.fbAppEvents logPurchase:purchaseAmount currency:currencyCode];
-        [self.logger logParamSetWithSuccess:TRANSACTION_TOTAL withValue:total];
+        [self.logger logParamSetWithSuccess:TRANSACTION_TOTAL withValue:[NSNumber numberWithFloat:purchaseAmount]];
         [self.logger logParamSetWithSuccess:TRANSACTION_CURRENCY_CODE withValue:currencyCode];
     }
     else

@@ -9,14 +9,8 @@
 
 #import <Foundation/Foundation.h>
 #import "FIFLogger.h"
-
-#import "TAGContainer.h"
-
-#import "Handlers.h"
-
-
-@class TAGManager;
-@class TAGContainer;
+#import "CARTagHandler.h"
+#import "CargoItem.h"
 
 
 /**
@@ -28,24 +22,15 @@
 /** Default logger */
 @property (nonatomic, strong) FIFLogger *logger;
 
-/** GTM tag manager */
-@property (nonatomic, strong) TAGManager *tagManager;
-
-/** GTM container */
-@property (nonatomic, strong) TAGContainer *container;
-
 /** App launchOptions */
 @property (nonatomic, strong) NSDictionary *launchOptions;
 
 /** Flag to know is launchOptions has been set */
 @property (nonatomic, assign) BOOL launchOptionsFlag;
 
-
-+ (void) registerTagHandler:(id<TAGFunctionCallTagHandler>)handler withKey:(NSString*) key;
-+ (void) registerMacroHandler:(id<TAGFunctionCallMacroHandler>)handler forMacro:(NSString*) macro;
+@property NSMutableArray *itemsArray;
 
 
--(void) registerHandlers;
 -(BOOL) isLaunchOptionsSet;
 
 
@@ -56,17 +41,29 @@
  */
 + (Cargo *) sharedHelper;
 
-
-#pragma mark - GoogleTagManager
 /**
- *  Use initTagHandlerWithManager:container: to configure and initilize
- *  FIFTagHandler with Google Tag Manager.
- *
- *  @param tagManager A google tag manager instance.
- *  @param container  The tag container.
+ Method called by the handlers on their load method, stores the handler which called this method
+ in a NSDictionary with the handler key parameter as the key.
+ 
+ @param handler the reference of the handler to store
  */
-- (void)initTagHandlerWithManager:(TAGManager *)tagManager
-                        container:(TAGContainer *)container;
+- (void)registerHandler:(CARTagHandler*)handler;
 
+- (void)setLogLevel:(LogLevel)logLevel;
+
+/**
+ Called from the Tags class which is made to handle callbacks from GTM.
+ Calls on this method allow the correct function tag to be redirected to the correct handler.
+ 
+ @param handlerMethod name of the method aimed by the callback, originally a parameter in the NSDict.
+ @param handlerKey the key of the handler aimed by the callback, created from the handlerMethod, eg. 'FB_init'
+ @param params a NSDictionary of the parameters sent to the method.
+ */
+- (void)executeMethod:(NSString*)handlerMethod forHandlerKey:(NSString*)handler withParameters:(NSDictionary*)params;
+
+- (void)attachItemToEvent:(CargoItem *)item;
+- (NSMutableArray *)itemsArray;
+- (void)setNewItemsArray:(NSMutableArray *)newItemsArray;
+- (void)notifyTagFired;
 
 @end

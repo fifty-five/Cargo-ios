@@ -8,9 +8,7 @@
 
 #import "ViewController.h"
 #import "Cargo.h"
-#import "TAGManager.h"
-#import "TAGDataLayer.h"
-#import "CARItem.h"
+#import "CargoItem.h"
 
 @interface ViewController ()
 
@@ -18,13 +16,19 @@
 
 @implementation ViewController
 
-TAGDataLayer *dataLayer;
+@synthesize scrollView;
+
+@synthesize userNameText;
+@synthesize userMailText;
+
+@synthesize xboxText;
+@synthesize playText;
+@synthesize nintendoText;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    Cargo *cargo = [Cargo sharedHelper];
-    dataLayer = cargo.tagManager.dataLayer;
 }
 
 
@@ -34,28 +38,64 @@ TAGDataLayer *dataLayer;
 }
 
 - (IBAction)tagEventPressed{
-    NSArray* itemArray = [[NSArray alloc]
-                          initWithObjects:
-                          [[CARItem alloc] initWithName:@"testItem" andUnitPrice:15.5f andQuantity:100],
-                          [[CARItem alloc] initWithName:@"testItem2" andUnitPrice:20.55f andQuantity:1],
-                          nil];
-    
-    [dataLayer push:@{@"event": @"tagEvent",
-                      @"eventItems": [CARItem toGTM:itemArray],
-                      @"eventDate1": [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]]
-                      }];
+    [FIRAnalytics logEventWithName:@"tagEvent" parameters:nil];
 }
 
 - (IBAction)tagScreenPressed{
-    [dataLayer push:@{@"event": @"tagScreen"}];
+    [FIRAnalytics logEventWithName:@"tagScreen" parameters:nil];
 }
 
 - (IBAction)tagPurchasePressed{
-    [dataLayer push:@{@"event": @"tagPurchase"}];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    float revenue = 0;
+
+    if (xboxText.text.doubleValue) {
+        CargoItem *item = [[CargoItem alloc] initWithName:@"xBox One" andUnitPrice:149.99 andQuantity:(unsigned int)xboxText.text.doubleValue];
+        [[Cargo sharedHelper] attachItemToEvent:item];
+        revenue += (item.revenue);
+    }
+    if (playText.text.doubleValue) {
+        CargoItem *item = [[CargoItem alloc] initWithName:@"Playstation 4" andUnitPrice:260 andQuantity:(unsigned int)playText.text.doubleValue];
+        [[Cargo sharedHelper] attachItemToEvent:item];
+        revenue += (item.revenue);
+    }
+    if (nintendoText.text.doubleValue) {
+        CargoItem *item = [[CargoItem alloc] initWithName:@"Nintendo Switch" andUnitPrice:350.50 andQuantity:(unsigned int)nintendoText.text.doubleValue];
+        [[Cargo sharedHelper] attachItemToEvent:item];
+        revenue += (item.revenue);
+    }
+    [parameters setObject:@"USD" forKey:@"currencyCode"];
+    [parameters setObject:[NSNumber numberWithFloat:revenue] forKey:@"totalRevenue"];
+    [parameters setObject:[NSNumber numberWithBool:true] forKey:@"eventItems"];
+    [FIRAnalytics logEventWithName:@"tagPurchase" parameters:parameters];
+
 }
 
 - (IBAction)tagUserPressed{
-    [dataLayer push:@{@"event": @"tagUser"}];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setObject:userNameText.text forKey:@"userName"];
+    [parameters setObject:userMailText.text forKey:@"userEmail"];
+    [FIRAnalytics logEventWithName:@"tagUser" parameters:parameters];
+}
+
+- (IBAction)clickOnView:(id)sender {
+    [self dismissKeyboard];
+}
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField { CGPoint scrollPoint = CGPointMake(0, textField.frame.origin.y/2);
+    [scrollView setContentOffset:scrollPoint animated:YES];
+}
+
+-(void) textFieldDidEndEditing:(UITextField *)textField {
+    [scrollView setContentOffset:CGPointZero animated:YES];
+}
+
+-(void) dismissKeyboard {
+    [userNameText resignFirstResponder];
+    [userMailText resignFirstResponder];
+    [playText resignFirstResponder];
+    [nintendoText resignFirstResponder];
+    [xboxText resignFirstResponder];
 }
 
 @end

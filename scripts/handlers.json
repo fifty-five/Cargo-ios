@@ -1,15 +1,6 @@
 {
   "handlers": [
     {
-      "name":"GoogleAnalytics",
-      "dependencies":[
-        {
-          "name": "GoogleAnalytics",
-          "version" : "~> 3.16.0"
-        }
-      ]
-    },
-    {
       "name":"Tune",
       "dependencies":[
         {
@@ -23,7 +14,7 @@
       "dependencies":[
         {
           "name": "FBSDKCoreKit",
-          "version" : "4.10.1"
+          "version" : "4.19.0"
         }
       ]
     },
@@ -33,15 +24,6 @@
         {
           "name": "ATInternet-iOS-ObjC-SDK/iOS",
           "version" : "2.2.0"
-        }
-      ]
-    },
-    {
-      "name":"Firebase",
-      "dependencies":[
-        {
-          "name": "Firebase",
-          "version" : "3.3.0"
         }
       ]
     }

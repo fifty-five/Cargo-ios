@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CARItem : NSObject
+@interface CargoItem : NSObject
 
 @property NSString      *name;
 @property float         unitPrice;
@@ -26,7 +26,5 @@
       andUnitPrice:(float)unitPrice
        andQuantity:(UInt32)quantity
         andRevenue:(float)revenue;
-
-+ (NSString *)toGTM:(NSArray *)items;
 
 @end

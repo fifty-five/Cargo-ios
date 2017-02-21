@@ -9,20 +9,26 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TAGLogger.h"
+typedef enum {
+    verbose = 0,
+    debug = 1,
+    info = 2,
+    warning = 3,
+    error = 4,
+    none = 5
+} LogLevel;
 
 /**
  *  A class that provides a logger for the FIFTagHandler framework
  */
 @interface FIFLogger : NSObject {
-    TAGLoggerLogLevelType level;
+    LogLevel level;
     NSString *superContext;
     NSString *context;
 }
 
-
 /** The logging level */
-@property (assign, readonly) TAGLoggerLogLevelType level;
+@property (assign, readonly) LogLevel level;
 
 
 /** Cargo name */
@@ -47,14 +53,14 @@
  *  @param intentLevel The level you want to log with
  *  @param messageFormat The message
  */
-- (void)FIFLog:(TAGLoggerLogLevelType)intentLevel withMessage:(NSString *)messageFormat, ...;
+- (void)FIFLog:(LogLevel)intentLevel withMessage:(NSString *)messageFormat, ...;
 
 /**
  *  Set the logging level
  *
  *  @param logLevel the logging level
  */
-- (void)setLevel:(TAGLoggerLogLevelType)logLevel;
+- (void)setLevel:(LogLevel)logLevel;
 
 
 /**
@@ -137,5 +143,5 @@
  *  @param messageFormat The message format.
  *  @param ...           The values of the printed format.
  */
-void FIFLog(TAGLoggerLogLevelType intentLevel, NSString *messageFormat, ...) NS_FORMAT_FUNCTION(2,3);
+void FIFLog(LogLevel intentLevel, NSString *messageFormat, ...) NS_FORMAT_FUNCTION(2,3);
 @end

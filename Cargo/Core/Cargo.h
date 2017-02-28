@@ -61,9 +61,31 @@
  */
 - (void)executeMethod:(NSString*)handlerMethod forHandlerKey:(NSString*)handler withParameters:(NSDictionary*)params;
 
+/**
+ Add an item to the array of items which will be linked with to the next items relative event.
+ The array of item is a property of Cargo and has a nil value at the beginning or when an
+ item-relative event has been sent, but the alloc and init are handled in this method.
+ A nil object given as parameter will be ignored.
+ 
+ @param item The CargoItem object to add to the list which will be sent with the item-relative event.
+ */
 - (void)attachItemToEvent:(CargoItem *)item;
+
+/**
+ Returns the itemsArray.
+ */
 - (NSMutableArray *)itemsArray;
+
+/**
+ Sets the array of items which will be sent to the next "item relative" event with a new value.
+ 
+ @param newItemsArray A new array of CargoItem objects, which value can be null.
+ */
 - (void)setNewItemsArray:(NSMutableArray *)newItemsArray;
+
+/**
+ A method called whenever a tag is received in the Tags class.
+ */
 - (void)notifyTagFired;
 
 @end

@@ -13,27 +13,21 @@ end
 
 Pod::Spec.new do |s|
   s.name             = "Cargo"
-  s.version          = "1.0.3"
-  s.summary          = "Cargo makes it easier to track your mobile apps"
+  s.version          = "2.0.1"
+  s.summary          = "Cargo makes it easier to track your mobile app."
 
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description      = <<-DESC
-  Cargo works with Google Tag Manager and makes easier the clientside tracking 
-  of your mobile apps with several handlers sending data to your favorite SDKs
+  Cargo is a tool developed by fifty-five. It allows to quickly and easily integrate third-party analytics SDKs through Google Tag Manager.
+  With Google Tag Manager (GTM), developers are able to change configuration values in their mobile applications using the GTM interface without having to rebuild and resubmit app binaries to app marketplaces.
                        DESC
 
   s.homepage         = "https://github.com/fifty-five/Cargo-ios"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
-  s.author           = { "louis" => "louis.chavane@gmail.com" }
+  s.author           = { "Julien" => "julien.gil@fifty-five.com" }
   s.source           = { :git => "https://github.com/fifty-five/Cargo-ios.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.social_media_url = 'https://twitter.com/55FiftyFive55'
 
-  s.platform     = :ios, '7.0'
+  s.platform     = :ios, '8.0'
   s.requires_arc = true
 
 
@@ -41,21 +35,22 @@ Pod::Spec.new do |s|
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
 
-  s.subspec 'Cargo-iOS' do |ss|
-    ss.public_header_files = ['Cargo/*.h', 'Cargo/Logger/*.h', 'Cargo/Models/*.h', 'Cargo/Handlers/*.h', 'Cargo/Handlers/*/*.h']
-    ss.source_files = ['Cargo/*.{h,m}', 'Cargo/Logger/*.{h,m}', 'Cargo/Models/*.{h,m}', 'Cargo/Handlers/*.{h,m}', 'Cargo/Handlers/*/*.{h,m}']
+  s.subspec 'Core' do |ss|
+    ss.public_header_files = "Cargo/Core/**/*.h"
+    ss.source_files = "Cargo/Core/**/*"
     ss.platform = :ios, '7.0'
     s.xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => "CARGO_VERSION=#{s.version}" }
-    s.dependency 'GoogleTagManager', '3.12.1'
+    s.dependency 'GoogleTagManager', '~> 5.0.0'
   end
 
   Build.subspecs.each do |a|
     s.subspec a.name do |ss|
       ss.prefix_header_contents = "#define USE_CARGO_#{a.name.upcase} 1"
 
-      ss.platform = :ios, '7.0'
-
-      ss.dependency 'Cargo/Cargo-iOS'
+      ss.platform = :ios, '8.0'
+      ss.public_header_files = ['Cargo/Handlers/*.h', "Cargo/Handlers/#{a.name}/*.h"]
+      ss.ios.source_files = "Cargo/Handlers/#{a.name}/*.{h,m}"
+      ss.dependency 'Cargo/Core'
 
       (a.dependencies || []).each do |d|
         if d.version

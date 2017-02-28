@@ -35,9 +35,9 @@ Pod::Spec.new do |s|
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
 
-  s.subspec 'Cargo-iOS' do |ss|
-    ss.public_header_files = ['Cargo/*.h', 'Cargo/Logger/*.h', 'Cargo/Models/*.h', 'Cargo/Handlers/*.h', 'Cargo/Handlers/*/*.h']
-    ss.source_files = ['Cargo/*.{h,m}', 'Cargo/Logger/*.{h,m}', 'Cargo/Models/*.{h,m}', 'Cargo/Handlers/*.{h,m}', 'Cargo/Handlers/*/*.{h,m}']
+  s.subspec 'Core' do |ss|
+    ss.public_header_files = "Cargo/Core/**/*.h"
+    ss.source_files = "Cargo/Core/**/*"
     ss.platform = :ios, '7.0'
     s.xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => "CARGO_VERSION=#{s.version}" }
     s.dependency 'GoogleTagManager', '~> 5.0.0'
@@ -48,8 +48,9 @@ Pod::Spec.new do |s|
       ss.prefix_header_contents = "#define USE_CARGO_#{a.name.upcase} 1"
 
       ss.platform = :ios, '8.0'
-
-      ss.dependency 'Cargo/Cargo-iOS'
+      ss.public_header_files = ['Cargo/Handlers/*.h', "Cargo/Handlers/#{a.name}/*.h"]
+      ss.ios.source_files = "Cargo/Handlers/#{a.name}/*.{h,m}"
+      ss.dependency 'Cargo/Core'
 
       (a.dependencies || []).each do |d|
         if d.version

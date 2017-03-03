@@ -25,6 +25,7 @@ Pod::Spec.new do |s|
   s.license          = 'MIT'
   s.author           = { "Julien" => "julien.gil@fifty-five.com" }
   s.source           = { :git => "https://github.com/fifty-five/Cargo-ios.git", :tag => "v#{s.version.to_s}" }
+  s.documentation_url = 'https://github.com/fifty-five/Cargo-ios/wiki'
   s.social_media_url = 'https://twitter.com/55FiftyFive55'
 
   s.platform     = :ios, '8.0'

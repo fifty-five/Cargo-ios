@@ -1,12 +1,17 @@
 language: objective-c
 osx_image: xcode8.2
+xcode_workspace: Cargo.xcworkspace
 xcode_scheme: Cargo
 
 before_install:
+  - export IOS_SIMULATOR_UDID=`instruments -s devices | grep "iPhone 6 (8.4" | awk -F '[ ]' '{print $4}' | awk -F '[\[]' '{print $2}' | sed 's/.$//'`
+  - echo $IOS_SIMULATOR_UDID
+  - open -a "simulator" --args -CurrentDeviceUDID $IOS_SIMULATOR_UDID
   - pod update
+  - gem install xcpretty
 
 script:
-  - xctool -workspace Cargo.xcworkspace -scheme Cargo build test -sdk iphonesimulator GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
+  - xcodebuild test 'ONLY_ACTIVE_ARCH=NO' 'ARCHS=arm64 armv7 armv7s i386 x86_64' -workspace Cargo.xcworkspace -scheme Cargo -enableCodeCoverage YES -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4' | xcpretty && exit ${PIPESTATUS[0]}
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) -t 5e20da68-d862-4214-a079-43a5659b41a0

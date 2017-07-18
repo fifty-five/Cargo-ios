@@ -9,6 +9,7 @@ before_install:
   - open -a "simulator" --args -CurrentDeviceUDID $IOS_SIMULATOR_UDID
   - pod update
   - gem install xcpretty
+  - rvm get stable
 
 script:
   - xcodebuild test 'ONLY_ACTIVE_ARCH=NO' 'ARCHS=arm64 armv7 armv7s i386 x86_64' 'GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES' 'GCC_GENERATE_TEST_COVERAGE_FILES=YES' -workspace Cargo.xcworkspace -scheme CargoTest -enableCodeCoverage YES -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4' | xcpretty && exit ${PIPESTATUS[0]}

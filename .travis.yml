@@ -10,10 +10,10 @@ before_install:
   - pod update
   - gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
   - rvm get stable
+  - gem install xcpretty
 
 script:
-  - xcodebuild test 'ONLY_ACTIVE_ARCH=NO' 'ARCHS=arm64 armv7 armv7s i386 x86_64' 'GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES' 'GCC_GENERATE_TEST_COVERAGE_FILES=YES' -workspace Cargo.xcworkspace -scheme CargoTest -enableCodeCoverage YES -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4'
+  - set -o pipefail && xcodebuild test 'ONLY_ACTIVE_ARCH=NO' 'ARCHS=arm64 armv7 armv7s i386 x86_64' 'GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES' 'GCC_GENERATE_TEST_COVERAGE_FILES=YES' -workspace Cargo.xcworkspace -scheme CargoTest -enableCodeCoverage YES -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4' | xcpretty
 
 after_success:
-  - echo "hello world"
   - bash <(curl -s https://codecov.io/bash) -X xcodeplist

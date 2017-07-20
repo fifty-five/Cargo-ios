@@ -4,6 +4,7 @@ coverage:
   precision: 0
 
 ignore:
-  - "App/**/*"  # ignore the app folders and all its contents
-  - "AppTests/**/*"  # ignore the app folders and all its contents
-  - "CargoTest/**/*"  # ignore the CargoTest folders and all its contents
+  - "/App/**/*"  # ignore the app folders and all its contents
+  - "/AppTests/**/*"  # ignore the app folders and all its contents
+  - "/AppUITests/**/*"  # ignore the app folders and all its contents
+  - "/CargoTest/**/*"  # ignore the CargoTest folders and all its contents

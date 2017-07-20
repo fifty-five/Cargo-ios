@@ -5,3 +5,4 @@ coverage:
 
 ignore:
   - "App*/**/*"  # ignore the app folders and all its contents
+  - "CargoTest*/**/*"  # ignore the app folders and all its contents

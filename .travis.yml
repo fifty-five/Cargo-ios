@@ -16,4 +16,5 @@ script:
   - xcodebuild test 'ONLY_ACTIVE_ARCH=NO' 'ARCHS=arm64 armv7 armv7s i386 x86_64' 'GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES' 'GCC_GENERATE_TEST_COVERAGE_FILES=YES' -workspace Cargo.xcworkspace -scheme CargoTest -enableCodeCoverage YES -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4' | xcpretty && exit ${PIPESTATUS[0]}
 
 after_success:
+  - echo "hello world"
   - bash <(curl -s https://codecov.io/bash) -X xcodeplist

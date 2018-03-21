@@ -7,8 +7,6 @@ before_install:
   - export IOS_SIMULATOR_UDID=`instruments -s devices | grep "iPhone 6 (8.4" | awk -F '[ ]' '{print $4}' | awk -F '[\[]' '{print $2}' | sed 's/.$//'`
   - echo $IOS_SIMULATOR_UDID
   - open -a "simulator" --args -CurrentDeviceUDID $IOS_SIMULATOR_UDID
-  - rvm get stable
-  - curl -sSL https://rvm.io/mpapis.asc | gpg --import -
   - pod update
   - gem install xcpretty
 

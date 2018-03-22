@@ -17,7 +17,6 @@
 #import <ATCustomObject.h>
 
 
-
 /**
  The class which handles interactions with the AT Internet SDK.
  */

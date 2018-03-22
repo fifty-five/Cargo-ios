@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "Cargo.h"
 #import "CargoItem.h"
+#import "CargoLocation.h"
 
 @interface ViewController ()
 
@@ -21,14 +22,28 @@
 @synthesize userNameText;
 @synthesize userMailText;
 
+@synthesize screenAndEventText;
+
 @synthesize xboxText;
 @synthesize playText;
 @synthesize nintendoText;
 
+@synthesize SwitchLocation;
+@synthesize segmentedPrivacyStatus;
+
+CLLocationManager* locationManager;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    locationManager = [[CLLocationManager alloc] init];
+    [locationManager requestAlwaysAuthorization];
+    [locationManager requestWhenInUseAuthorization];
+    
+    if ([CLLocationManager locationServicesEnabled]) {
+        locationManager.delegate = self;
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    }
 }
 
 
@@ -38,11 +53,23 @@
 }
 
 - (IBAction)tagEventPressed{
-    [FIRAnalytics logEventWithName:@"tagEvent" parameters:nil];
+    NSMutableDictionary* parameters = [[NSMutableDictionary alloc] init];
+    [parameters setObject:screenAndEventText.text forKey:@"eventName"];
+    [FIRAnalytics logEventWithName:@"tagEvent" parameters:parameters];
+
+    if (SwitchLocation.isOn) {
+        [FIRAnalytics logEventWithName:@"tagLocation" parameters:nil];
+    }
 }
 
 - (IBAction)tagScreenPressed{
-    [FIRAnalytics logEventWithName:@"tagScreen" parameters:nil];
+    NSMutableDictionary* parameters = [[NSMutableDictionary alloc] init];
+    [parameters setObject:screenAndEventText.text forKey:@"screenName"];
+    [FIRAnalytics logEventWithName:@"tagScreen" parameters:parameters];
+
+    if (SwitchLocation.isOn) {
+        [FIRAnalytics logEventWithName:@"tagLocation" parameters:nil];
+    }
 }
 
 - (IBAction)tagPurchasePressed{
@@ -69,6 +96,10 @@
     [parameters setObject:[NSNumber numberWithBool:true] forKey:@"eventItems"];
     [FIRAnalytics logEventWithName:@"tagPurchase" parameters:parameters];
 
+    if (SwitchLocation.isOn) {
+        [FIRAnalytics logEventWithName:@"tagLocation" parameters:nil];
+    }
+
 }
 
 - (IBAction)tagUserPressed{
@@ -76,6 +107,43 @@
     [parameters setObject:userNameText.text forKey:@"userName"];
     [parameters setObject:userMailText.text forKey:@"userEmail"];
     [FIRAnalytics logEventWithName:@"tagUser" parameters:parameters];
+}
+
+- (IBAction)switchLocationValueChanged:(UISwitch *)sender {
+    if (SwitchLocation.isOn) {
+        [locationManager startUpdatingLocation];
+    }
+    else {
+        [locationManager stopUpdatingLocation];
+        [CargoLocation setLocation:nil];
+    }
+}
+
+- (IBAction)segmentedControlPrivacyValueChanged:(UISegmentedControl *)sender {
+    NSMutableString* privacyStatus = [[NSMutableString alloc] init];
+    NSMutableDictionary* parameters = [[NSMutableDictionary alloc] init];
+    if (segmentedPrivacyStatus.selectedSegmentIndex == 0) {
+        privacyStatus = [NSMutableString stringWithString:@"OPT_IN"];
+    }
+    else if (segmentedPrivacyStatus.selectedSegmentIndex == 1) {
+        privacyStatus = [NSMutableString stringWithString:@"OPT_OUT"];
+    }
+    else {
+        privacyStatus = [NSMutableString stringWithString:@"UNKNOWN"];
+    }
+    [parameters setObject:privacyStatus forKey:@"privacyStatus"];
+    [FIRAnalytics logEventWithName:@"setPrivacy" parameters:parameters];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    CLLocation* location = [locationManager location];
+    if (location) {
+        [CargoLocation setLocation:location];
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    NSLog(@"Failed to find user's location : %@", error);
 }
 
 - (IBAction)clickOnView:(id)sender {

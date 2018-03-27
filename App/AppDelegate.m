@@ -18,16 +18,17 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
+    NSMutableDictionary* appStartParams = [[NSMutableDictionary alloc] init];
     [FIRApp configure];
 
     //FIFTagHandler
     [[Cargo sharedHelper] setLogLevel:verbose];
     [[Cargo sharedHelper] setLaunchOptions:launchOptions];
-    
-    [FIRAnalytics logEventWithName:@"applicationStart" parameters:nil];
+
+    [appStartParams setObject:[[NSBundle mainBundle] bundleIdentifier] forKey:@"bundleIdentifier"];
+    [FIRAnalytics logEventWithName:@"applicationStart" parameters:appStartParams];
     [FIRAnalytics logEventWithName:@"FB_activateApp" parameters:nil];
-    
+
     return YES;
 }
 

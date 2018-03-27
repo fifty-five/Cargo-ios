@@ -139,22 +139,45 @@ NSString* ACTION_NAME = @"actionName";
 -(void)init:(NSDictionary *)parameters{
     NSMutableDictionary* params = [parameters mutableCopy];
     NSString* overrideConfigPath = @"overrideConfigPath";
+    NSString* bundleIdentifier = @"bundleIdentifier";
     NSString* overrideConfig = [CARUtils castToNSString:[params objectForKey:overrideConfigPath]];
+    NSString* bundleId = [CARUtils castToNSString:[params objectForKey:bundleIdentifier]];
     self.initialized = true;
     
-    if (overrideConfig) {
-        NSString* configPath = [[NSBundle mainBundle] pathForResource:overrideConfig ofType:@"json"];
-        if (configPath) {
-            [self.adobe overrideConfigPath:configPath];
-            [self.logger logParamSetWithSuccess:overrideConfig withValue:configPath];
+    if (bundleId) {
+        [params removeObjectForKey:bundleIdentifier];
+        [params removeObjectForKey:overrideConfigPath];
+
+        if (overrideConfig) {
+            NSString* configPath = [[NSBundle bundleWithIdentifier:bundleId] pathForResource:overrideConfig ofType:@"json"];
+
+            if (configPath) {
+                [self.adobe overrideConfigPath:configPath];
+                [self.logger logParamSetWithSuccess:overrideConfigPath withValue:configPath];
+            }
+            else {
+                [self.logger FIFLog:error withMessage:[overrideConfig stringByAppendingString:@".json not found."]];
+                // set the handler as uninitialized.
+                self.initialized = false;
+                return;
+            }
         }
         else {
-            [self.logger FIFLog:error withMessage:[overrideConfig stringByAppendingString:@".json not found."]];
-            // set the handler as uninitialized.
-            self.initialized = false;
-            return;
+            NSString* configPath = [[NSBundle bundleWithIdentifier:bundleId] pathForResource:@"ADBMobileConfig" ofType:@"json"];
+
+            if (configPath) {
+                [self.adobe overrideConfigPath:configPath];
+                [self.logger logParamSetWithSuccess:overrideConfigPath withValue:configPath];
+            }
+            else {
+                [self.logger FIFLog:error withMessage:@"ADBMobileConfig.json not found."];
+                // set the handler as uninitialized.
+                self.initialized = false;
+                return;
+            }
         }
-        [params removeObjectForKey:overrideConfigPath];
+        [self collectLifeCycle:params];
+        self.initialized = true;
     }
     
     if (self.logger.level <= debug) {
@@ -163,10 +186,6 @@ NSString* ACTION_NAME = @"actionName";
     else {
         [self.adobe setDebugLogging:false];
     }
-
-    [self collectLifeCycle:params];
-    self.initialized = true;
-    
 }
 
 -(void)collectLifeCycle:(NSDictionary *)parameters {

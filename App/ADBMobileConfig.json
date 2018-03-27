@@ -1,5 +1,5 @@
 {
-  "lastModified": "2018-02-05T17:13:27.488Z",
+  "lastModified": "2018-03-27T09:23:39.057Z",
   "marketingCloud": {
     "org": "FBD139F75694F1C67F000101@AdobeOrg"
   },
@@ -19,14 +19,14 @@
   "analytics": {
     "rsids": "55smobiledev",
     "server": "55sas.sc.omtrdc.net",
-    "ssl": false,
-    "offlineEnabled": true,
+    "ssl": true,
+    "offlineEnabled": false,
     "charset": "UTF-8",
-    "lifecycleTimeout": 1800,
+    "lifecycleTimeout": 300,
     "privacyDefault": "optedin",
     "batchLimit": 0,
-    "timezone": "CET",
-    "timezoneOffset": 60,
+    "timezone": "CEST",
+    "timezoneOffset": 120,
     "referrerTimeout": 0,
     "backdateSessionInfo": false,
     "poi": []

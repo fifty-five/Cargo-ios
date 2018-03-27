@@ -59,8 +59,17 @@
 	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>dpm.demdex.net</key>
+			<string></string>
+			<key>55sas.sc.omtrdc.net</key>
+			<string></string>
+			<key>c00.adobe.com</key>
+			<string></string>
+		</dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<true/>
+		<false/>
 	</dict>
 </dict>
 </plist>

@@ -40,12 +40,25 @@ CLLocationManager* locationManager;
     [locationManager requestAlwaysAuthorization];
     [locationManager requestWhenInUseAuthorization];
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+
+    NSMutableDictionary* parameters = [[NSMutableDictionary alloc] init];
+    [parameters setObject:@"shopAction" forKey:@"actionName"];
+    [FIRAnalytics logEventWithName:@"ADB_trackTimeStart" parameters:parameters];
+    
     if ([CLLocationManager locationServicesEnabled]) {
         locationManager.delegate = self;
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     }
 }
 
+- (void)viewDidUnload {
+    NSMutableDictionary* parameters = [[NSMutableDictionary alloc] init];
+    [parameters setObject:@"shopAction" forKey:@"actionName"];
+    [parameters setObject:@"FALSE" forKey:@"successfulAction"];
+    [FIRAnalytics logEventWithName:@"ADB_trackTimeEnd" parameters:parameters];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -100,6 +113,12 @@ CLLocationManager* locationManager;
         [FIRAnalytics logEventWithName:@"tagLocation" parameters:nil];
     }
 
+    if (revenue > 0) {
+        [parameters setObject:@"shopAction" forKey:@"actionName"];
+        [parameters setObject:@"TRUE" forKey:@"successfulAction"];
+        [FIRAnalytics logEventWithName:@"ADB_trackTimeEnd" parameters:parameters];
+        [FIRAnalytics logEventWithName:@"ADB_trackTimeStart" parameters:parameters];
+    }
 }
 
 - (IBAction)tagUserPressed{
@@ -161,6 +180,7 @@ CLLocationManager* locationManager;
 -(void) dismissKeyboard {
     [userNameText resignFirstResponder];
     [userMailText resignFirstResponder];
+    [screenAndEventText resignFirstResponder];
     [playText resignFirstResponder];
     [nintendoText resignFirstResponder];
     [xboxText resignFirstResponder];

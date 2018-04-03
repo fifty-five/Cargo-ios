@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Allow the use of your location to attach it to the events</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Allow the use of your location to attach it to the events</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Allow the use of your location to attach it to the events</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -51,8 +59,17 @@
 	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>dpm.demdex.net</key>
+			<string></string>
+			<key>55sas.sc.omtrdc.net</key>
+			<string></string>
+			<key>c00.adobe.com</key>
+			<string></string>
+		</dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<true/>
+		<false/>
 	</dict>
 </dict>
 </plist>

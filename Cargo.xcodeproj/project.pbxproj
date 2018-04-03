@@ -37,6 +37,9 @@
 		BF37DEF71BC540A80031876D /* AppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37DEF61BC540A80031876D /* AppUITests.m */; };
 		C17726CA1109EBF745AFBDF1 /* libPods-Cargo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F38D5BCB23442BFD4A209BB /* libPods-Cargo.a */; };
 		E4C702BD55E80538A2E63655 /* libPods-CargoTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72E3F8A1DDDA157DADFAEF47 /* libPods-CargoTest.a */; };
+		F938BF282062A2030072D6A5 /* CARAdobeTagHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F938BF272062A2030072D6A5 /* CARAdobeTagHandler.m */; };
+		F9937B802063C18B00A955D9 /* CargoLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = F9937B7F2063C18B00A955D9 /* CargoLocation.m */; };
+		F9B9C40C2064016700DCC935 /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = F9B9C40B2064016700DCC935 /* ADBMobileConfig.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,6 +151,11 @@
 		BF37DEF81BC540A80031876D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E3D83150B09B23F1D920EA26 /* Pods-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.release.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.release.xcconfig"; sourceTree = "<group>"; };
 		F5A6466931A71363A0E87DDF /* Pods-CargoTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CargoTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-CargoTest/Pods-CargoTest.release.xcconfig"; sourceTree = "<group>"; };
+		F938BF262062A2030072D6A5 /* CARAdobeTagHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARAdobeTagHandler.h; sourceTree = "<group>"; };
+		F938BF272062A2030072D6A5 /* CARAdobeTagHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CARAdobeTagHandler.m; sourceTree = "<group>"; };
+		F9937B7E2063C18B00A955D9 /* CargoLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CargoLocation.h; sourceTree = "<group>"; };
+		F9937B7F2063C18B00A955D9 /* CargoLocation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CargoLocation.m; sourceTree = "<group>"; };
+		F9B9C40B2064016700DCC935 /* ADBMobileConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ADBMobileConfig.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,8 +251,6 @@
 				8058518F1E65C09600B59079 /* TagHandler */,
 				805851851E65C09600B59079 /* Cargo.h */,
 				805851861E65C09600B59079 /* Cargo.m */,
-				805851871E65C09600B59079 /* CargoItem.h */,
-				805851881E65C09600B59079 /* CargoItem.m */,
 				805851921E65C09600B59079 /* Tags.h */,
 				805851931E65C09600B59079 /* Tags.m */,
 				805851941E65C09600B59079 /* Utils */,
@@ -282,6 +288,10 @@
 		805851941E65C09600B59079 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				805851871E65C09600B59079 /* CargoItem.h */,
+				805851881E65C09600B59079 /* CargoItem.m */,
+				F9937B7E2063C18B00A955D9 /* CargoLocation.h */,
+				F9937B7F2063C18B00A955D9 /* CargoLocation.m */,
 				805851951E65C09600B59079 /* CARUtils.h */,
 				805851961E65C09600B59079 /* CARUtils.m */,
 			);
@@ -372,6 +382,7 @@
 		BF37DECD1BC540A80031876D /* App */ = {
 			isa = PBXGroup;
 			children = (
+				F9B9C40B2064016700DCC935 /* ADBMobileConfig.json */,
 				805979F31E3A09D900D940FF /* GoogleService-Info.plist */,
 				80CD8C821DD233970040B567 /* App.entitlements */,
 				BF37DED11BC540A80031876D /* AppDelegate.h */,
@@ -418,11 +429,21 @@
 		BF37DF1E1BC57B530031876D /* Handlers */ = {
 			isa = PBXGroup;
 			children = (
+				F938BF252062A1BA0072D6A5 /* Adobe */,
 				9CE17DE51BCE91F700833399 /* ATInternet */,
 				803606761BCE9191006EDA98 /* Facebook */,
 				80C3DDC01D3FC08F00BE290A /* Tune */,
 			);
 			path = Handlers;
+			sourceTree = "<group>";
+		};
+		F938BF252062A1BA0072D6A5 /* Adobe */ = {
+			isa = PBXGroup;
+			children = (
+				F938BF262062A2030072D6A5 /* CARAdobeTagHandler.h */,
+				F938BF272062A2030072D6A5 /* CARAdobeTagHandler.m */,
+			);
+			path = Adobe;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -532,7 +553,7 @@
 		BF37DD511BC512450031876D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "55 SAS";
 				TargetAttributes = {
 					BF37DD581BC512450031876D = {
@@ -597,6 +618,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF37DEE11BC540A80031876D /* LaunchScreen.storyboard in Resources */,
+				F9B9C40C2064016700DCC935 /* ADBMobileConfig.json in Resources */,
 				BF37DEDE1BC540A80031876D /* Assets.xcassets in Resources */,
 				805979F41E3A09D900D940FF /* GoogleService-Info.plist in Resources */,
 				80F3CD9A1E38F6B200C35544 /* container in Resources */,
@@ -627,9 +649,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CargoTest/Pods-CargoTest-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ATInternet-iOS-ObjC-SDK/ATAssets.bundle",
+				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+				"${PODS_ROOT}/GoogleTagManager/Frameworks/GoogleTagManager.framework/Resources/TagManagerResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ATAssets.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TagManagerResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -642,9 +671,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Cargo/Pods-Cargo-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ATInternet-iOS-ObjC-SDK/ATAssets.bundle",
+				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+				"${PODS_ROOT}/GoogleTagManager/Frameworks/GoogleTagManager.framework/Resources/TagManagerResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ATAssets.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TagManagerResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -657,9 +693,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-App/Pods-App-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ATInternet-iOS-ObjC-SDK/ATAssets.bundle",
+				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+				"${PODS_ROOT}/GoogleTagManager/Frameworks/GoogleTagManager.framework/Resources/TagManagerResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ATAssets.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TagManagerResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -672,13 +715,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Cargo-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BF8F71F42B447A4CF27E2EFA /* [CP] Check Pods Manifest.lock */ = {
@@ -687,13 +733,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CargoTest-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C21E0D1DBE233D05AAE61D1D /* [CP] Check Pods Manifest.lock */ = {
@@ -702,13 +751,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-App-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D0421F1FBF0C461F904B8D4B /* [CP] Embed Pods Frameworks */ = {
@@ -752,8 +804,10 @@
 				805851971E65C09600B59079 /* Cargo.m in Sources */,
 				80C3DDD11D3FC38700BE290A /* CARTuneTagHandler.m in Sources */,
 				9CE17DE41BCE91F200833399 /* CARATInternetTagHandler.m in Sources */,
+				F938BF282062A2030072D6A5 /* CARAdobeTagHandler.m in Sources */,
 				8058519D1E65C09600B59079 /* CARUtils.m in Sources */,
 				803606791BCE9191006EDA98 /* CARFacebookTagHandler.m in Sources */,
+				F9937B802063C18B00A955D9 /* CargoLocation.m in Sources */,
 				8058519A1E65C09600B59079 /* CARConstants.m in Sources */,
 				805851981E65C09600B59079 /* CargoItem.m in Sources */,
 				805851991E65C09600B59079 /* FIFLogger.m in Sources */,
@@ -857,14 +911,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -901,14 +961,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

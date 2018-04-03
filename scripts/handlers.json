@@ -26,6 +26,15 @@
           "version" : "2.2.0"
         }
       ]
+    },
+    {
+      "name":"Adobe",
+      "dependencies":[
+        {
+          "name": "AdobeMobileSDK",
+          "version" : "4.15.0"
+        }
+      ]
     }
   ]
 }

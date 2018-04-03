@@ -102,15 +102,6 @@ NSString* CHAPTER3 = @"chapter3";
         [self.logger logUninitializedFramework];
 }
 
-/**
- Called in registerHandlers to validate a handler and check for its initialization.
- */
-- (void)validate
-{
-    // Nothing is required
-    self.valid = TRUE;
-}
-
 
 /* ************************************ SDK initialization ************************************** */
 

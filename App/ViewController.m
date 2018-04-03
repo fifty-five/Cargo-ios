@@ -39,14 +39,14 @@ CLLocationManager* locationManager;
     locationManager = [[CLLocationManager alloc] init];
     [locationManager requestAlwaysAuthorization];
     [locationManager requestWhenInUseAuthorization];
-    
+
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
 
     NSMutableDictionary* parameters = [[NSMutableDictionary alloc] init];
     [parameters setObject:@"shopAction" forKey:@"actionName"];
-    [FIRAnalytics logEventWithName:@"ADB_trackTimeStart" parameters:parameters];
-    
+    [FIRAnalytics logEventWithName:@"actionStart" parameters:parameters];
+
     if ([CLLocationManager locationServicesEnabled]) {
         locationManager.delegate = self;
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
@@ -56,8 +56,8 @@ CLLocationManager* locationManager;
 - (void)viewDidUnload {
     NSMutableDictionary* parameters = [[NSMutableDictionary alloc] init];
     [parameters setObject:@"shopAction" forKey:@"actionName"];
-    [parameters setObject:@"FALSE" forKey:@"successfulAction"];
-    [FIRAnalytics logEventWithName:@"ADB_trackTimeEnd" parameters:parameters];
+    [parameters setObject:[NSNumber numberWithBool:false] forKey:@"successfulAction"];
+    [FIRAnalytics logEventWithName:@"actionEnd" parameters:parameters];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -115,9 +115,9 @@ CLLocationManager* locationManager;
 
     if (revenue > 0) {
         [parameters setObject:@"shopAction" forKey:@"actionName"];
-        [parameters setObject:@"TRUE" forKey:@"successfulAction"];
-        [FIRAnalytics logEventWithName:@"ADB_trackTimeEnd" parameters:parameters];
-        [FIRAnalytics logEventWithName:@"ADB_trackTimeStart" parameters:parameters];
+        [parameters setObject:[NSNumber numberWithBool:true] forKey:@"successfulAction"];
+        [FIRAnalytics logEventWithName:@"actionEnd" parameters:parameters];
+        [FIRAnalytics logEventWithName:@"actionStart" parameters:parameters];
     }
 }
 

@@ -129,12 +129,12 @@ NSString* ACTION_NAME = @"actionName";
 /* ************************************ SDK initialization ************************************** */
 
 /**
- The method you need to call first. Allow you to initialize AT Internet SDK
- Register the domain and the siteId to the AT Internet SDK.
+ The method you need to call first. Allow you to initialize Adobe SDK
+ You can give a path to override the default one for the config file.
  
  @param parameters :
- - domain: domain AT Internet gives when you register your app
- - siteId: site ID AT Internet gives when you register your app
+ - bundleIdentifier: the identifier of your app, you can retrieve it with [[NSBundle mainBundle] bundleIdentifier]
+ - overrideConfigPath: the path to override the default one for the config file location
  */
 -(void)init:(NSDictionary *)parameters{
     NSMutableDictionary* params = [parameters mutableCopy];
@@ -188,6 +188,13 @@ NSString* ACTION_NAME = @"actionName";
     }
 }
 
+/**
+ Indicates to the SDK that lifecycle data should be collected for use across all solutions in the SDK.
+ Tip: The preferred location to invoke this method is in application:didFinishLaunchingWithOptions:
+ 
+ @param parameters :
+ - all the parameters are used as additional data
+ */
 -(void)collectLifeCycle:(NSDictionary *)parameters {
     // if there is any parameter, these are given to the appropriate SDK function
     if ([parameters count] > 0) {
@@ -205,14 +212,12 @@ NSString* ACTION_NAME = @"actionName";
 /* ****************************************** Tracking ****************************************** */
 
 /**
- Method used to create and fire an event to the AT Internet interface
+ Method used to create and send a screen view event to the Adobe interface
  The mandatory parameter is screenName which is a necessity to build the event.
  
  @param parameters :
  - screenName : the name of the screen tagged
- - chapter1/2/3 : use them to add more context (optional)
- - level2 : an int describing a second level of your screen (optional)
- - isBasketView (bool) : set to true if the screen view is a basket one
+ - all the other parameters left are used as context data
  */
 - (void)tagScreen:(NSDictionary*)parameters{
     NSMutableDictionary* params = [parameters mutableCopy];
@@ -231,15 +236,13 @@ NSString* ACTION_NAME = @"actionName";
 }
 
 /**
- Method used to create and fire an event to the AT Internet interface
+ Method used to create and fire an event to the Adobe interface
  The mandatory parameter is eventName and eventType which are a necessity to build the event.
  Possibility to attach up to 3 chapters and a second level to the event
  
  @param parameters :
  - eventName : the name given to this event
- - eventType : the type of the event (sendTouch/sendNavigation/sendDownload/sendExit/sendSearch)
- - chapter1/2/3 : add some more context with up to 3 chapters
- - level2 : an int describing a second level of your screen (optional) (-1 turn this option off)
+ - all the other parameters left are used as context data
  */
 - (void)tagEvent:(NSDictionary*)parameters{
     NSMutableDictionary* params = [parameters mutableCopy];
@@ -254,10 +257,16 @@ NSString* ACTION_NAME = @"actionName";
         }
     }
     else {
-        [self.logger logMissingParam:@"eventName and/or eventType" inMethod:ADB_TAG_EVENT];
+        [self.logger logMissingParam:@"eventName" inMethod:ADB_TAG_EVENT];
     }
 }
 
+/**
+ Tracks a push message click-through.
+ 
+ @param parameters :
+ - all the parameters are used as user infos.
+ */
 - (void)trackPushMessage:(NSDictionary *)parameters{
     // send the hit only when there is parameters.
     if ([parameters count] > 0) {
@@ -269,6 +278,15 @@ NSString* ACTION_NAME = @"actionName";
     }
 }
 
+/**
+ Start a timed action with name action.
+ If you call this method for an action that has already started, the previous timed action is overwritten.
+ Tip: This call does not send a hit.
+ 
+ @param parameters :
+ - actionName : the name of the action to track
+ - all the other parameters left are used as context data
+ */
 - (void)trackTimedActionStart:(NSDictionary *)parameters{
     NSMutableDictionary* params = [parameters mutableCopy];
     NSString* actionName = [CARUtils castToNSString:[params objectForKey:ACTION_NAME]];
@@ -286,6 +304,15 @@ NSString* ACTION_NAME = @"actionName";
     }
 }
 
+/**
+ Pass in data to update the context data associated with the given action.
+ The data that is passed in is appended to the existing data for the action, and if the same key is already defined for action, overwrites the data.
+ Tip: This call does not send a hit.
+ 
+ @param parameters :
+ - actionName : the name of the action to update
+ - all the other parameters left are used as context data updating the actionName
+ */
 - (void)trackTimedActionUpdate:(NSDictionary *)parameters{
     NSMutableDictionary* params = [parameters mutableCopy];
     NSString* actionName = [CARUtils castToNSString:[params objectForKey:ACTION_NAME]];
@@ -306,6 +333,16 @@ NSString* ACTION_NAME = @"actionName";
     }
 }
 
+/**
+ End a timed action.
+ If you provide block, you will have access to the final time values and be able to manipulate data prior to sending the final hit.
+ Tip: If you provide block, you must return YES to send a hit. Passing in nil for block sends the final hit.
+ 
+ @param parameters :
+ - actionName : the name of the action to end
+ - successfulAction: defines whether the hit should be send or not (default true)
+ - all the other parameters left are used as context data updating the actionName
+ */
 - (void)trackTimedActionEnd:(NSDictionary *)parameters{
     NSMutableDictionary* params = [parameters mutableCopy];
     NSString* successfulAction = @"successfulAction";
@@ -340,6 +377,17 @@ NSString* ACTION_NAME = @"actionName";
     }
 }
 
+/**
+ Sends the current x y coordinates.
+ Also uses points of interest that are defined in the ADBMobileConfig.json file to determine
+ if the location provided as a parameter is in any of your POIs.
+ If the current coordinates are in a defined POI,
+ a context data variable is populated and sent with the trackLocation call.
+ 
+ @param parameters :
+ none is required, but you'll have to create a CLLocation and set it in the CargoLocation object for this method to work.
+ - all the parameters are given as context data
+ */
 - (void)trackLocation:(NSDictionary *)parameters{
     CLLocation* location = [CargoLocation getLocation];
     // if there is a location to retrieve, it is set, along with the additional data
@@ -355,6 +403,13 @@ NSString* ACTION_NAME = @"actionName";
     }
 }
 
+/**
+ Adds amount to the user's lifetime value.
+ 
+ @param parameters :
+ - increaseVisitorLifetimeValue: the amount to add to the user's lifetime value.
+ - all the parameters left are given as context data
+ */
 - (void)increaseLifetimeValue:(NSDictionary *)parameters{
     NSString* LT_VALUE = @"increaseVisitorLifetimeValue";
     NSMutableDictionary* params = [parameters mutableCopy];
@@ -377,6 +432,21 @@ NSString* ACTION_NAME = @"actionName";
     }
 }
 
+/**
+ Sets the privacy status for the current user to status.
+ 
+ Set to one of the following values:
+ 
+ OPT_IN - hits are sent immediately.
+ OPT_OUT - hits are discarded.
+ UNKNOWN - If offline tracking is enabled, hits are saved
+ until the privacy status changes to opt-in (then hits are sent)
+ or opt-out (then hits are discarded). If offline tracking is not enabled,
+ hits are discarded until the privacy status changes to opt in.
+ 
+ @param parameters :
+ - privacyStatus: can have 3 possible values OPT_IN / OPT_OUT / UNKNOWN
+ */
 - (void)setPrivacy:(NSDictionary *)parameters{
     NSString* STATUS = @"privacyStatus";
     NSString* OPT_IN = @"OPT_IN";
@@ -407,6 +477,9 @@ NSString* ACTION_NAME = @"actionName";
     }
 }
 
+/**
+ Regardless of how many hits are currently queued, forces the library to send all hits in the offline queue.
+ */
 - (void)sendQueueHits{
     NSUInteger queueHits = [self.adobe trackingGetQueueSize];
     
@@ -414,6 +487,9 @@ NSString* ACTION_NAME = @"actionName";
     [self.logger FIFLog:verbose withMessage:@"Forced to send %tu hits from queue", queueHits];
 }
 
+/**
+ Clears all hits from the offline queue.
+ */
 - (void)clearQueue{
     NSUInteger queueHits = [self.adobe trackingGetQueueSize];
     
